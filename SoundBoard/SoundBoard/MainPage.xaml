@@ -27,7 +27,7 @@
             
             <Button Name="BackButton"
                     RelativePanel.RightOf="HamburgerButton"
-                    Click="BackButton_Click_1"
+                    Click="BackButton_Click"
                     FontFamily="Segoe MDL2 Assets"
                     Height="45"
                     Width="45"
@@ -52,8 +52,24 @@
             <SplitView.Pane>
                 <ListView Name="MenuItemListView"  
                           IsItemClickEnabled="True"
+                          ItemsSource="{x:Bind MenuItems}"
                           ItemClick="ListView_ItemClick">
-                    
+                    <ListView.ItemTemplate>
+                        <DataTemplate x:DataType="data:MenuItem">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{x:Bind IconFile}" 
+                                       Height="35"
+                                       Width="35"
+                                       Margin="-10,10,0,10"
+                                       />
+                                <TextBlock Text="{x:Bind Category}"
+                                           FontSize="18"
+                                           Margin="10,0,0,0"
+                                           VerticalAlignment="Center"
+                                           />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
                 </ListView>
             </SplitView.Pane>
             <SplitView.Content>
@@ -63,7 +79,7 @@
                         <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <MediaElement Name="MyMediaEelment"
+                    <MediaElement Name="MyMediaElement"
                                   AutoPlay="True" />
 
                     <TextBlock Name="CategoryTextBlock"
