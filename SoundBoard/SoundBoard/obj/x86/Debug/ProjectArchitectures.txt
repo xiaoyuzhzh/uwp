@@ -1,1 +1,0 @@
-F:\github\xiaoyuzhzh\uwp\SoundBoard\SoundBoard\SoundBoard.csproj;x86
