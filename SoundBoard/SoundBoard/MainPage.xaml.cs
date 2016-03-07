@@ -65,12 +65,31 @@ namespace SoundBoard
 
         private void SearchAutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
         {
+            if (String.IsNullOrEmpty(sender.Text))
+            {
+                SearchAutoSuggestBox.ItemsSource = null;
+                goBack();
+                return;
+            }
+            
+
+            var sounds = new ObservableCollection<Sound>();
+            SoundManager.GetAllSounds(sounds);
+            Suggestions = sounds.Where(p => p.Name.ToUpper().StartsWith(sender.Text.ToUpper())).Select(p => p.Name).ToList();
+
+            SearchAutoSuggestBox.ItemsSource = Suggestions;
 
         }
 
         private void SearchAutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
         {
+            if (String.IsNullOrEmpty(sender.Text))
+            {
+                return;
+            }
 
+            SoundManager.GetSoundsByName(Sounds, sender.Text);
+            BackButton.Visibility = Visibility.Visible;
         }
 
         private void ListView_ItemClick(object sender, ItemClickEventArgs e)
