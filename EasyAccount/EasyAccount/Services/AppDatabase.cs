@@ -33,8 +33,6 @@ namespace EasyAccount.Services
         {
             // 连接数据库，如果数据库文件不存在则创建一个空数据库。
             var conn = new SQLiteConnection(new SQLitePlatformWinRT(), path);
-            // 创建 Person 模型对应的表，如果已存在，则忽略该操作。
-
             
             return conn;
         }
@@ -69,6 +67,19 @@ namespace EasyAccount.Services
                 var msg = e.Message;
             }
 
+        }
+
+        public static void deleteTransaction(Transaction transaction)
+        {
+            try
+            {
+                var conn = GetDbConnection();
+                conn.Delete<Transaction>(transaction.id);
+            }
+            catch (Exception ex)
+            {
+                var msg = ex.Message;
+            }
         }
 
         public static List<Transaction> getAllTransaction()

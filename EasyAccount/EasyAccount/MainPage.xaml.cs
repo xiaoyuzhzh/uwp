@@ -15,6 +15,8 @@ using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 using EasyAccount.Services;
 using System.Collections.ObjectModel;
+using EasyAccount.Views;
+using Windows.UI.Core;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -33,74 +35,45 @@ namespace EasyAccount
 
         public ObservableCollection<Transaction> transactions { get; set; }
 
+        public int i { get; set; }
+
         public MainPage()
         {
             this.InitializeComponent();
 
-            classOnes = new List<string> { "支出很长支出很长支出很长支出很长", "收入"};
-
-            classOne.ItemsSource = classOnes;
-
             AppDatabase.initTable();
-            transactions = new ObservableCollection<Transaction>();
+
+            this.frame.Navigate(typeof(Statistics));
+
+            SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequested;
+
+            WifiConnectionLost();
         }
 
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void SystemNavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
         {
-            var transaction = getTransactionFromForm();
-
-            if (transaction != null)
+            if (frame.CanGoBack && !e.Handled)
             {
-                save(transaction);
+                frame.GoBack();
             }
+            infoOutText.Text = "手机点击了返回："+ i++;
+            e.Handled = true;
         }
 
-        private void save(Transaction transaction)
+
+        private void OnNavigatingToPage(object sender, NavigatingCancelEventArgs e)
         {
-            if(transaction.id == null)
-            {
-                transaction.id = Guid.NewGuid().ToString();
-            }
-            AppDatabase.saveTransaction(transaction);
+
         }
 
-        private void showAllTransactions()
+        private void OnNavigatedToPage(object sender, NavigationEventArgs e)
         {
-            List<Transaction> list = AppDatabase.getAllTransaction();
 
-            if (list != null)
-            {
-                transactions.Clear();
-                list.ForEach(t => transactions.Add(t));
-            }
         }
 
-
-
-        private Transaction getTransactionFromForm() {
-            var transaction = new Transaction();
-            try
-            {
-                transaction.amount = Decimal.Parse(amount.Text);
-            }
-            catch (Exception)
-            {
-                return null;
-            }
-
-            transaction.tradeTime = new DateTime(date.Date.Year, date.Date.Month, date.Date.Day, 
-                                                    time.Time.Hours, time.Time.Minutes, time.Time.Seconds);
-            
-            transaction.classOne = classOne.SelectedValue==null? null : classOne.SelectedValue.ToString();
-            transaction.classTwo = classTwo.SelectedValue == null ? null : classTwo.SelectedValue.ToString();
-            transaction.classThree = classThree.SelectedValue == null ? null : classThree.SelectedValue.ToString();
-            return transaction;
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            showAllTransactions();
+
         }
     }
 }

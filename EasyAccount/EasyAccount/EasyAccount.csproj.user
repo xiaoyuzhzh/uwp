@@ -5,6 +5,6 @@
     <UseEmulator>true</UseEmulator>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
-    <UseSimulator>true</UseSimulator>
+    <UseSimulator>false</UseSimulator>
   </PropertyGroup>
 </Project>

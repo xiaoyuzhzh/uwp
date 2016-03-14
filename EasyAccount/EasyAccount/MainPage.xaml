@@ -6,68 +6,48 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:data="using:EasyAccount.Model"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource AppBarBackgroundThemeBrush}">
+    <Page.Resources>
+        <Flyout x:Key="ImagePreviewFlyout" Placement="Right">
+            <!-- The DataContext of the Image that the flyout is attached to must be the Image's Source. -->
+            <Image Source="{Binding Path=Source}" MaxHeight="400" MaxWidth="400" Stretch="Uniform"/>
+            <Flyout.FlyoutPresenterStyle>
+                <Style TargetType="FlyoutPresenter">
+                    <Setter Property="ScrollViewer.ZoomMode" Value="Enabled"/>
+                    <Setter Property="Background" Value="Black"/>
+                    <Setter Property="BorderBrush" Value="Gray"/>
+                    <Setter Property="BorderThickness" Value="5"/>
+                    <Setter Property="MinHeight" Value="300"/>
+                    <Setter Property="MinWidth" Value="300"/>
+                </Style>
+            </Flyout.FlyoutPresenterStyle>
+        </Flyout>
+    </Page.Resources>
+
+    <Grid>
+
         <Grid.RowDefinitions>
-            <RowDefinition Height="9*" />
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        
-        <ScrollViewer Height="auto">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="9*" />
-                    <RowDefinition Height="1*" />
-                </Grid.RowDefinitions>
-                <RelativePanel Grid.Row="0">
-                    <!--<TextBlock Name="dataSpan" Text="日期：" Margin="0,10,0,0" RelativePanel.LeftOf="date"  RelativePanel.AlignTopWithPanel="True" />-->
-                    <DatePicker Name="date" Header="选择一个日期" Width="300"  Margin="0,10,0,0" RelativePanel.AlignTopWithPanel="True"  RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+        <Frame x:Name="frame"
+            Navigating="OnNavigatingToPage"
+            Navigated="OnNavigatedToPage">
+            <Frame.ContentTransitions>
+                <TransitionCollection>
+                    <NavigationThemeTransition>
+                        <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                            <EntranceNavigationTransitionInfo/>
+                        </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                    </NavigationThemeTransition>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
 
-                    <!--<TextBlock Name="timeSpan" Text="日期：" Margin="0,10,0,0" RelativePanel.LeftOf="time"  RelativePanel.Below="date" />-->
-                    <TimePicker Name="time" Header="选择一个时间" Width="300"  Margin="0,10,0,0"  RelativePanel.Below="date"  RelativePanel.AlignHorizontalCenterWithPanel="True" />
-
-                    <ComboBox Name="classOne" 
-                              Margin="0,10,0,0" 
-                              RelativePanel.AlignLeftWith="time" 
-                              RelativePanel.Below="time"
-                              Width="80"/>
-                    <ComboBox Name="classTwo" Width="80"  Margin="0,10,0,0"  RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Below="time" />
-                    <ComboBox Name="classThree" Width="80" Margin="0,10,0,0"  RelativePanel.AlignRightWith="time"  RelativePanel.Below="time"/>
-                    
-                    
-                    <TextBox Name="amount" Width="300" Margin="0,10,0,0" PlaceholderText="输入金额" TextWrapping="Wrap"   RelativePanel.Below="classThree" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
-
-                    <Button Width="300" Name="submitButton" Click="Button_Click" Content="提交" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Below="amount" Margin="0,10,0,0"></Button>
-
-                    <ListView Name="transactionListView" RelativePanel.Below="submitButton" RelativePanel.AlignHorizontalCenterWithPanel="True"
-                              Margin="0,30,0,0"
-                              ItemsSource="{x:Bind transactions}"
-                              >
-                        <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="data:Transaction">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="{x:Bind classOne}"/>
-                                    <TextBlock Text="{x:Bind amount}"/>
-                                </StackPanel>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                        
-                    </ListView>
-
-                    <Button RelativePanel.AlignHorizontalCenterWithPanel="True"
-                            RelativePanel.Below="transactionListView"
-                            Margin="0,10,0,0"
-                            Width="300"
-                            Click="Button_Click_1">查看</Button>
-                    
-                </RelativePanel>
-                
-            </Grid>
-            
-        </ScrollViewer>
-        
-
-
+        <TextBlock Grid.Row="1" Name="infoOutText">
+            暂时没消息
+        </TextBlock>
     </Grid>
 </Page>
