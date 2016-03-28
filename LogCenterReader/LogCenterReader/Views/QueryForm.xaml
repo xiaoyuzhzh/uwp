@@ -1,0 +1,41 @@
+﻿<ContentDialog
+    x:Class="LogCenterReader.Views.QueryForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LogCenterReader.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="查询条件"
+    PrimaryButtonText="查询"
+    SecondaryButtonText="取消"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <ComboBox Name="level" Header="level" SelectionChanged="level_SelectionChanged">
+                <x:String >
+                    DEBUG
+                </x:String>
+                <x:String >
+                    INFO
+                </x:String>
+                <x:String >
+                    WARN
+                </x:String>
+                <x:String >
+                    ERROR
+                </x:String>
+                <x:String >
+                    FETEL
+                </x:String>
+            </ComboBox>
+            <TextBox Name="envId" Header="envId" ></TextBox>
+            <TextBox Name="projectId" Header="projectId"></TextBox>
+            
+            <TextBox Name="title" Header="title"></TextBox>
+            <TextBox Name="content" Header="content"></TextBox>
+        </StackPanel>
+    </Grid>
+</ContentDialog>
