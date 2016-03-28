@@ -47,7 +47,6 @@ namespace EasyAccount
 
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequested;
 
-            WifiConnectionLost();
         }
 
         private void SystemNavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
@@ -56,7 +55,6 @@ namespace EasyAccount
             {
                 frame.GoBack();
             }
-            infoOutText.Text = "手机点击了返回："+ i++;
             e.Handled = true;
         }
 

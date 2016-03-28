@@ -46,8 +46,5 @@
             </Frame.ContentTransitions>
         </Frame>
 
-        <TextBlock Grid.Row="1" Name="infoOutText">
-            暂时没消息
-        </TextBlock>
     </Grid>
 </Page>
