@@ -1,0 +1,53 @@
+﻿<Page
+    x:Class="EasyAccount.Views.Summarize.Summarize"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasyAccount.Views.Summarize"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources >
+        <Style x:Key="TextBlockBase" TargetType="TextBlock">
+            <Setter Property="Padding" Value="5" />
+            <Setter Property="TextAlignment" Value="Center" />
+        </Style>
+        <Style x:Key="Selected" TargetType="TextBlock" BasedOn="{StaticResource TextBlockBase}">
+            <Setter Property="FontWeight" Value="Bold"/>
+            
+        </Style>
+    </Page.Resources>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="1*"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Tapped="Week_Tapped"
+                       Name="weekTextBlock"
+                       Style="{StaticResource Selected}"
+                       Grid.Column="0">本周汇总</TextBlock>
+            <TextBlock Tapped="Month_Tapped"
+                       Name="monthTextBlock"
+                       Style="{StaticResource TextBlockBase}"
+                       Grid.Column="1">本月汇总</TextBlock>
+            <TextBlock Tapped="Year_Tapped"
+                       Name="yearTextBlock"
+                       Style="{StaticResource TextBlockBase}"
+                       Grid.Column="2">每年汇总</TextBlock>
+        </Grid>
+        
+        <ScrollViewer Grid.Row="1">
+            <Frame Name="SummarizeFrame">
+                
+            </Frame>
+        </ScrollViewer>
+    </Grid>
+</Page>

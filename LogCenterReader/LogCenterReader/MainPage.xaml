@@ -6,43 +6,49 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:LogCenterReader.Model"
+    xmlns:views="using:LogCenterReader.Views"
     mc:Ignorable="d">
 
 
 
     <Page.Resources>
         <Style TargetType="TextBox">
-            <Setter Property="Height" Value="60" />
-            <Setter Property="Width" Value="280" />
-            <Setter Property="Margin" Value="10,0,0,0" />
+            <Setter Property="Height" Value="48" />
+            <Setter Property="Width" Value="200" />
+            <Setter Property="Margin" Value="10,0,10,0" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="Padding" Value="4,8,0,8" />
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="BorderThickness" Value="1" />
         </Style>
         <Style x:Key="pageText" TargetType="TextBlock">
             <Setter Property="Margin" Value="1,10,1,10" />
-            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontFamily" Value="微软雅黑 Light" />
             <Setter Property="RelativePanel.AlignVerticalCenterWithPanel" Value="True" />
+            <Setter Property="Foreground" Value="White" />
         </Style>
         <Style x:Key="middleSizeButton" TargetType="Button">
             <Setter Property="Margin" Value="0,0,0,0" />
             <Setter Property="Height" Value="50" />
             <Setter Property="Width" Value="50" />
             <Setter Property="FontSize" Value="20" />
-            <Setter Property="Background" Value="#FF6100" />
+            <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
             <Setter Property="BorderBrush" Value="Black" />
-            <Setter Property="Opacity" Value="0.7" />
+            <Setter Property="Opacity" Value="1.0" />
+            <Setter Property="Foreground" Value="White" />
             <Setter Property="RelativePanel.AlignVerticalCenterWithPanel" Value="True"/>
         </Style>
     </Page.Resources>
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="50" />
             <RowDefinition Height="*" />
             <RowDefinition Height="50" />
         </Grid.RowDefinitions>
 
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
 
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="group">
@@ -65,7 +71,62 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
 
-        <RelativePanel Grid.Row="1" Background="#fac450"
+        <!-- 顶部菜单 -->
+        <RelativePanel Background="#2ecc71">
+                <Button Name="showFormButton" 
+                        RelativePanel.AlignLeftWithPanel="True"
+                        Style="{StaticResource middleSizeButton}"  
+                        FontFamily="Segoe MDL2 Assets"
+                        Content="&#xE14C;" 
+                        Click="ChangeQuery_Click"
+                        ></Button>
+
+                <StackPanel RelativePanel.AlignRightWithPanel="True"
+                            Orientation="Horizontal"
+                            Name="quickSearchBlock"
+                            >
+                <TextBox Name="titleTextBox"
+                         RelativePanel.LeftOf="contentTextBox"
+                         PlaceholderText="输入标题"
+                         KeyUp="titleTextBox_KeyUp" BorderBrush="Gray"
+                         ></TextBox>
+                <TextBox Name="contentTextBox"
+                         RelativePanel.LeftOf="quickSearchButton"
+                         PlaceholderText="输入内容"
+                         KeyUp="titleTextBox_KeyUp" BorderBrush="Gray"
+                         ></TextBox>
+                <Button Name="quickSearchButton" 
+                        RelativePanel.AlignRightWithPanel="True"
+                        Style="{StaticResource middleSizeButton}"  
+                        FontFamily="Segoe MDL2 Assets"
+                        Content="&#xE1A3;" 
+                        Click="quickSearchButton_Click"
+                        >
+                    
+                </Button>
+                </StackPanel>
+            </RelativePanel>
+
+        <!-- 内容框体 -->
+        <ScrollViewer Grid.Row="1" 
+                          Background="#ffffff"
+                          Padding="10,20,20,10">
+            <ListView Name="LogListView"
+                          SelectionMode="None"
+                          ItemsSource="{x:Bind logs}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="model:LogMessage">
+                        <views:LogItemTemplate></views:LogItemTemplate>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </ScrollViewer>
+
+        
+        <!-- 底部菜单 -->
+        <RelativePanel Grid.Row="2" 
+                       Background="#2ecc71"
+                       
                        >
 
             <StackPanel Name="pageInfoBar"
@@ -82,7 +143,9 @@
                        Style="{StaticResource pageText}" >1</TextBlock>
                 <TextBlock Name="Block2"
                        Style="{StaticResource pageText}" >页</TextBlock>
-                <AppBarSeparator Name="separator1" RelativePanel.RightOf="Block2"
+                <AppBarSeparator Name="separator1" 
+                                 RelativePanel.RightOf="Block2"
+                                 Foreground="White"
                              RelativePanel.AlignVerticalCenterWithPanel="True"/>
                 <TextBlock Name="Block3"
                        Style="{StaticResource pageText}">共</TextBlock>
@@ -115,71 +178,5 @@
             </Button>
 
         </RelativePanel>
-
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
-
-            <RelativePanel Background="#fac450">
-                <Button Name="showFormButton" 
-                        RelativePanel.AlignLeftWithPanel="True"
-                        Style="{StaticResource middleSizeButton}"  
-                        FontFamily="Segoe MDL2 Assets"
-                        Content="&#xE14C;" 
-                        Click="ChangeQuery_Click"
-                        ></Button>
-
-                <StackPanel RelativePanel.AlignRightWithPanel="True"
-                            Orientation="Horizontal"
-                            Name="quickSearchBlock"
-                            >
-                <TextBox Name="titleTextBox"
-                         RelativePanel.LeftOf="contentTextBox"
-                         PlaceholderText="输入标题"
-                         FontSize="28"
-                         Width="200"
-                         Height="50"
-                         KeyUp="titleTextBox_KeyUp"
-                         ></TextBox>
-                <TextBox Name="contentTextBox"
-                         RelativePanel.LeftOf="quickSearchButton"
-                         PlaceholderText="输入内容"
-                         FontSize="28"
-                         Width="200"
-                         Height="50"
-                         KeyUp="titleTextBox_KeyUp"
-                         ></TextBox>
-                <Button Name="quickSearchButton" 
-                        RelativePanel.AlignRightWithPanel="True"
-                        Style="{StaticResource middleSizeButton}"  
-                        FontFamily="Segoe MDL2 Assets"
-                        Content="&#xE1A3;" 
-                        Click="quickSearchButton_Click"
-                        >
-                    
-                </Button>
-                </StackPanel>
-            </RelativePanel>
-
-            <ScrollViewer Grid.Row="1" Background="#C7EDCC" >
-                <ListView ItemsSource="{x:Bind logs}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="model:LogMessage">
-                            <StackPanel>
-                                <TextBlock TextWrapping="Wrap" 
-                                       Text="{x:Bind logheader}" />
-                                <TextBlock TextWrapping="Wrap" 
-                                       Text="{x:Bind content}" />
-                                <TextBlock>
-                                    <LineBreak/>------------------------<LineBreak/>
-                                </TextBlock>
-                            </StackPanel >
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </ScrollViewer>
-        </Grid>
     </Grid>
 </Page>

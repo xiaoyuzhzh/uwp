@@ -1,4 +1,5 @@
-﻿using System;
+﻿using EasyAccount.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,20 +16,16 @@ using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace AdaptiveChallenge
+namespace EasyAccount.Views.Summarize
 {
-    public sealed partial class NewsTemplate : UserControl
+    public sealed partial class DailySummarizeView : UserControl
     {
-        private Model.NewsItem News {
-            get {
-                return this.DataContext as Model.NewsItem;
-            }
-        }
+        private DailySummarize summarize { get { return this.DataContext as DailySummarize; } }
 
-        public NewsTemplate()
+        public DailySummarizeView()
         {
             this.InitializeComponent();
-            this.DataContextChanged += (s, e) => Bindings.Update();
+            this.DataContextChanged += (s, e) => Bindings.Update();//没有使用{x:bind}的话，Bindings实例不存在。
         }
     }
 }

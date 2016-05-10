@@ -9,12 +9,15 @@
     Title="查询条件"
     PrimaryButtonText="查询"
     SecondaryButtonText="取消"
+    Background="#D82ECC71"
     PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
     <Grid>
         <StackPanel Orientation="Vertical">
-            <ComboBox Name="level" Header="level" SelectionChanged="level_SelectionChanged">
+            <ComboBox Name="level"
+                      HorizontalAlignment="Stretch"
+                      Header="level" SelectionChanged="level_SelectionChanged">
                 <x:String >
                     DEBUG
                 </x:String>
@@ -28,7 +31,7 @@
                     ERROR
                 </x:String>
                 <x:String >
-                    FETEL
+                    FATAL
                 </x:String>
             </ComboBox>
             <TextBox Name="envId" Header="envId" ></TextBox>

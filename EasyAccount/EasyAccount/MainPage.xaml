@@ -10,41 +10,144 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <Flyout x:Key="ImagePreviewFlyout" Placement="Right">
-            <!-- The DataContext of the Image that the flyout is attached to must be the Image's Source. -->
-            <Image Source="{Binding Path=Source}" MaxHeight="400" MaxWidth="400" Stretch="Uniform"/>
-            <Flyout.FlyoutPresenterStyle>
-                <Style TargetType="FlyoutPresenter">
-                    <Setter Property="ScrollViewer.ZoomMode" Value="Enabled"/>
-                    <Setter Property="Background" Value="Black"/>
-                    <Setter Property="BorderBrush" Value="Gray"/>
-                    <Setter Property="BorderThickness" Value="5"/>
-                    <Setter Property="MinHeight" Value="300"/>
-                    <Setter Property="MinWidth" Value="300"/>
-                </Style>
-            </Flyout.FlyoutPresenterStyle>
-        </Flyout>
+        <Style x:Key="TopButton" TargetType="Button">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="Width" Value="48" />
+            <Setter Property="Height" Value="48" />
+            <Setter Property="BorderThickness" Value="0" />
+        </Style>
+        <Style x:Key="listBoxTextBlock" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20" />
+        </Style>
     </Page.Resources>
 
     <Grid>
 
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
-        <Frame x:Name="frame"
+
+        <!-- 顶部按纽栏 -->
+        <RelativePanel>
+            <Button
+                Name="NavigateButton"
+                FontFamily="Segoe MDL2 Assets"
+                Content="&#xE700;" 
+                Click="NavigateButton_Click"
+                RelativePanel.AlignLeftWithPanel="True"
+                Style="{StaticResource TopButton}"
+                >
+            </Button>
+
+            <Button
+                Name="addTransactionButton"
+                FontFamily="Segoe MDL2 Assets"
+                Content="&#xE948;" 
+                Click="addTransactionButton_Click"
+                RelativePanel.AlignRightWithPanel="True"
+                Style="{StaticResource TopButton}"
+                >
+            </Button>
+        </RelativePanel>
+        
+        <!--  splitView  -->
+        <SplitView Grid.Row="1"
+                   Name="mainSplitView"
+                   DisplayMode="CompactOverlay"
+                   CompactPaneLength="48"
+                   OpenPaneLength="200"
+                   >
+            <SplitView.Pane>
+                <RelativePanel>
+                    <ListBox RelativePanel.AlignTopWithPanel="True"
+                             Name="mainListBox">
+                        <ListBoxItem Name="summary"
+                                     >
+                            <StackPanel Orientation="Horizontal"
+                                        >
+                                <TextBlock Style="{StaticResource listBoxTextBlock}"
+                                    FontFamily="Segoe MDL2 Assets" 
+                                        Text="&#xE8f3;"
+                                    Margin="0,5,0,0"
+                                    ></TextBlock>
+                                <TextBlock Style="{StaticResource listBoxTextBlock}"
+                                    Text="汇总"
+                                    Margin="20,0,0,0"
+                                    ></TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem Name="recentBills"
+                                     >
+                            <StackPanel Orientation="Horizontal"
+                                        >
+                                <TextBlock Style="{StaticResource listBoxTextBlock}"
+                                    FontFamily="Segoe MDL2 Assets" 
+                                        Text="&#xE71d;"
+                                    Margin="0,5,0,0"
+                                    ></TextBlock>
+                                <TextBlock Style="{StaticResource listBoxTextBlock}"
+                                    Text="近期账单"
+                                    Margin="20,0,0,0"
+                                    ></TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem Name="special"
+                                     >
+                            <StackPanel Orientation="Horizontal"
+                                        >
+                                <TextBlock Style="{StaticResource listBoxTextBlock}"
+                                    FontFamily="Segoe MDL2 Assets" 
+                                        Text="&#xE24a;"
+                                    Margin="0,5,0,0"
+                                    ></TextBlock>
+                                <TextBlock Style="{StaticResource listBoxTextBlock}"
+                                    Text="特别关注"
+                                    Margin="20,0,0,0"
+                                    ></TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                    </ListBox>
+                    <ListBox RelativePanel.AlignBottomWithPanel="True"
+                             Name="bottomListBox">
+                        <ListBoxItem>
+                            <StackPanel Orientation="Horizontal"
+                                        >
+                                <TextBlock Style="{StaticResource listBoxTextBlock}"
+                                    FontFamily="Segoe MDL2 Assets" 
+                                        Text="&#xE713;"
+                                    Margin="0,5,0,0"
+                                    ></TextBlock>
+                                <TextBlock Style="{StaticResource listBoxTextBlock}"
+                                    Text="设置"
+                                    Margin="20,0,0,0"
+                                    ></TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                    </ListBox>
+                    
+                </RelativePanel>
+            </SplitView.Pane>
+            <SplitView.Content>
+                <Grid>
+                    <Frame x:Name="frame"
             Navigating="OnNavigatingToPage"
             Navigated="OnNavigatedToPage">
-            <Frame.ContentTransitions>
-                <TransitionCollection>
-                    <NavigationThemeTransition>
-                        <NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                            <EntranceNavigationTransitionInfo/>
-                        </NavigationThemeTransition.DefaultNavigationTransitionInfo>
-                    </NavigationThemeTransition>
-                </TransitionCollection>
-            </Frame.ContentTransitions>
-        </Frame>
+                        <Frame.ContentTransitions>
+                            <TransitionCollection>
+                                <NavigationThemeTransition>
+                                    <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                        <EntranceNavigationTransitionInfo/>
+                                    </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                </NavigationThemeTransition>
+                            </TransitionCollection>
+                        </Frame.ContentTransitions>
+                    </Frame>
+                </Grid>
+            </SplitView.Content>
+        </SplitView>
+        
+
 
     </Grid>
 </Page>

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LogCenterReader.Model;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -15,17 +16,17 @@ using Windows.UI.Xaml.Navigation;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 
-namespace AdaptiveChallenge
+namespace LogCenterReader.Views
 {
-    public sealed partial class NewsTemplate : UserControl
+    public sealed partial class LogItemTemplate : UserControl
     {
-        private Model.NewsItem News {
+        private LogMessage logs {
             get {
-                return this.DataContext as Model.NewsItem;
+                return this.DataContext as LogMessage;
             }
         }
 
-        public NewsTemplate()
+        public LogItemTemplate()
         {
             this.InitializeComponent();
             this.DataContextChanged += (s, e) => Bindings.Update();

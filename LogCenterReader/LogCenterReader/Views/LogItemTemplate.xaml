@@ -1,0 +1,55 @@
+﻿<UserControl
+    x:Class="LogCenterReader.Views.LogItemTemplate"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:LogCenterReader.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+
+    <Grid>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="group">
+                <VisualState x:Name="wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LogTitleText.FontSize" Value="20" />
+                        <Setter Target="LogContentText.FontSize" Value="15" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="LogTitleText.FontSize" Value="15" />
+                        <Setter Target="LogContentText.FontSize" Value="10" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        <StackPanel>
+            <TextBlock Name="LogTitleText"
+                                           TextWrapping="Wrap" 
+                                               LineHeight="22"
+                                               FontSize="20"
+                                            
+                                               Padding="5,5,0,10"
+                                           Text="{x:Bind logs.logheader}" />
+            <TextBlock Name="LogContentText" TextWrapping="Wrap" 
+                                               LineHeight="30"
+                                               FontSize="15"
+                                               FontFamily="微软雅黑"
+                                               FontWeight="Bold"
+                                               Padding="5,10,0,0"
+                                           Text="{x:Bind logs.content}" />
+            <TextBlock>
+                                        <LineBreak/>------------------------<LineBreak/>
+            </TextBlock>
+        </StackPanel >
+    </Grid>
+</UserControl>

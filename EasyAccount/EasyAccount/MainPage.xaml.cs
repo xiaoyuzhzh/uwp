@@ -17,6 +17,7 @@ using EasyAccount.Services;
 using System.Collections.ObjectModel;
 using EasyAccount.Views;
 using Windows.UI.Core;
+using EasyAccount.Views.Summarize;
 
 //“空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409 上有介绍
 
@@ -43,7 +44,10 @@ namespace EasyAccount
 
             AppDatabase.initTable();
 
-            this.frame.Navigate(typeof(Statistics));
+            //this.frame.Navigate(typeof(Statistics));
+
+            this.frame.Navigate(typeof(Summarize));
+
 
             SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequested;
 
@@ -72,6 +76,18 @@ namespace EasyAccount
         private void BackButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void NavigateButton_Click(object sender, RoutedEventArgs e)
+        {
+            mainSplitView.IsPaneOpen = !mainSplitView.IsPaneOpen;
+        }
+
+        private void addTransactionButton_Click(object sender, RoutedEventArgs e)
+        {
+            var form = new TransactionForm();
+
+            form.ShowAsync();
         }
     }
 }

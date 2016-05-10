@@ -112,6 +112,9 @@ namespace LogCenterReader
             }
         }
 
+        /**
+        * 重置页码到第一页
+        */
         private async void resetPage()
         {
             this.pageNo = 1;
