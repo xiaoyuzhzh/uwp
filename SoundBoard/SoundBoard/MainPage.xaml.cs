@@ -1,4 +1,5 @@
 ﻿using SoundBoard.Model;
+using SoundBoard.TestView;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -24,88 +25,97 @@ namespace SoundBoard
     /// </summary>
     public sealed partial class MainPage : Page
     {
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            testFrame.Navigate(typeof(PanelTest));
+        }
 
-        private ObservableCollection<Sound> Sounds;
-        private List<String> Suggestions;
-        private List<MenuItem> MenuItems;
+        //private ObservableCollection<Sound> Sounds;
+        //private List<String> Suggestions;
+        //private List<MenuItem> MenuItems;
 
         public MainPage()
         {
             this.InitializeComponent();
-            Sounds = new ObservableCollection<Sound>();
-            SoundManager.GetAllSounds(Sounds);
 
-            MenuItems = new List<MenuItem>();
-            MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/animals.png", Category = SoundCategory.Animals });
-            MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/cartoon.png", Category = SoundCategory.Cartoons });
-            MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/taunt.png", Category = SoundCategory.Taunts });
-            MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/warning.png", Category = SoundCategory.Warnings });
+            //Sounds = new ObservableCollection<Sound>();
+            //SoundManager.GetAllSounds(Sounds);
 
-            BackButton.Visibility = Visibility.Collapsed;
+            //MenuItems = new List<MenuItem>();
+            //MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/animals.png", Category = SoundCategory.Animals });
+            //MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/cartoon.png", Category = SoundCategory.Cartoons });
+            //MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/taunt.png", Category = SoundCategory.Taunts });
+            //MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/warning.png", Category = SoundCategory.Warnings });
+            //MenuItems.Add(new MenuItem { IconFile = "Assets/Icons/warning.png", Category = SoundCategory.Test });
+
+            //BackButton.Visibility = Visibility.Collapsed;
         }
 
-        private void HamburgerButton_Click(object sender, RoutedEventArgs e)
-        {
-            MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
-        }
+        //private void HamburgerButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    MySplitView.IsPaneOpen = !MySplitView.IsPaneOpen;
+        //}
 
-        private void BackButton_Click(object sender, RoutedEventArgs e)
-        {
-            goBack();
-        }
+        //private void BackButton_Click(object sender, RoutedEventArgs e)
+        //{
+        //    goBack();
+        //}
 
-        private void goBack()
-        {
-            SoundManager.GetAllSounds(Sounds);
-            CategoryTextBlock.Text = "All Sounds";
-            MenuItemListView.SelectedItem = null;
-            BackButton.Visibility = Visibility.Collapsed;
-        }
+        //private void goBack()
+        //{
+        //    SoundManager.GetAllSounds(Sounds);
+        //    CategoryTextBlock.Text = "All Sounds";
+        //    MenuItemListView.SelectedItem = null;
+        //    BackButton.Visibility = Visibility.Collapsed;
+        //}
 
 
-        private void SearchAutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-        {
-            if (String.IsNullOrEmpty(sender.Text))
-            {
-                SearchAutoSuggestBox.ItemsSource = null;
-                goBack();
-                return;
-            }
-            
+        //private void SearchAutoSuggestBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+        //{
+        //    if (String.IsNullOrEmpty(sender.Text))
+        //    {
+        //        SearchAutoSuggestBox.ItemsSource = null;
+        //        goBack();
+        //        return;
+        //    }
 
-            var sounds = new ObservableCollection<Sound>();
-            SoundManager.GetAllSounds(sounds);
-            Suggestions = sounds.Where(p => p.Name.ToUpper().StartsWith(sender.Text.ToUpper())).Select(p => p.Name).ToList();
 
-            SearchAutoSuggestBox.ItemsSource = Suggestions;
+        //    var sounds = new ObservableCollection<Sound>();
+        //    SoundManager.GetAllSounds(sounds);
+        //    Suggestions = sounds.Where(p => p.Name.ToUpper().StartsWith(sender.Text.ToUpper())).Select(p => p.Name).ToList();
 
-        }
+        //    SearchAutoSuggestBox.ItemsSource = Suggestions;
 
-        private void SearchAutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
-        {
-            if (String.IsNullOrEmpty(sender.Text))
-            {
-                return;
-            }
+        //}
 
-            SoundManager.GetSoundsByName(Sounds, sender.Text);
-            BackButton.Visibility = Visibility.Visible;
-        }
+        //private void SearchAutoSuggestBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        //{
+        //    if (String.IsNullOrEmpty(sender.Text))
+        //    {
+        //        return;
+        //    }
 
-        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var menuItem = (MenuItem)e.ClickedItem;
+        //    SoundManager.GetSoundsByName(Sounds, sender.Text);
+        //    BackButton.Visibility = Visibility.Visible;
+        //}
 
-            // Filter on category
-            CategoryTextBlock.Text = menuItem.Category.ToString();
-            SoundManager.GetSoundsByCategory(Sounds, menuItem.Category);
-            BackButton.Visibility = Visibility.Visible;
-        }
+        //private void ListView_ItemClick(object sender, ItemClickEventArgs e)
+        //{
+        //    var menuItem = (MenuItem)e.ClickedItem;
 
-        private void SountGridView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var sound = (Sound)e.ClickedItem;
-            MyMediaElement.Source = new Uri(this.BaseUri, sound.AudioFile);
-        }
+        //    // Filter on category
+        //    var text = menuItem.Category.ToString();
+        //    CategoryTextBlock.Text = menuItem.Category.ToString();
+        //    SoundManager.GetSoundsByCategory(Sounds, menuItem.Category);
+        //    BackButton.Visibility = Visibility.Visible;
+        //}
+
+        //private void SountGridView_ItemClick(object sender, ItemClickEventArgs e)
+        //{
+        //    var sound = (Sound)e.ClickedItem;
+        //    MyMediaElement.Source = new Uri(this.BaseUri, sound.AudioFile);
+        //}
+
+
     }
 }

@@ -1,4 +1,5 @@
 ﻿using EasyAccount.Model;
+using EasyAccount.Model.Base;
 using SQLite.Net;
 using SQLite.Net.Platform.WinRT;
 using System;
@@ -26,13 +27,15 @@ namespace EasyAccount.Services
         /// <summary>
         /// 数据库文件所在路径，这里使用 LocalFolder，数据库文件名叫 test.db。
         /// </summary>
-        public readonly static string DbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "test.db");
+        public readonly static string DbPath = Path.Combine(ApplicationData.Current.LocalFolder.Path, "account.db");
+        //public readonly static string DbPath = Path.Combine("d:\\uwpdb", "account.db");
+
 
 
         public static SQLiteConnection GetDbConnection()
         {
             // 连接数据库，如果数据库文件不存在则创建一个空数据库。
-            var conn = new SQLiteConnection(new SQLitePlatformWinRT(), path);
+            var conn = new SQLiteConnection(new SQLitePlatformWinRT(), DbPath);
             
             return conn;
         }
@@ -41,7 +44,13 @@ namespace EasyAccount.Services
         {
             var conn = GetDbConnection();
             createTableTransaction(conn);
+            createTableCategory(conn);
             closeConn(conn);
+        }
+
+        private static void createTableCategory(SQLiteConnection conn)
+        {
+            conn.CreateTable<Category>();
         }
 
         private static void createTableTransaction(SQLiteConnection conn)
@@ -52,6 +61,20 @@ namespace EasyAccount.Services
         public static void closeConn(SQLiteConnection conn)
         {
             conn.Close();
+        }
+
+        public static T saveOne<T>(T t, SQLiteConnection conn,bool re) where T:BaseModel
+        {
+            if (t.id == null)
+            {
+                t.id = Guid.NewGuid().ToString();
+            }
+            conn.Insert(t);
+            if (re)
+            {
+                t = conn.Get<T>(t.id);
+            }
+            return t;
         }
 
         public static void saveTransaction(Transaction transaction)

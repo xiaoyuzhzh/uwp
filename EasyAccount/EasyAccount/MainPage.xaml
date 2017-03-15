@@ -21,12 +21,33 @@
         </Style>
     </Page.Resources>
 
-    <Grid>
+    <Grid Background="{ThemeResource AppBarBorderThemeBrush}">
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="group">
+                <VisualState x:Name="narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="mainSplitView.DisplayMode" Value="Overlay"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="mainSplitView.DisplayMode" Value="CompactOverlay"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
 
         <!-- 顶部按纽栏 -->
         <RelativePanel>
@@ -39,6 +60,14 @@
                 Style="{StaticResource TopButton}"
                 >
             </Button>
+
+            <TextBlock
+                Name="titleTextBlock"
+                RelativePanel.AlignHorizontalCenterWithPanel="True"
+                FontSize="20"
+                Margin="0,10,0,0">
+                EASYACCOUNT
+            </TextBlock>
 
             <Button
                 Name="addTransactionButton"
@@ -54,15 +83,19 @@
         <!--  splitView  -->
         <SplitView Grid.Row="1"
                    Name="mainSplitView"
-                   DisplayMode="CompactOverlay"
+                   DisplayMode="Overlay"
                    CompactPaneLength="48"
                    OpenPaneLength="200"
                    >
             <SplitView.Pane>
                 <RelativePanel>
                     <ListBox RelativePanel.AlignTopWithPanel="True"
-                             Name="mainListBox">
+                             Name="mainListBox"
+                             SelectionChanged="mainListBox_SelectionChanged"
+                             >
                         <ListBoxItem Name="summary"
+                                     IsSelected="True"
+                                     
                                      >
                             <StackPanel Orientation="Horizontal"
                                         >
@@ -107,10 +140,26 @@
                                     ></TextBlock>
                             </StackPanel>
                         </ListBoxItem>
+                        <ListBoxItem Name="debug"
+                                     >
+                            <StackPanel Orientation="Horizontal"
+                                        >
+                                <TextBlock Style="{StaticResource listBoxTextBlock}"
+                                    FontFamily="Segoe MDL2 Assets" 
+                                        Text="&#xE15E;"
+                                    Margin="0,5,0,0"
+                                    ></TextBlock>
+                                <TextBlock Style="{StaticResource listBoxTextBlock}"
+                                    Text="调试"
+                                    Margin="20,0,0,0"
+                                    ></TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
                     </ListBox>
                     <ListBox RelativePanel.AlignBottomWithPanel="True"
-                             Name="bottomListBox">
-                        <ListBoxItem>
+                             Name="bottomListBox"
+                             SelectionChanged="bottomListBox_SelectionChanged">
+                        <ListBoxItem Name="setting">
                             <StackPanel Orientation="Horizontal"
                                         >
                                 <TextBlock Style="{StaticResource listBoxTextBlock}"
@@ -131,8 +180,8 @@
             <SplitView.Content>
                 <Grid>
                     <Frame x:Name="frame"
-            Navigating="OnNavigatingToPage"
-            Navigated="OnNavigatedToPage">
+                            Navigating="OnNavigatingToPage"
+                            Navigated="OnNavigatedToPage">
                         <Frame.ContentTransitions>
                             <TransitionCollection>
                                 <NavigationThemeTransition>

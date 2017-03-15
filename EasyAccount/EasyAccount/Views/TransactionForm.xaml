@@ -13,25 +13,61 @@
     SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
 
     <Grid>
-        <ScrollViewer Height="auto">
-            <Grid>
-                <RelativePanel Width="310" >
+        <ScrollViewer >
+            <Grid Height="400" Width="400">
+                <RelativePanel  >
                     <!--<TextBlock Name="dataSpan" Text="日期：" Margin="0,10,0,0" RelativePanel.LeftOf="date"  RelativePanel.AlignTopWithPanel="True" />-->
-                    <DatePicker Name="date" Header="选择一个日期" Width="300"  Margin="0,10,0,0" RelativePanel.AlignTopWithPanel="True"  RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+                    <DatePicker Name="date" 
+                                Header="选择一个日期" 
+                                HorizontalAlignment="Stretch"
+                                Margin="10,10,0,0" 
+                                Width="200"
+                                RelativePanel.AlignTopWithPanel="True"  
+                                RelativePanel.AlignLeftWithPanel="True"/>
 
                     <!--<TextBlock Name="timeSpan" Text="日期：" Margin="0,10,0,0" RelativePanel.LeftOf="time"  RelativePanel.Below="date" />-->
-                    <TimePicker Name="time" Header="选择一个时间" Width="300"  Margin="0,10,0,0"  RelativePanel.Below="date"  RelativePanel.AlignHorizontalCenterWithPanel="True" />
+                    <TimePicker Name="time" 
+                                Header="选择一个时间" 
+                                HorizontalAlignment="Stretch"
+                                Margin="10,10,0,0"
+                                Width="200"
+                                RelativePanel.Below="date"  
+                                RelativePanel.AlignLeftWithPanel="True" />
 
                     <ComboBox Name="classOne" 
-                              Margin="0,10,0,0" 
-                              RelativePanel.AlignLeftWith="time" 
+                              Margin="10,10,0,0" 
+                              Width="200"
+                              RelativePanel.AlignLeftWithPanel="True" 
                               RelativePanel.Below="time"
-                              Width="80"/>
-                    <ComboBox Name="classTwo" Width="80"  Margin="0,10,0,0"  RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Below="time" />
-                    <ComboBox Name="classThree" Width="80" Margin="0,10,0,0"  RelativePanel.AlignRightWith="time"  RelativePanel.Below="time"/>
+                              SelectionChanged="classOne_SelectionChanged"
+                              HorizontalAlignment="Stretch"
+                              DisplayMemberPath="name"
+                              />
+                    <ComboBox Name="classTwo"  
+                              Margin="10,10,0,0" 
+                              Width="200"
+                              RelativePanel.AlignLeftWithPanel="True" 
+                              HorizontalAlignment="Stretch"
+                              RelativePanel.Below="classOne" 
+                              SelectionChanged="classTwo_SelectionChanged"
+                              DisplayMemberPath="name"/>
+                    <ComboBox Name="classThree"
+                              Margin="10,10,0,0"  
+                              Width="200"
+                              HorizontalAlignment="Stretch"
+                              RelativePanel.AlignLeftWithPanel="True"  
+                              RelativePanel.Below="classTwo"
+                              DisplayMemberPath="name"/>
 
 
-                    <TextBox Name="amount" Width="300" Margin="0,10,0,0" PlaceholderText="输入金额" TextWrapping="Wrap"   RelativePanel.Below="classThree" RelativePanel.AlignHorizontalCenterWithPanel="True"/>
+                    <TextBox Name="amount" 
+                             Margin="10,10,0,0" 
+                             Width="200"
+                             HorizontalAlignment="Stretch"
+                             PlaceholderText="输入金额" 
+                             TextWrapping="Wrap"   
+                             RelativePanel.Below="classThree" 
+                             RelativePanel.AlignLeftWithPanel="True"/>
 
                     <!--<Button Width="300" Name="submitButton" Click="Button_Click" Content="提交" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.Below="amount" Margin="0,10,0,0"></Button>
 

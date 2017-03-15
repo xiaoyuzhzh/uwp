@@ -1,5 +1,8 @@
-﻿using System;
+﻿using EasyAccount.Model;
+using EasyAccount.Services;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -25,6 +28,10 @@ namespace EasyAccount.Views.Summarize
     {
         private List<TextBlock> navigationText;
 
+        private SummarizeService summarizeServices = new SummarizeService();
+
+        private ObservableCollection<DailySummarize> dailySummarizes;
+
         // 未选中的label样式
         private Style baseTextBlockStyle;
 
@@ -34,13 +41,11 @@ namespace EasyAccount.Views.Summarize
         public Summarize()
         {
             this.InitializeComponent();
-            this.SummarizeFrame.Navigate(typeof(Weekly));
             navigationText = new List<TextBlock>();
-            navigationText.Add(weekTextBlock);
-            navigationText.Add(monthTextBlock);
-            navigationText.Add(yearTextBlock);
+            dailySummarizes = new ObservableCollection<DailySummarize>();
+            //initParam();
+            summarizeServices.getWeeklySummarize(dailySummarizes);
 
-            initParam();
         }
 
         private void initParam()
@@ -51,29 +56,6 @@ namespace EasyAccount.Views.Summarize
             selectedTextBlockStyle = (Style)resouce.ToList().Where(s => s.Key.ToString().Equals("Selected")).ToList()[0].Value;
         }
 
-        private void Week_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            selectText(weekTextBlock);
-            this.SummarizeFrame.Navigate(typeof(Weekly));
-        }
 
-        //改变选中的TextBlock的样式
-        private void selectText(TextBlock block)
-        {
-            navigationText.ForEach(t => t.Style = baseTextBlockStyle);
-            block.Style = selectedTextBlockStyle;
-        }
-
-        private void Month_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            this.SummarizeFrame.Navigate(typeof(Month));
-            selectText(monthTextBlock);
-        }
-
-        private void Year_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            this.SummarizeFrame.Navigate(typeof(Month));
-            selectText(yearTextBlock);
-        }
     }
 }

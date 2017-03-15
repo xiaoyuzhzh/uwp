@@ -14,7 +14,7 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-
+<!--
         <RelativePanel>
             <Button Name="HamburgerButton"
                     RelativePanel.AlignLeftWithPanel="True"
@@ -105,6 +105,9 @@
                     </GridView>
                 </Grid>
             </SplitView.Content>
-        </SplitView>
+        </SplitView>-->
+        <Button Click="Button_Click">跳转到测试页面</Button>
+        <Frame x:Name="testFrame" Grid.Row="1"></Frame>
     </Grid>
+    
 </Page>

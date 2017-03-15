@@ -4,19 +4,23 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
-    <ProjectGuid>{1A8ABE26-FFFF-496E-9EFB-8909D177DF1C}</ProjectGuid>
+    <ProjectGuid>{74163CAE-19D4-46B0-BA35-9491930B44A0}</ProjectGuid>
     <OutputType>AppContainerExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>SoundBoard</RootNamespace>
-    <AssemblyName>SoundBoard</AssemblyName>
+    <RootNamespace>Sfacg</RootNamespace>
+    <AssemblyName>Sfacg</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.10586.0</TargetPlatformVersion>
-    <TargetPlatformMinVersion>10.0.10240.0</TargetPlatformMinVersion>
+    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
+    <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>SoundBoard_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>Sfacg_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
+    <AppxPackageDir>C:\Users\xiaoy\Desktop\</AppxPackageDir>
+    <AppxBundle>Always</AppxBundle>
+    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -89,9 +93,6 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
-    <Content Include="ApplicationInsights.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
@@ -101,54 +102,21 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\MenuItem.cs" />
-    <Compile Include="Model\Sound.cs" />
-    <Compile Include="Model\SoundManager.cs" />
+    <Compile Include="Model\NovelJSON.cs" />
+    <Compile Include="Model\ReadInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TestView\PanelTest.xaml.cs">
-      <DependentUpon>PanelTest.xaml</DependentUpon>
+    <Compile Include="Utils\NovelUtil.cs" />
+    <Compile Include="Views\NovelReadView.xaml.cs">
+      <DependentUpon>NovelReadView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
-    <None Include="SoundBoard_TemporaryKey.pfx" />
+    <None Include="Sfacg_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\Audio\Animals\Cat.wav" />
-    <Content Include="Assets\Audio\Animals\Cow.wav" />
-    <Content Include="Assets\Audio\Cartoons\Gun.wav" />
-    <Content Include="Assets\Audio\Cartoons\Spring.wav" />
-    <Content Include="Assets\Audio\Taunts\Clock.wav" />
-    <Content Include="Assets\Audio\Taunts\LOL.wav" />
-    <Content Include="Assets\Audio\Warnings\Ship.wav" />
-    <Content Include="Assets\Audio\Warnings\Siren.wav" />
-    <Content Include="Assets\Icons\animals.png" />
-    <Content Include="Assets\Icons\cartoon.png" />
-    <Content Include="Assets\Icons\taunt.png" />
-    <Content Include="Assets\Icons\warning.png" />
-    <Content Include="Assets\Images\Animals\Cat.png" />
-    <Content Include="Assets\Images\Animals\Cow.png" />
-    <Content Include="Assets\Images\Cartoons\Gun.png" />
-    <Content Include="Assets\Images\Cartoons\Spring.png" />
-    <Content Include="Assets\Images\Taunts\Clock.png" />
-    <Content Include="Assets\Images\Taunts\LOL.png" />
-    <Content Include="Assets\Images\Warnings\Ship.png" />
-    <Content Include="Assets\Images\Warnings\Siren.png" />
-    <Content Include="Assets\PackageAppXManifest\1240x1240.png" />
-    <Content Include="Assets\PackageAppXManifest\1240x600.png" />
-    <Content Include="Assets\PackageAppXManifest\24x24-large.png" />
-    <Content Include="Assets\PackageAppXManifest\24x24.png" />
-    <Content Include="Assets\PackageAppXManifest\300x300.png" />
-    <Content Include="Assets\PackageAppXManifest\310x310.png" />
-    <Content Include="Assets\PackageAppXManifest\50x50-large.png" />
-    <Content Include="Assets\PackageAppXManifest\50x50.png" />
-    <Content Include="Assets\PackageAppXManifest\620x300.png" />
-    <Content Include="Assets\PackageAppXManifest\71x71-large.png" />
-    <Content Include="Assets\PackageAppXManifest\71x71.png" />
-    <Content Include="Assets\PackageAppXManifest\88x88-large.png" />
-    <Content Include="Assets\PackageAppXManifest\88x88.png" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -167,11 +135,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="TestView\PanelTest.xaml">
+    <Page Include="Views\NovelReadView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

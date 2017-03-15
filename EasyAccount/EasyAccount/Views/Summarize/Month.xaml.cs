@@ -15,7 +15,6 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
-// “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
 
 namespace EasyAccount.Views.Summarize
 {
@@ -24,27 +23,11 @@ namespace EasyAccount.Views.Summarize
     /// </summary>
     public sealed partial class Month : Page
     {
-        private ObservableCollection<DailySummarize> dailys;
 
         public Month()
         {
             this.InitializeComponent();
-
-            dailys = new ObservableCollection<DailySummarize>();
-
-            mockData();
         }
 
-        private void mockData() {
-            for (var i = 0; i < 30; i++)
-            {
-                DailySummarize summarize = new DailySummarize();
-                summarize.income = 10;
-                summarize.payout = 20;
-                summarize.day = 1;
-                summarize.weekName = "Monday";
-                dailys.Add(summarize);
-            }
-        }
     }
 }

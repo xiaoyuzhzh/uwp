@@ -1,0 +1,31 @@
+﻿<Page
+    x:Class="Sfacg.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Sfacg"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ScrollViewer>
+            <StackPanel>
+                <Button Click="Button_Click"> 调用接口</Button>
+                <TextBlock TextWrapping="Wrap">
+                    返回结果:
+                </TextBlock>
+                <TextBlock Name="resultTextBlock" TextWrapping="Wrap">
+                
+                </TextBlock>
+                <Button Click="Button_Click_1">调用小说接口并保存</Button>
+                <TextBlock Name="fileDir" 
+                           TextWrapping="Wrap"
+                           IsTextSelectionEnabled="True"></TextBlock>
+                <Button Click="Button_Click_2" > 找到小说并展示</Button>
+                <TextBlock Name="fileContent" 
+                           TextWrapping="Wrap"
+                           IsTextSelectionEnabled="True"></TextBlock>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>

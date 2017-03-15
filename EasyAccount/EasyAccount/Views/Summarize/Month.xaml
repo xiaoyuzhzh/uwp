@@ -3,6 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:EasyAccount.Views.Summarize"
+    xmlns:ctrls="using:EasyAccount.Views.Ctrls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:EasyAccount.Model"
@@ -10,14 +11,25 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <GridView ItemsSource="{x:Bind dailys}">
-            <GridView.ItemTemplate>
-                <DataTemplate x:DataType="model:DailySummarize">
-                    <summarize:DailySummarizeView>
-
-                    </summarize:DailySummarizeView>
-                </DataTemplate>
-            </GridView.ItemTemplate>
-        </GridView>
+        <Pivot>
+            <PivotItem>
+                <PivotItem.Header>
+                    <ctrls:NewPivotHeader Glyph="&#xE163;" Label="总览" />
+                </PivotItem.Header>
+                <TextBlock Text="这里可以放置总览图表" />
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <ctrls:NewPivotHeader Glyph="&#xE163;" Label="总览" />
+                </PivotItem.Header>
+                <TextBlock Text="这里可以放置总览图表" />
+            </PivotItem>
+            <PivotItem>
+                <PivotItem.Header>
+                    <ctrls:NewPivotHeader Glyph="&#xE163;" Label="总览" />
+                </PivotItem.Header>
+                <TextBlock Text="这里可以放置总览图表" />
+            </PivotItem>
+        </Pivot>
     </Grid>
 </Page>

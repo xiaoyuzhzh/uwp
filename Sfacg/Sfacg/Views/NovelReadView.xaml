@@ -1,0 +1,70 @@
+﻿<Page
+    x:Class="Sfacg.Views.NovelReadView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Sfacg.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="#FFF6F7E3"
+          Padding="5 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="12" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="12" />
+        </Grid.RowDefinitions>
+
+        <!-- 标题 -->
+        <TextBlock Text="这里是好长的标题....."
+                   FontSize="7"
+                   Name="title"
+                   ></TextBlock>
+
+        <!-- 正文 -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+
+
+            <ScrollViewer Grid.ColumnSpan="3" Padding="0 0 10 0">
+                <TextBlock Name="content"
+                           Text="正在加载..."
+                           TextWrapping="WrapWholeWords"
+                           Margin=" 0 0 10 0"
+                       >
+                </TextBlock>
+            </ScrollViewer>
+
+            <!--<Button Grid.Column="0" 
+                    Tapped="Left_Tapped"
+                    Click="Left_Tapped"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    Opacity="0"
+                    ></Button>
+            <Button Grid.Column="1" 
+                    Tapped="Middle_Tapped"
+                    Click="Middle_Tapped"
+                    HorizontalAlignment="Stretch"
+                    Opacity="0"
+                    VerticalAlignment="Stretch"></Button>
+            <Button Grid.Column="2" 
+                    Tapped="Right_Tapped"
+                    Click="Right_Tapped"
+                    HorizontalAlignment="Stretch"
+                    Opacity="0"
+                    VerticalAlignment="Stretch"></Button>-->
+        </Grid>
+
+        <!-- 页脚 -->
+        <RelativePanel Grid.Row="2">
+            <TextBlock RelativePanel.AlignRightWithPanel="True"
+                       FontSize="7"
+                       Name="rate">14%</TextBlock>
+        </RelativePanel>
+    </Grid>
+</Page>

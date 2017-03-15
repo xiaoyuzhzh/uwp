@@ -28,6 +28,7 @@ namespace SoundBoard.Model
         Animals,
         Cartoons,
         Taunts,
-        Warnings
+        Warnings,
+        Test
     }
 }

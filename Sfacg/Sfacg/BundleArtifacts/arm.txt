@@ -1,0 +1,2 @@
+MainPackage=C:\Users\xiaoy\documents\visual studio 2015\Projects\Sfacg\Sfacg\bin\ARM\Debug\Sfacg_1.0.0.0_ARM_Debug.appx
+SymbolPackage=C:\Users\xiaoy\Desktop\Sfacg_1.0.0.0_Debug_Test\Sfacg_1.0.0.0_ARM_Debug.appxsym
