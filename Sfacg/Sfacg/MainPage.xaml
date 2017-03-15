@@ -8,24 +8,23 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <ScrollViewer>
-            <StackPanel>
-                <Button Click="Button_Click"> 调用接口</Button>
-                <TextBlock TextWrapping="Wrap">
-                    返回结果:
-                </TextBlock>
-                <TextBlock Name="resultTextBlock" TextWrapping="Wrap">
-                
-                </TextBlock>
-                <Button Click="Button_Click_1">调用小说接口并保存</Button>
-                <TextBlock Name="fileDir" 
-                           TextWrapping="Wrap"
-                           IsTextSelectionEnabled="True"></TextBlock>
-                <Button Click="Button_Click_2" > 找到小说并展示</Button>
-                <TextBlock Name="fileContent" 
-                           TextWrapping="Wrap"
-                           IsTextSelectionEnabled="True"></TextBlock>
-            </StackPanel>
-        </ScrollViewer>
+        <Pivot >
+            <PivotItem Header="推荐">
+                <Frame Name="push">
+                    
+                </Frame>
+            </PivotItem>
+            <PivotItem Header="日轻">
+                <Frame Name="jpnovel">
+                    
+                </Frame>
+            </PivotItem>
+            <PivotItem Header="Flagged">
+                <TextBlock Text="flagged emails go here." />
+            </PivotItem>
+            <PivotItem Header="Urgent">
+                <TextBlock Text="urgent emails go here." />
+            </PivotItem>
+        </Pivot>
     </Grid>
 </Page>

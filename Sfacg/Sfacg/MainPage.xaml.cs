@@ -11,6 +11,7 @@ using System.Text;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -36,67 +37,44 @@ namespace Sfacg
             this.InitializeComponent();
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
             Current = this;
-        }
 
 
-        private async void Button_Click(object sender, RoutedEventArgs e)
-        {
-            string url = "https://api.sfacg.com/novels?size=8&filter=newpush";
-            HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("Authorization", "Basic YW5kcm9pZHVzZXI6MWEjJDUxLXl0Njk7KkFjdkBxeHE=");
-            System.Uri uri = new Uri(url);
-            HttpResponseMessage x = await httpClient.GetAsync(uri);
-            resultTextBlock.Text = await x.Content.ReadAsStringAsync();
+            SystemNavigationManager.GetForCurrentView().BackRequested += SystemNavigationManager_BackRequested;
 
-        }
+            SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
 
-        private async void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            string url = "https://api.sfacg.com/Chaps/629050?expand=content,needFireMoney";
-            HttpClient httpClient = new HttpClient();
-            httpClient.DefaultRequestHeaders.Add("Authorization", "Basic YW5kcm9pZHVzZXI6MWEjJDUxLXl0Njk7KkFjdkBxeHE=");
-            System.Uri uri = new Uri(url);
-            HttpResponseMessage x = await httpClient.GetAsync(uri);
-            var result = await x.Content.ReadAsStringAsync();
-
-            var serializer = new DataContractJsonSerializer(typeof(NovelJSON));
-            var ms = new MemoryStream(Encoding.UTF8.GetBytes(result));
-
-            NovelJSON data = (NovelJSON)serializer.ReadObject(ms);
-
-            StorageFolder folder;
-            folder = ApplicationData.Current.LocalFolder;
-
-            StorageFolder novelFolder = await folder.CreateFolderAsync(data.data.novelId, CreationCollisionOption.OpenIfExists);
-            fileDir.Text = novelFolder.Path;
-
-            StorageFile file = await novelFolder.CreateFileAsync(data.data.chapId, CreationCollisionOption.ReplaceExisting);
-            await FileIO.WriteTextAsync(file, data.data.expand.content, Windows.Storage.Streams.UnicodeEncoding.Utf8);
-
-
-        }
-
-        private async void Button_Click_2(object sender, RoutedEventArgs e)
-        {
-            StorageFolder folder;
-            folder = ApplicationData.Current.LocalFolder;
-
-            StorageFolder novelf = await folder.GetFolderAsync("18488");
-
-            StorageFile file = await novelf.GetFileAsync("629050");
-
-            var str = await FileIO.ReadTextAsync(file, Windows.Storage.Streams.UnicodeEncoding.Utf8);
-
-            //fileContent.Text = str;
+            push.Navigate(typeof(PushNovelView));
 
             var rootFrame = (Frame)Window.Current.Content;
-
-            ReadInfo readInfo = new ReadInfo();
-            readInfo.novalId = "18488";
-            readInfo.chapId = "629050";
-            rootFrame.Navigate(typeof(NovelReadView), readInfo);
-
+            rootFrame.Navigated += OnNavigatedToPage;
         }
+
+        private void OnNavigatedToPage(object sender, NavigationEventArgs e)
+        {
+            var rootFrame = (Frame)Window.Current.Content;
+            if (rootFrame.CanGoBack)
+            {
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Visible;
+            }
+            else
+            {
+                SystemNavigationManager.GetForCurrentView().AppViewBackButtonVisibility = AppViewBackButtonVisibility.Collapsed;
+            }
+        }
+
+        /**
+         * 返回按钮处理方案 
+         */
+        private void SystemNavigationManager_BackRequested(object sender, BackRequestedEventArgs e)
+        {
+            var rootFrame = (Frame)Window.Current.Content;
+            if (rootFrame.CanGoBack && !e.Handled)
+            {
+                rootFrame.GoBack();
+            }
+            e.Handled = true;
+        }
+
 
     }
 }

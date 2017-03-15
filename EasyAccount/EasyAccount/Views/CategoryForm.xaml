@@ -1,0 +1,48 @@
+﻿<ContentDialog
+    x:Class="EasyAccount.Views.CategoryForm"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:EasyAccount.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Title="添加分类"
+    PrimaryButtonText="添加"
+    SecondaryButtonText="取消"
+    PrimaryButtonClick="ContentDialog_PrimaryButtonClick"
+    SecondaryButtonClick="ContentDialog_SecondaryButtonClick">
+
+    <Grid Background="{ThemeResource AppBarBorderThemeBrush}">
+
+        <StackPanel>
+            <ComboBox Name="classOne" 
+                                  Margin="10,10,0,0" 
+                                  Width="200"
+                                  RelativePanel.AlignLeftWithPanel="True" 
+                                  RelativePanel.Below="time"
+                                  SelectionChanged="classOne_SelectionChanged"
+                                  HorizontalAlignment="Stretch"
+                                  DisplayMemberPath="name"
+                                  />
+
+            <ComboBox Name="classTwo"  
+                              Margin="10,10,0,0" 
+                              Width="200"
+                              RelativePanel.AlignLeftWithPanel="True" 
+                              HorizontalAlignment="Stretch"
+                              RelativePanel.Below="classOne" 
+                              SelectionChanged="classTwo_SelectionChanged"
+                              Visibility="Collapsed"
+                              DisplayMemberPath="name"/>
+
+            <TextBox Name="name" 
+                                 Margin="10,10,0,0" 
+                                 Width="200"
+                                 HorizontalAlignment="Stretch"
+                                 PlaceholderText="输入分类名称" 
+                                 TextWrapping="Wrap"   
+                                 RelativePanel.Below="classThree" 
+                                 RelativePanel.AlignLeftWithPanel="True"/>
+        </StackPanel>
+    </Grid>
+</ContentDialog>
