@@ -1,0 +1,56 @@
+﻿<Page
+    x:Class="Sfacg.Views.QueryPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Sfacg.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource Common-Background}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <AutoSuggestBox x:Name="autoSug_Box" 
+                        BorderBrush="#00808080" 
+                        BorderThickness="1" 
+                        Margin="5 0" 
+                        Grid.Column="1" 
+                        PlaceholderText="输入关键字" 
+                        QueryIcon="Find" 
+                        VerticalAlignment="Center" 
+                        QuerySubmitted="autoSug_Box_QuerySubmitted" 
+                        TextChanged="autoSug_Box_TextChanged" 
+                        SuggestionChosen="autoSug_Box_SuggestionChosen" 
+                        Style="{StaticResource AutoSuggestBoxStyle1}">
+            
+        </AutoSuggestBox>
+        <ScrollViewer Grid.Row="1"
+                      Padding="5 0 5 0">
+            <GridView x:Name="result"
+                      IsItemClickEnabled="True"
+                      ItemClick="page_ItemClick">
+                <GridView.ItemTemplate>
+                    <DataTemplate >
+                        <Grid Background="{ThemeResource Common-Block-Background}"
+                              Width="150"
+                              Height="250">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="3*" />
+                                <RowDefinition Height="1*" />
+                            </Grid.RowDefinitions>
+                            <Image Source="{Binding NovelCover}"></Image>
+                            <TextBlock Grid.Row="1"
+                                       Text="{Binding NovelName}"
+                                       TextWrapping="Wrap"
+                                       Padding="5 5 5 0">
+
+                            </TextBlock>
+                        </Grid>
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+            </GridView>
+        </ScrollViewer>
+    </Grid>
+</Page>

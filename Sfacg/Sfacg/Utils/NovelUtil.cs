@@ -19,9 +19,19 @@ namespace Sfacg.Utils
 
         private static string PushNovelsUrl = "https://api.sfacg.com/novels?size=#size#&filter=newpush";
 
+        private static string NovelCatalogUrl = "https://api.sfacg.com/novels/#novelId#/dirs";
+
+        private static string JPNovelsUrl = "https://api.sfacg.com/APP/API/HTML5.ashx?op=jpnovels&index=#index#&listype=#listType# ";
+
+        private static string NovelDetailUrl = "https://api.sfacg.com/APP/API/HTML5.ashx?op=noveldetailnew&nid=#novelId#";
+
+        private static string QuerySuggestionUrl = "https://api.sfacg.com/search/novels/reffers?q=#text#";
+
+        private static string QueryNovelsUrl = "https://api.sfacg.com/APP/API/HTML5.ashx?op=search&keyword=#keyword#";
+
         /**
          *  获取小说章节数据
-         */ 
+         */
         public static async Task<string> getNovel(string novelId, string chapId)
         {
             if (string.IsNullOrEmpty(novelId) || string.IsNullOrEmpty(chapId))
@@ -31,9 +41,18 @@ namespace Sfacg.Utils
 
             StorageFolder novelFolder = await folder.CreateFolderAsync(novelId, CreationCollisionOption.OpenIfExists);
 
-            StorageFile novel = await novelFolder.GetFileAsync(chapId);
+            StorageFile novel = null;
 
-            if(novel == null)
+            try
+            {
+                novel = await novelFolder.GetFileAsync(chapId);
+            }
+            catch (Exception)
+            {
+            }
+            
+
+            if (novel == null)
             {
                 //调用接口获取文本
                 HttpClient httpClient = new HttpClient();
@@ -74,6 +93,104 @@ namespace Sfacg.Utils
 
 
             return data.data;
+        }
+
+        public static async Task<List<JPNovelData>> getJPNovels(int index, ListType listType)
+        {
+            //调用接口获取文本
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Basic YW5kcm9pZHVzZXI6MWEjJDUxLXl0Njk7KkFjdkBxeHE=");
+            System.Uri uri = new Uri(JPNovelsUrl.Replace("#index#", index.ToString())
+                                                .Replace("#listType#", listType.ToString()));
+            HttpResponseMessage x = await httpClient.GetAsync(uri);
+            var result = await x.Content.ReadAsStringAsync();
+            result = "{\"novels\":" + result + "}";
+
+            var serializer = new DataContractJsonSerializer(typeof(JPNovelVO));
+            var ms = new MemoryStream(Encoding.UTF8.GetBytes(result));
+
+            JPNovelVO response = (JPNovelVO)serializer.ReadObject(ms);
+            List<JPNovelData> list = response.novels;
+
+            list.ForEach(n => {
+                n.NovelCover = "http://rs.sfacg.com/web/novel/images/NovelCover/Big/" + n.NovelCover;
+            });
+            return list;
+        }
+
+        
+
+        public static async Task<List<VolumeList>> getNovelCatalog(string novelId)
+        {
+            //调用接口获取文本
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Basic YW5kcm9pZHVzZXI6MWEjJDUxLXl0Njk7KkFjdkBxeHE=");
+            System.Uri uri = new Uri(NovelCatalogUrl.Replace("#novelId#", novelId));
+            HttpResponseMessage x = await httpClient.GetAsync(uri);
+            var result = await x.Content.ReadAsStringAsync();
+
+            var serializer = new DataContractJsonSerializer(typeof(NovelCatalogVO));
+            var ms = new MemoryStream(Encoding.UTF8.GetBytes(result));
+
+            NovelCatalogVO response = (NovelCatalogVO)serializer.ReadObject(ms);
+
+            return response.data.volumeList;
+
+        }
+
+        public static async Task<NovelDetailVO> getNovelDetail(string novelId)
+        {
+            //调用接口获取文本
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Basic YW5kcm9pZHVzZXI6MWEjJDUxLXl0Njk7KkFjdkBxeHE=");
+            System.Uri uri = new Uri(NovelDetailUrl.Replace("#novelId#", novelId));
+            HttpResponseMessage x = await httpClient.GetAsync(uri);
+            var result = await x.Content.ReadAsStringAsync();
+
+            var serializer = new DataContractJsonSerializer(typeof(NovelDetailVO));
+            var ms = new MemoryStream(Encoding.UTF8.GetBytes(result));
+
+            NovelDetailVO response = (NovelDetailVO)serializer.ReadObject(ms);
+
+            return response;
+
+        }
+
+        public static async Task<List<string>> getSugges(string text)
+        {
+            //调用接口获取文本
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Basic YW5kcm9pZHVzZXI6MWEjJDUxLXl0Njk7KkFjdkBxeHE=");
+            System.Uri uri = new Uri(QuerySuggestionUrl.Replace("#text#", text));
+            HttpResponseMessage x = await httpClient.GetAsync(uri);
+            var result = await x.Content.ReadAsStringAsync();
+
+            var serializer = new DataContractJsonSerializer(typeof(SuggestionVO));
+            var ms = new MemoryStream(Encoding.UTF8.GetBytes(result));
+
+            SuggestionVO response = (SuggestionVO)serializer.ReadObject(ms);
+
+            return response.data;
+        }
+
+        public static async Task<List<Novels>> queryNovels(string keyword)
+        {
+            //调用接口获取文本
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Basic YW5kcm9pZHVzZXI6MWEjJDUxLXl0Njk7KkFjdkBxeHE=");
+            System.Uri uri = new Uri(QueryNovelsUrl.Replace("#keyword#", keyword));
+            HttpResponseMessage x = await httpClient.GetAsync(uri);
+            var result = await x.Content.ReadAsStringAsync();
+
+            var serializer = new DataContractJsonSerializer(typeof(QueryNovelsVo));
+            var ms = new MemoryStream(Encoding.UTF8.GetBytes(result));
+
+            QueryNovelsVo response = (QueryNovelsVo)serializer.ReadObject(ms);
+
+            response.Novels.ForEach(n => {
+                n.NovelCover = "http://rs.sfacg.com/web/novel/images/NovelCover/Big/" + n.NovelCover;
+            });
+            return response.Novels;
         }
     }
 }

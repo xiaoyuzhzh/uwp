@@ -16,11 +16,12 @@
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{A5A43C5B-DE2A-4C0C-9213-0A381AF9435A};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <PackageCertificateKeyFile>Sfacg_TemporaryKey.pfx</PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>Sfacg_StoreKey.pfx</PackageCertificateKeyFile>
     <AppxAutoIncrementPackageRevision>True</AppxAutoIncrementPackageRevision>
     <AppxPackageDir>C:\Users\xiaoy\Desktop\</AppxPackageDir>
     <AppxBundle>Always</AppxBundle>
-    <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
+    <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
+    <PackageCertificateThumbprint>CE6CA0C772AC375331DA956223FA34EC671A627E</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -93,20 +94,53 @@
   </PropertyGroup>
   <ItemGroup>
     <!-- A reference to the entire .Net Framework and Windows SDK are automatically included -->
+    <Content Include="Assets\iconfont.ttf" />
     <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="BridgeView.xaml.cs">
+      <DependentUpon>BridgeView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Model\Base\BaseModel.cs" />
+    <Compile Include="Model\JPNovelVO.cs" />
+    <Compile Include="Model\NovelCatalogVO.cs" />
+    <Compile Include="Model\NovelDetailModel.cs" />
+    <Compile Include="Model\NovelDetailVO.cs" />
     <Compile Include="Model\NovelJSON.cs" />
     <Compile Include="Model\NovelsVO.cs" />
+    <Compile Include="Model\QueryModel\BookmarkQO.cs" />
+    <Compile Include="Model\QueryModel\NovelQO.cs" />
+    <Compile Include="Model\QueryNovelsVo.cs" />
     <Compile Include="Model\ReadInfo.cs" />
+    <Compile Include="Model\StoreModel\Bookmark.cs" />
+    <Compile Include="Model\StoreModel\Novel.cs" />
+    <Compile Include="Model\SuggestionVO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SplashPage.xaml.cs">
+      <DependentUpon>SplashPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Utils\AppDatabaseUtil.cs" />
+    <Compile Include="Utils\BookmarkRepositoryUtil.cs" />
+    <Compile Include="Utils\NovelRepositoryUtil.cs" />
     <Compile Include="Utils\NovelUtil.cs" />
+    <Compile Include="Views\CollectNovelView.xaml.cs">
+      <DependentUpon>CollectNovelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\JPNovelView.xaml.cs">
+      <DependentUpon>JPNovelView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\MessageShow.xaml.cs">
+      <DependentUpon>MessageShow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NovelCatalogView.xaml.cs">
+      <DependentUpon>NovelCatalogView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\NovelDetail.xaml.cs">
       <DependentUpon>NovelDetail.xaml</DependentUpon>
     </Compile>
@@ -116,14 +150,24 @@
     <Compile Include="Views\PushNovelView.xaml.cs">
       <DependentUpon>PushNovelView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\QueryPage.xaml.cs">
+      <DependentUpon>QueryPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
       <SubType>Designer</SubType>
     </AppxManifest>
+    <None Include="Sfacg_StoreKey.pfx" />
     <None Include="Sfacg_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assets\ic_launcher.png" />
+    <Content Include="Assets\logo150x150.scale-100.png" />
+    <Content Include="Assets\logo44x44.scale-200.png" />
+    <Content Include="Assets\logo50x50.scale-100.png" />
+    <Content Include="Assets\welcome.png" />
+    <None Include="Package.StoreAssociation.xml" />
     <Content Include="Properties\Default.rd.xml" />
     <Content Include="Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Assets\SplashScreen.scale-200.png" />
@@ -138,9 +182,33 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Page Include="BridgeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="SplashPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\CollectNovelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\JPNovelView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\MessageShow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\NovelCatalogView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\NovelDetail.xaml">
       <SubType>Designer</SubType>
@@ -154,8 +222,22 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\QueryPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <SDKReference Include="Microsoft.VCLibs, Version=14.0">
+      <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
+    </SDKReference>
+    <SDKReference Include="SQLite.UWP.2015, Version=3.14.1">
+      <Name>SQLite for Universal Windows Platform</Name>
+    </SDKReference>
+    <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
+      <Name>Windows Mobile Extensions for the UWP</Name>
+    </SDKReference>
+  </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>
   </PropertyGroup>

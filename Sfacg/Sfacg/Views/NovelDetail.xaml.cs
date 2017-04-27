@@ -1,4 +1,6 @@
 ﻿using Sfacg.Model;
+using Sfacg.Model.StoreModel;
+using Sfacg.Utils;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,17 +27,27 @@ namespace Sfacg.Views
     {
 
         private NovelsVOData novelInfo;
+        private string novelId;
 
         public NovelDetail()
         {
             this.InitializeComponent();
+            NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.Parameter is NovelsVOData)
+            if (e.Parameter is string)
             {
-                novelInfo = (NovelsVOData)e.Parameter;
+                var newNovelId = (string)e.Parameter;
+                if (novelId == newNovelId) return;
+                novelId = newNovelId;
+                NovelDetailVO novelDetail = await NovelUtil.getNovelDetail(newNovelId);
+                novelDetail.NovelCover = "http://rs.sfacg.com/web/novel/images/NovelCover/Big/" + novelDetail.NovelCover;
+
+                NovelDetailModel data = new NovelDetailModel();
+                data.novelDetail = novelDetail;
+                this.DataContext = data;
             }
             else
             {
@@ -43,5 +55,33 @@ namespace Sfacg.Views
             }
         }
 
+        private void Catalog_Button_Click(object sender, RoutedEventArgs e)
+        {
+            //var rootFrame = (Frame)Window.Current.Content;
+            this.Frame.Navigate(typeof(NovelCatalogView), novelId);
+        }
+
+        private void txt_desc_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (txt_desc.MaxLines == 3)
+            {
+                txt_desc.MaxLines = 0;
+            }
+            else
+            {
+                txt_desc.MaxLines = 3;
+            }
+        }
+
+        private void Collect_btn_Click(object sender, RoutedEventArgs e)
+        {
+            var data = (NovelDetailModel)this.DataContext;
+            Novel novel = new Novel() { novelId = data.novelDetail.NovelID,
+                                        novelCover = data.novelDetail.NovelCover,
+                                        novelName = data.novelDetail.NovelName};
+            NovelRepositoryUtil.save(novel);
+
+            messShow.Show("收藏成功", 1000);
+        }
     }
 }

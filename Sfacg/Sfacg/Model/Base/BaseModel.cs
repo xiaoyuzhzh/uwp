@@ -5,9 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace EasyAccount.Model.Base
+namespace Sfacg.Model.Base
 {
-     public class BaseModel
+    public class BaseModel
     {
         [PrimaryKey]
         public string id { get; set; }

@@ -30,7 +30,7 @@ namespace Sfacg.Views
         public PushNovelView()
         {
             this.InitializeComponent();
-            
+            NavigationCacheMode = NavigationCacheMode.Enabled;
         }
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -42,9 +42,37 @@ namespace Sfacg.Views
         private void page_ItemClick(object sender, ItemClickEventArgs e)
         {
             NovelsVOData item = (NovelsVOData)e.ClickedItem;
-            var rootFrame = (Frame)Window.Current.Content;
+            MainPage.secondFrame.Navigate(typeof(NovelDetail), item.novelId);
+        }
 
-            rootFrame.Navigate(typeof(NovelDetail), item);
+
+        private void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if (sv.VerticalOffset == sv.ScrollableHeight)
+            {
+                //TODO 滑动到底部了，准备加载新的内容
+            }
+        }
+
+        private void Border_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+
+        }
+
+        private void Border_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+
+        }
+
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            int d = Convert.ToInt32(this.ActualWidth / 160);
+            if (d > 10)
+            {
+                d = 10;
+            }
+
+            bor_Width.Width = this.ActualWidth / d - 15;
         }
     }
 }

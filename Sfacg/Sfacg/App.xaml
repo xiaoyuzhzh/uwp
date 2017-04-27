@@ -5,4 +5,52 @@
     xmlns:local="using:Sfacg"
     RequestedTheme="Light">
 
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.ThemeDictionaries>
+                <ResourceDictionary x:Key="Light">
+                    <!--  背景颜色  -->
+                    <SolidColorBrush x:Key="Common-Background" Color="#FFE9E9E9"/>
+                    <!--  普通模块颜色  -->
+                    <SolidColorBrush x:Key="Common-Block-Background" Color="#FFFFFFFF"/>
+                    <!--  小说详情页顶部颜色  -->
+                    <SolidColorBrush x:Key="Novel-Detail-Header" Color="#FFFFFFFF"/>
+
+                </ResourceDictionary>
+            </ResourceDictionary.ThemeDictionaries>
+            <Style x:Key="AutoSuggestBoxStyle1" TargetType="AutoSuggestBox">
+                <Setter Property="VerticalAlignment" Value="Top"/>
+                <Setter Property="IsTabStop" Value="False"/>
+                <Setter Property="TextBoxStyle" Value="{StaticResource AutoSuggestBoxTextBoxStyle}"/>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="AutoSuggestBox">
+                            <Grid>
+                                <VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="Orientation">
+                                        <VisualState x:Name="Landscape"/>
+                                        <VisualState x:Name="Portrait"/>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>
+                                <TextBox x:Name="TextBox" ScrollViewer.BringIntoViewOnFocusChange="False" DesiredCandidateWindowAlignment="BottomEdge" BorderBrush="{TemplateBinding BorderBrush}" Header="{TemplateBinding Header}" Margin="0" PlaceholderText="{TemplateBinding PlaceholderText}" Style="{TemplateBinding TextBoxStyle}" BorderThickness="{TemplateBinding BorderThickness}" Width="{TemplateBinding Width}" Canvas.ZIndex="0"/>
+                                <Popup x:Name="SuggestionsPopup">
+                                    <Border x:Name="SuggestionsContainer">
+                                        <Border.RenderTransform>
+                                            <TranslateTransform x:Name="UpwardTransform"/>
+                                        </Border.RenderTransform>
+                                        <ListView x:Name="SuggestionsList" BorderBrush="{ThemeResource SystemControlForegroundChromeHighBrush}" BorderThickness="{ThemeResource AutoSuggestListBorderThemeThickness}" Background="{ThemeResource SystemControlBackgroundChromeMediumLowBrush}" DisplayMemberPath="{TemplateBinding DisplayMemberPath}" IsItemClickEnabled="True" ItemTemplate="{TemplateBinding ItemTemplate}" ItemContainerStyle="{TemplateBinding ItemContainerStyle}" ItemTemplateSelector="{TemplateBinding ItemTemplateSelector}" MaxHeight="{ThemeResource AutoSuggestListMaxHeight}" Margin="{ThemeResource AutoSuggestListMargin}" Padding="{ThemeResource AutoSuggestListPadding}">
+                                            <ListView.ItemContainerTransitions>
+                                                <TransitionCollection/>
+                                            </ListView.ItemContainerTransitions>
+                                        </ListView>
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+
 </Application>

@@ -7,8 +7,9 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Pivot >
+    <Grid Background="{ThemeResource Common-Background}">
+        <Pivot Margin="0 0 -12 0"
+               >
             <PivotItem Header="推荐">
                 <Frame Name="push">
                     
@@ -19,12 +20,43 @@
                     
                 </Frame>
             </PivotItem>
-            <PivotItem Header="Flagged">
+            <!--<PivotItem Header="分类">
                 <TextBlock Text="flagged emails go here." />
             </PivotItem>
-            <PivotItem Header="Urgent">
+            <PivotItem Header="排行榜">
                 <TextBlock Text="urgent emails go here." />
+            </PivotItem>-->
+            <PivotItem Header="收藏">
+                <Frame Name="collections">
+
+                </Frame>
             </PivotItem>
         </Pivot>
+        <Grid Height="50" VerticalAlignment="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="40" />
+            </Grid.ColumnDefinitions>
+
+            <Button x:Name="btn_Qr" Click="btn_Qr_Click" Grid.Column="1"  Foreground="Gray" Width="40" Height="40" Background="#00000000">
+                <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Glyph="&#xe60a;" FontSize="20"/>
+            </Button>
+        </Grid>
+
+        <Frame x:Name="frame"  Visibility="Visible"  Navigated="frame_Navigated">
+            <Frame.ContentTransitions >
+                <TransitionCollection>
+                    <EdgeUIThemeTransition Edge="Right"/>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
+
+        <Frame x:Name="novelDetail_frame"  Visibility="Visible"  Navigated="novelDetail_frame_Navigated">
+            <Frame.ContentTransitions >
+                <TransitionCollection>
+                    <EdgeUIThemeTransition Edge="Right"/>
+                </TransitionCollection>
+            </Frame.ContentTransitions>
+        </Frame>
     </Grid>
 </Page>

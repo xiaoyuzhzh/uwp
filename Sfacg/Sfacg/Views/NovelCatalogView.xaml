@@ -1,0 +1,60 @@
+﻿<Page
+    x:Class="Sfacg.Views.NovelCatalogView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Sfacg.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <Pivot>
+            <PivotItem Header="目录">
+                <ListView ItemsSource="{x:Bind volumes}"
+                          ItemClick="ListView_ItemClick"
+                          IsItemClickEnabled="True"
+                          
+                          >
+                    <ListView.ItemTemplate>
+                        <DataTemplate >
+                            <Grid >
+                                <Grid.RowDefinitions>
+                                    <RowDefinition  Height="40"/>
+                                    <RowDefinition  Height="*"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Text="{Binding title}"
+                                           />
+                                <ListView Grid.Row="1"
+                                          ItemsSource="{Binding chapterList}"
+                                          ItemClick="Chapter_ItemClick"
+                                          IsItemClickEnabled="True">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <TextBlock Text="{Binding title}"></TextBlock>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+
+                            </Grid>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </PivotItem>
+            <PivotItem Header="书签">
+                <ListView ItemsSource="{x:Bind bookmarks}"
+                          ItemClick="bookmark_ItemClick"
+                          IsItemClickEnabled="True">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding chapName}"></TextBlock>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </PivotItem>
+        </Pivot>
+        <StackPanel VerticalAlignment="Bottom" Margin="0 30">
+            <ProgressRing x:Name="process" Width="50" Height="50" IsActive="False" Margin="0 5" Foreground="Gray"></ProgressRing>
+            <TextBlock x:Name="txt_Load" HorizontalAlignment="Center"  Foreground="Gray" ></TextBlock>
+        </StackPanel>
+    </Grid>
+</Page>
