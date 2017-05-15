@@ -1,1 +1,1 @@
-F:\users\xiaoyuzhzh\documents\visual studio 2015\Projects\StackPanelExercise\StackPanelExercise\StackPanelExercise.csproj;x86
+D:\gitHub\uwp\StackPanelExercise\StackPanelExercise\StackPanelExercise.csproj;x86

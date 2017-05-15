@@ -35,7 +35,7 @@ namespace Sfacg.Model
 
     public enum ListType
     {
-        latest,hot,finish
+        latest,hot,finish,recommend
     }
 
 }

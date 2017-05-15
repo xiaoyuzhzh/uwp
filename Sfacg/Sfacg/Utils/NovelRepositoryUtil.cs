@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Sfacg.Utils
 {
-    class NovelRepositoryUtil
+    class NovelRepositoryUtil : AppDatabaseUtil
     {
         public static Novel save(Novel novel)
         {

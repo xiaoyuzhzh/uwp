@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Sfacg.Utils
 {
-    class BookmarkRepositoryUtil
+    class BookmarkRepositoryUtil : AppDatabaseUtil
     {
         public static Bookmark save(Bookmark bookmark)
         {

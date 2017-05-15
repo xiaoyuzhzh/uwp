@@ -52,20 +52,28 @@ namespace Sfacg.Views
                 var novelIdNew = (string)e.Parameter;
 
                 //书签要每次刷新
-                BookmarkQO qo = new BookmarkQO() { novelId = novelIdNew };
-                var bookmarkList = BookmarkRepositoryUtil.getList(qo);
-                bookmarks.Clear();
-                bookmarkList.ForEach(b => bookmarks.Add(b));
+                RefreshBookmark(novelIdNew);
 
-                if (!string.IsNullOrEmpty(novelId)&&novelId.Equals(novelIdNew)) {
+                if (!string.IsNullOrEmpty(novelId) && novelId.Equals(novelIdNew))
+                {
                     return;
                 }
 
                 novelId = novelIdNew;
-                
-                var volumeList = await NovelUtil.getNovelCatalog(novelId);
+
+                List<VolumeList> volumeList;
+                try
+                {
+                    volumeList = await NovelUtil.getNovelCatalog(novelId);
+                }
+                catch (Exception)
+                {
+                    messShow.Show("网络异常", 3000);
+                    process.IsActive = false;
+                    return;
+                }
                 volumes.Clear();
-                volumeList.ForEach(v=>volumes.Add(v));
+                volumeList.ForEach(v => volumes.Add(v));
 
                 process.IsActive = false;
             }
@@ -73,6 +81,22 @@ namespace Sfacg.Views
             {
 
             }
+        }
+
+        private void RefreshBookmark(string novelId)
+        {
+            BookmarkQO qo = new BookmarkQO() { novelId = novelId };
+            var bookmarkList = BookmarkRepositoryUtil.getList(qo);
+            bookmarks.Clear();
+            if (bookmarkList.Count <= 0)
+            {
+                textInfo.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                textInfo.Visibility = Visibility.Collapsed;
+            }
+            bookmarkList.ForEach(b => bookmarks.Add(b));
         }
 
         private void Chapter_ItemClick(object sender, ItemClickEventArgs e)
@@ -85,16 +109,41 @@ namespace Sfacg.Views
 
         }
 
-        private void ListView_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            var Chapter = e.ClickedItem;
-        }
 
         private void bookmark_ItemClick(object sender, ItemClickEventArgs e)
         {
             var bookmark = (Bookmark)e.ClickedItem;
             var charpter = new ChapterList() { novelId = bookmark.novelId,chapId = bookmark.chapId ,title = bookmark.chapName};
             this.Frame.Navigate(typeof(NovelReadView), charpter);
+        }
+
+        private void menuitem_Dlete_Click(object sender, RoutedEventArgs e)
+        {
+            var bookmark = (sender as MenuFlyoutItem).DataContext as Bookmark;
+            BookmarkRepositoryUtil.deleteOne(bookmark);
+
+            //书签要每次刷新
+            RefreshBookmark(novelId);
+        }
+
+        private void menuitem_View_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void menuitem_Delete_F_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Grid_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            right_menu.ShowAt(sender as Grid, e.GetPosition(sender as Grid));
+        }
+
+        private void Grid_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            right_menu.ShowAt(sender as Grid, e.GetPosition(sender as Grid));
         }
     }
 }

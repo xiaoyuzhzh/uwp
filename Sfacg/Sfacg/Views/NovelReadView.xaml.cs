@@ -56,7 +56,17 @@ namespace Sfacg.Views
             {
                 chapter = (ChapterList)e.Parameter;
                 process.IsActive = true;
-                var novelStr = await NovelUtil.getNovel(chapter.novelId, chapter.chapId);
+                string novelStr;
+                try
+                {
+                    novelStr = await NovelUtil.getNovel(chapter.novelId, chapter.chapId);
+                }
+                catch (Exception)
+                {
+                    messShow.Show("网络异常", 3000);
+                    process.IsActive = false;
+                    return;
+                }
                 ShowNovel(novelStr);
                 process.IsActive = false;
             }

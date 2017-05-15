@@ -40,6 +40,8 @@ namespace Sfacg
         public static MainPage Current;
         public static Frame secondFrame;
 
+        private List<Category> categories;
+
         public MainPage()
         {
             this.InitializeComponent();
@@ -63,6 +65,28 @@ namespace Sfacg
 
             AppDatabaseUtil.initTable();//初始化数据库
 
+
+            //初始化分类的数据
+            categories = new List<Category>();
+            
+            categories.Add(new Category() { imageUrl = "ms-appx:///Assets/category/fenlei_rx.jpg", name = "热血类", tid = 1 });
+            categories.Add(new Category() { imageUrl = "ms-appx:///Assets/category/fenlei_mx.jpg", name = "冒险类", tid = 2 });
+            categories.Add(new Category() { imageUrl = "ms-appx:///Assets/category/fenlei_mh.jpg", name = "魔幻类", tid = 4 });
+            categories.Add(new Category() { imageUrl = "ms-appx:///Assets/category/fenlei_xy.jpg", name = "校园类", tid = 6 });
+            categories.Add(new Category() { imageUrl = "ms-appx:///Assets/category/fenlei_wx.jpg", name = "架空类", tid = 5 });
+            categories.Add(new Category() { imageUrl = "ms-appx:///Assets/category/fenlei_tr.jpg", name = "同人类", tid = 7 });
+            categories.Add(new Category() { imageUrl = "ms-appx:///Assets/category/fenlei_aq.jpg", name = "爱情类", tid = 9 });
+            categories.Add(new Category() { imageUrl = "ms-appx:///Assets/category/fenlei_gx.jpg", name = "搞笑类", tid = 8 });
+            categories.Add(new Category() { imageUrl = "ms-appx:///Assets/category/fenlei_kh.jpg", name = "科幻类", tid = 13 });
+            categories.Add(new Category() { imageUrl = "ms-appx:///Assets/category/fenlei_tl.jpg", name = "推理类", tid = 11 });
+            categories.Add(new Category() { imageUrl = "ms-appx:///Assets/category/fenlei_jx.jpg", name = "惊悚类", tid = 14 });
+            categories.Add(new Category() { imageUrl = "ms-appx:///Assets/category/fenlei_yd.jpg", name = "运动类", tid = 3 });
+            categories.Add(new Category() { imageUrl = "ms-appx:///Assets/category/fenlei_jz.jpg", name = "机战类", tid = 12 });
+            categories.Add(new Category() { imageUrl = "ms-appx:///Assets/category/fenlei_wq.jpg", name = "温情类", tid = 10 });
+            
+
+
+            CategoryPivot.ItemsSource = categories;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -143,6 +167,19 @@ namespace Sfacg
             {
                 novelDetail_frame.Visibility = Visibility.Collapsed;
             }
+        }
+
+
+        public class Category{
+            public string imageUrl { get; set; }
+            public string name { get; set; }
+            public int tid { get; set; }
+        }
+
+        private void CategoryPivot_ItemClick(object sender, ItemClickEventArgs e)
+        {
+            Category item = (Category)e.ClickedItem;
+            this.frame.Navigate(typeof(CategoryPage), item);
         }
     }
 }

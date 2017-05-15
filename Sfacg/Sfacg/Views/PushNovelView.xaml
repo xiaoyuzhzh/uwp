@@ -1,5 +1,6 @@
 ﻿<Page
     x:Class="Sfacg.Views.PushNovelView"
+    xmlns:ustr="using:Sfacg.Views"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:Sfacg.Views"
@@ -51,5 +52,18 @@
                 </GridView.ItemTemplate>
             </GridView>
         </ScrollViewer>
+        <ustr:MessageShow x:Name="messShow" VerticalAlignment="Bottom" Grid.RowSpan="2" Margin="60" HorizontalAlignment="Center" />
+
+        <CommandBar VerticalAlignment="Bottom"
+                    Background="{ThemeResource Common-Background}"
+                    Foreground="Black">
+            <AppBarButton x:Name="btn_refresh" Icon="Refresh"  Label="刷新"  Foreground="Black" Click="btn_refresh_Clicked"/>
+        </CommandBar>
+
+        <StackPanel VerticalAlignment="Bottom" Margin="0 30">
+            <ProgressRing x:Name="process" Width="50" Height="50" IsActive="False" Margin="0 5" Foreground="Gray"></ProgressRing>
+            <TextBlock x:Name="txt_Load" HorizontalAlignment="Center"  Foreground="Gray" ></TextBlock>
+        </StackPanel>
     </Grid>
+    
 </Page>

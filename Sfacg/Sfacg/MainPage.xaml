@@ -7,32 +7,128 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <Style x:Key="pivotItemTextBlock" TargetType="TextBlock">
+            <Setter Property="FontSize" Value="16" />
+        </Style>
+    </Page.Resources>
+
+
     <Grid Background="{ThemeResource Common-Background}">
         <Pivot Margin="0 0 -12 0"
                >
-            <PivotItem Header="推荐">
+            <Pivot.RightHeader>
+                <Button x:Name="btn_Qr" Click="btn_Qr_Click"   Foreground="Gray"  Background="#00000000"
+                        Margin=" 0 0 20 0">
+                    <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Glyph="&#xe60a;" FontSize="20"/>
+                </Button>
+            </Pivot.RightHeader>
+            <PivotItem >
+                <PivotItem.Header>
+                    <TextBlock Style="{StaticResource pivotItemTextBlock}">推荐</TextBlock>
+                </PivotItem.Header>
                 <Frame Name="push">
                     
                 </Frame>
             </PivotItem>
-            <PivotItem Header="日轻">
+            <PivotItem >
+                <PivotItem.Header>
+                    <TextBlock Style="{StaticResource pivotItemTextBlock}">日轻</TextBlock>
+                </PivotItem.Header>
                 <Frame Name="jpnovel">
                     
                 </Frame>
             </PivotItem>
-            <!--<PivotItem Header="分类">
-                <TextBlock Text="flagged emails go here." />
+            <PivotItem >
+                <PivotItem.Header>
+                    <TextBlock Style="{StaticResource pivotItemTextBlock}">分类</TextBlock>
+                </PivotItem.Header>
+                <GridView x:Name="CategoryPivot"
+                          IsItemClickEnabled="True"
+                          ItemClick="CategoryPivot_ItemClick">
+                    <!--<GridViewItem>
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+                            <Ellipse Width="60" Height="60" Margin="10,10,10,10">
+                                <Ellipse.Fill>
+                                    <ImageBrush ImageSource="ms-appx:///Assets/category/fenlei_aq.jpg"/>
+                                </Ellipse.Fill>
+                            </Ellipse>
+                            <TextBlock Text="爱情类"
+                                       Grid.Row="1"
+                                       FontSize="14"
+                                       Foreground="Gray"
+                                       HorizontalAlignment="Center"></TextBlock>
+                        </Grid>
+                    </GridViewItem>-->
+                    <GridView.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="30" />
+                                </Grid.RowDefinitions>
+                                <!--<VisualStateManager.VisualStateGroups>
+                                    <VisualStateGroup x:Name="wide">
+                                        <VisualState x:Name="w1"  >
+                                            <VisualState.StateTriggers>
+                                                <AdaptiveTrigger x:Name="w1_Trigger" MinWindowWidth="701"/>
+                                            </VisualState.StateTriggers>
+                                            <VisualState.Setters>
+                                                <Setter Target="Image.Width" Value="100"></Setter>
+                                                <Setter Target="Image.Height" Value="100"></Setter>
+                                                <Setter Target="Image.Margin" Value="13 13 13 13"></Setter>
+                                                <Setter Target="Title.FontSize" Value="18"></Setter>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                        <VisualState x:Name="w2">
+                                            <VisualState.StateTriggers>
+                                                <AdaptiveTrigger MinWindowWidth="0"/>
+                                            </VisualState.StateTriggers>
+                                            <VisualState.Setters>
+                                                <Setter Target="Image.Width" Value="60"></Setter>
+                                                <Setter Target="Image.Height" Value="60"></Setter>
+                                                <Setter Target="Image.Margin" Value="10 10 10 10"></Setter>
+                                                <Setter Target="Title.FontSize" Value="14"></Setter>
+                                            </VisualState.Setters>
+                                        </VisualState>
+                                    </VisualStateGroup>
+                                </VisualStateManager.VisualStateGroups>-->
+                                <Ellipse Name="Image"
+                                         Width="80"
+                                         Grid.Row="0"
+                                         Height="80" Margin="10 10 10 10">
+                                        <Ellipse.Fill>
+                                            <ImageBrush ImageSource="{Binding imageUrl}"/>
+                                        </Ellipse.Fill>
+                                    </Ellipse>
+                                <TextBlock Name="Title"
+                                            Text="{Binding name}"
+                                           Grid.Row="1"
+                                           HorizontalAlignment="Center"
+                                           FontSize="14"
+                                            Foreground="Gray"></TextBlock>
+                            </Grid>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
             </PivotItem>
-            <PivotItem Header="排行榜">
+            <!--<PivotItem Header="排行榜">
                 <TextBlock Text="urgent emails go here." />
             </PivotItem>-->
-            <PivotItem Header="收藏">
+            <PivotItem>
+                <PivotItem.Header>
+                    <TextBlock Style="{StaticResource pivotItemTextBlock}">收藏</TextBlock>
+                </PivotItem.Header>
                 <Frame Name="collections">
 
                 </Frame>
             </PivotItem>
         </Pivot>
-        <Grid Height="50" VerticalAlignment="Top">
+        <!--<Grid Height="50" VerticalAlignment="Top">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="40" />
@@ -41,7 +137,7 @@
             <Button x:Name="btn_Qr" Click="btn_Qr_Click" Grid.Column="1"  Foreground="Gray" Width="40" Height="40" Background="#00000000">
                 <FontIcon FontFamily="ms-appx:///Assets/iconfont.ttf#iconfont" Glyph="&#xe60a;" FontSize="20"/>
             </Button>
-        </Grid>
+        </Grid>-->
 
         <Frame x:Name="frame"  Visibility="Visible"  Navigated="frame_Navigated">
             <Frame.ContentTransitions >
@@ -52,11 +148,6 @@
         </Frame>
 
         <Frame x:Name="novelDetail_frame"  Visibility="Visible"  Navigated="novelDetail_frame_Navigated">
-            <Frame.ContentTransitions >
-                <TransitionCollection>
-                    <EdgeUIThemeTransition Edge="Right"/>
-                </TransitionCollection>
-            </Frame.ContentTransitions>
         </Frame>
     </Grid>
 </Page>

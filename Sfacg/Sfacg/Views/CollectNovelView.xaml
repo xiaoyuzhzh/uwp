@@ -7,6 +7,16 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <Page.Resources>
+        <MenuFlyout x:Name="right_menu">
+            <MenuFlyoutItem x:Name="menuitem_Dlete" Click="menuitem_Dlete_Click">删除</MenuFlyoutItem>
+        </MenuFlyout>
+        <MenuFlyout x:Name="_menu">
+            <MenuFlyoutItem x:Name="menuitem_View" Click="menuitem_View_Click">查看详情</MenuFlyoutItem>
+            <MenuFlyoutItem x:Name="menuitem_Delete_F" Click="menuitem_Delete_F_Click">删除</MenuFlyoutItem>
+        </MenuFlyout>
+    </Page.Resources>
+
     <Grid Background="{ThemeResource Common-Background}">
         <Border x:Name="bor_Width" Width="160" VerticalAlignment="Top"></Border>
         <ScrollViewer Name="sv" ViewChanged="sv_ViewChanged"
@@ -27,7 +37,7 @@
                 <GridView.ItemTemplate>
                     <DataTemplate >
                         <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
-                            <Grid Background="{ThemeResource Common-Block-Background}">
+                            <Grid Background="{ThemeResource Common-Block-Background}" Holding="Grid_Holding" RightTapped="Grid_RightTapped">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="*" />
                                     <RowDefinition Height="50" />
@@ -49,8 +59,9 @@
                 </GridView.ItemTemplate>
             </GridView>
         </ScrollViewer>
+        <TextBlock Name="textInfo" FontSize="15" Foreground="Gray" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0 10 0 0"> 暂无收藏 </TextBlock>
         <CommandBar VerticalAlignment="Bottom"
-                    Background="Transparent"
+                    Background="{ThemeResource Common-Background}"
                     Foreground="Black">
             <AppBarButton x:Name="btn_refresh" Icon="Refresh"  Label="刷新"  Foreground="Black" Click="btn_refresh_Clicked"/>
         </CommandBar>

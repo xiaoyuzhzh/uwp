@@ -41,6 +41,13 @@ namespace Sfacg.Views
         {
             List<Novel> novels = NovelRepositoryUtil.getList(new NovelQO());
             collectedNovels.Clear();
+            if(novels.Count <= 0)
+            {
+                textInfo.Visibility = Visibility.Visible;
+            }else
+            {
+                textInfo.Visibility = Visibility.Collapsed;
+            }
             novels.ForEach(n => collectedNovels.Add(n));
         }
 
@@ -58,6 +65,34 @@ namespace Sfacg.Views
         private void btn_refresh_Clicked(object sender, RoutedEventArgs e)
         {
             getCollectedNovels();
+        }
+
+        private void Grid_Holding(object sender, HoldingRoutedEventArgs e)
+        {
+            right_menu.ShowAt(sender as Grid, e.GetPosition(sender as Grid));
+        }
+
+        private void Grid_RightTapped(object sender, RightTappedRoutedEventArgs e)
+        {
+            right_menu.ShowAt(sender as Grid, e.GetPosition(sender as Grid));
+        }
+
+        private void menuitem_Dlete_Click(object sender, RoutedEventArgs e)
+        {
+            var novel = (sender as MenuFlyoutItem).DataContext as Novel;
+            NovelRepositoryUtil.deleteOne(novel);
+
+            getCollectedNovels();
+        }
+
+        private void menuitem_View_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void menuitem_Delete_F_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

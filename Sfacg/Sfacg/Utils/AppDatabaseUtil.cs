@@ -47,6 +47,26 @@ namespace Sfacg.Utils
             return t;
         }
 
+        public static int deleteOne<T>(T t) where T : BaseModel
+        {
+            SQLiteConnection conn = GetDbConnection();
+            try
+            {
+                return conn.Delete(t);
+            }
+            catch (Exception)
+            {
+                return 0;
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    closeConn(conn);
+                }
+            }
+        }
+
 
 
 

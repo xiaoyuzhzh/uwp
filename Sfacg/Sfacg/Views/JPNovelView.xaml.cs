@@ -48,7 +48,7 @@ namespace Sfacg.Views
         {
             if (!inited)
             {
-                loadNextPage(2);//首次进入加载两页
+                loadNextPage(2,true);//首次进入加载两页
                 inited = true;
             }
             
@@ -65,36 +65,57 @@ namespace Sfacg.Views
         {
             if (sv.VerticalOffset == sv.ScrollableHeight)
             {
-                loadNextPage(2);
+                loadNextPage(2,false);
             }
         }
 
         private void btn_LoadMore_Click(object sender, RoutedEventArgs e)
         {
-            loadNextPage(2);
+            loadNextPage(2,false);
         }
 
-        private async void loadNextPage(int pageNum)
+        private async void loadNextPage(int pageNum,bool init)
         {
             if (!loading&&!noData)
             {
                 loading = true;
-                for(int i = 0; i< pageNum; i++)
+                process.IsActive = true;
+
+                if (init)
                 {
-                    List<JPNovelData> nextPageNovels = await NovelUtil.getJPNovels(pageIndex, ListType.latest);
+                    pageIndex = 1;
+                    novels.Clear();
+                }
+
+                for (int i = 0; i< pageNum; i++)
+                {
+                    List<JPNovelData> nextPageNovels;
+                    try
+                    {
+                        nextPageNovels = await NovelUtil.getJPNovels(pageIndex, ListType.latest);
+                    }
+                    catch (Exception)
+                    {
+                        messShow.Show("网络异常", 3000);
+                        process.IsActive = false;
+                        loading = false;
+                        return;
+                    }
                     pageIndex++;
                     if (nextPageNovels.Count == 0)
                     {
                         noData = true;
-                        return;
-                    }
-
-                    nextPageNovels.ForEach(n =>
+                        messShow.Show("没有更多数据了", 3000);
+                    }else
                     {
-                        novels.Add(n);
-                    });
+                        nextPageNovels.ForEach(n =>
+                        {
+                            novels.Add(n);
+                        });
+                    }
                 }
                 loading = false;
+                process.IsActive = false;
             }
             
         }
@@ -108,6 +129,12 @@ namespace Sfacg.Views
             }
 
             bor_Width.Width = this.ActualWidth / d - 15;
+        }
+
+        private async void btn_refresh_Clicked(object sender, RoutedEventArgs e)
+        {
+            loadNextPage(2,true);
+            inited = true;
         }
     }
 

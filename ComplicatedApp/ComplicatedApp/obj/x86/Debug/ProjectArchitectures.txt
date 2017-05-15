@@ -1,1 +1,1 @@
-F:\users\xiaoyuzhzh\documents\visual studio 2015\Projects\ComplicatedApp\ComplicatedApp\ComplicatedApp.csproj;x86
+D:\gitHub\uwp\ComplicatedApp\ComplicatedApp\ComplicatedApp.csproj;x86

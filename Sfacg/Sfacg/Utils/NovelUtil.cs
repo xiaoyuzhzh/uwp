@@ -29,6 +29,8 @@ namespace Sfacg.Utils
 
         private static string QueryNovelsUrl = "https://api.sfacg.com/APP/API/HTML5.ashx?op=search&keyword=#keyword#";
 
+        private static string CategoryNovelsUrl = "https://api.sfacg.com/APP/API/HTML5.ashx?op=typenovels&index=#index#&listype=#listType#&tid=#tid#";
+
         /**
          *  获取小说章节数据
          */
@@ -191,6 +193,27 @@ namespace Sfacg.Utils
                 n.NovelCover = "http://rs.sfacg.com/web/novel/images/NovelCover/Big/" + n.NovelCover;
             });
             return response.Novels;
+        }
+
+        public static async Task<List<CategoryNovelVO>> queryCategoryNovels(int tid,ListType listType,int index)
+        {
+            //调用接口获取文本
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Authorization", "Basic YW5kcm9pZHVzZXI6MWEjJDUxLXl0Njk7KkFjdkBxeHE=");
+            System.Uri uri = new Uri(CategoryNovelsUrl.Replace("#tid#", tid+"").Replace("#index#", index.ToString())
+                                                .Replace("#listType#", listType.ToString()));
+            HttpResponseMessage x = await httpClient.GetAsync(uri);
+            var result = await x.Content.ReadAsStringAsync();
+
+            var serializer = new DataContractJsonSerializer(typeof(List<CategoryNovelVO>));
+            var ms = new MemoryStream(Encoding.UTF8.GetBytes(result));
+
+            List<CategoryNovelVO> response = (List<CategoryNovelVO>)serializer.ReadObject(ms);
+            response.ForEach(n =>
+            {
+                n.NovelCover = "http://rs.sfacg.com/web/novel/images/NovelCover/Big/" + n.NovelCover;
+            });
+            return response;
         }
     }
 }

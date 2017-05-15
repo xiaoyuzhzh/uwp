@@ -34,9 +34,26 @@ namespace Sfacg.Views
         }
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            novels = await NovelUtil.getPushNovels(10);
+            
+            getPushNovels();
+        }
+
+        private async System.Threading.Tasks.Task getPushNovels()
+        {
+            process.IsActive = true;
+            try
+            {
+                novels = await NovelUtil.getPushNovels(10);
+            }
+            catch (Exception)
+            {
+                messShow.Show("网络异常", 3000);
+                process.IsActive = false;
+                return;
+            }
 
             page.ItemsSource = novels;
+            process.IsActive = false;
         }
 
         private void page_ItemClick(object sender, ItemClickEventArgs e)
@@ -73,6 +90,11 @@ namespace Sfacg.Views
             }
 
             bor_Width.Width = this.ActualWidth / d - 15;
+        }
+
+        private async void btn_refresh_Clicked(object sender, RoutedEventArgs e)
+        {
+            getPushNovels();
         }
     }
 }

@@ -1905,6 +1905,31 @@
             "rid": "win8-aot"
           }
         }
+      },
+      "Telerik.UI.for.UniversalWindowsPlatform/1.0.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/Telerik.Core.dll": {},
+          "lib/uap10.0/Telerik.Data.dll": {},
+          "lib/uap10.0/Telerik.Geospatial.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Telerik.Core.dll": {},
+          "lib/uap10.0/Telerik.Data.dll": {},
+          "lib/uap10.0/Telerik.Geospatial.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.dll": {}
+        }
       }
     },
     "UAP,Version=v10.0/win10-arm": {
@@ -3667,6 +3692,31 @@
         "runtime": {
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "Telerik.UI.for.UniversalWindowsPlatform/1.0.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/Telerik.Core.dll": {},
+          "lib/uap10.0/Telerik.Data.dll": {},
+          "lib/uap10.0/Telerik.Geospatial.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Telerik.Core.dll": {},
+          "lib/uap10.0/Telerik.Data.dll": {},
+          "lib/uap10.0/Telerik.Geospatial.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.dll": {}
+        }
       }
     },
     "UAP,Version=v10.0/win10-arm-aot": {
@@ -5391,6 +5441,31 @@
         },
         "runtime": {
           "runtimes/win8-aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
+        }
+      },
+      "Telerik.UI.for.UniversalWindowsPlatform/1.0.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/Telerik.Core.dll": {},
+          "lib/uap10.0/Telerik.Data.dll": {},
+          "lib/uap10.0/Telerik.Geospatial.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Telerik.Core.dll": {},
+          "lib/uap10.0/Telerik.Data.dll": {},
+          "lib/uap10.0/Telerik.Geospatial.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.dll": {}
         }
       }
     },
@@ -7161,6 +7236,31 @@
         "runtime": {
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "Telerik.UI.for.UniversalWindowsPlatform/1.0.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/Telerik.Core.dll": {},
+          "lib/uap10.0/Telerik.Data.dll": {},
+          "lib/uap10.0/Telerik.Geospatial.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Telerik.Core.dll": {},
+          "lib/uap10.0/Telerik.Data.dll": {},
+          "lib/uap10.0/Telerik.Geospatial.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.dll": {}
+        }
       }
     },
     "UAP,Version=v10.0/win10-x64-aot": {
@@ -8885,6 +8985,31 @@
         },
         "runtime": {
           "runtimes/win8-aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
+        }
+      },
+      "Telerik.UI.for.UniversalWindowsPlatform/1.0.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/Telerik.Core.dll": {},
+          "lib/uap10.0/Telerik.Data.dll": {},
+          "lib/uap10.0/Telerik.Geospatial.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Telerik.Core.dll": {},
+          "lib/uap10.0/Telerik.Data.dll": {},
+          "lib/uap10.0/Telerik.Geospatial.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.dll": {}
         }
       }
     },
@@ -10655,6 +10780,31 @@
         "runtime": {
           "lib/netcore50/System.Xml.XmlSerializer.dll": {}
         }
+      },
+      "Telerik.UI.for.UniversalWindowsPlatform/1.0.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/Telerik.Core.dll": {},
+          "lib/uap10.0/Telerik.Data.dll": {},
+          "lib/uap10.0/Telerik.Geospatial.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Telerik.Core.dll": {},
+          "lib/uap10.0/Telerik.Data.dll": {},
+          "lib/uap10.0/Telerik.Geospatial.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.dll": {}
+        }
       }
     },
     "UAP,Version=v10.0/win10-x86-aot": {
@@ -12379,6 +12529,31 @@
         },
         "runtime": {
           "runtimes/win8-aot/lib/netcore50/System.Xml.XmlSerializer.dll": {}
+        }
+      },
+      "Telerik.UI.for.UniversalWindowsPlatform/1.0.0.1": {
+        "type": "package",
+        "compile": {
+          "lib/uap10.0/Telerik.Core.dll": {},
+          "lib/uap10.0/Telerik.Data.dll": {},
+          "lib/uap10.0/Telerik.Geospatial.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.dll": {}
+        },
+        "runtime": {
+          "lib/uap10.0/Telerik.Core.dll": {},
+          "lib/uap10.0/Telerik.Data.dll": {},
+          "lib/uap10.0/Telerik.Geospatial.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.dll": {},
+          "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.dll": {}
         }
       }
     }
@@ -15654,12 +15829,246 @@
         "runtime.json",
         "runtimes/win8-aot/lib/netcore50/System.Xml.XmlSerializer.dll"
       ]
+    },
+    "Telerik.UI.for.UniversalWindowsPlatform/1.0.0.1": {
+      "sha512": "PjBZrHH2aaLqJFS2LTl60gb5wIYnhM+/uFvhPJn8LA61pJobyWChPjq+E4bbqdOI1Run3Zr4o0QO/yCfZ9Pkmw==",
+      "type": "package",
+      "path": "Telerik.UI.for.UniversalWindowsPlatform/1.0.0.1",
+      "files": [
+        "LicenseAgreements/LICENSE.md",
+        "Telerik.UI.for.UniversalWindowsPlatform.1.0.0.1.nupkg.sha512",
+        "Telerik.UI.for.UniversalWindowsPlatform.nuspec",
+        "build/uap10.0/Telerik.UI.for.UniversalWindowsPlatform.targets",
+        "lib/uap10.0/ARM/Telerik.Core/Properties/default.rd.xml",
+        "lib/uap10.0/ARM/Telerik.UI.Drawing.dll",
+        "lib/uap10.0/ARM/Telerik.UI.Drawing.exp",
+        "lib/uap10.0/ARM/Telerik.UI.Drawing.ilk",
+        "lib/uap10.0/ARM/Telerik.UI.Drawing.lib",
+        "lib/uap10.0/ARM/Telerik.UI.Drawing.pdb",
+        "lib/uap10.0/ARM/Telerik.UI.Drawing.pri",
+        "lib/uap10.0/ARM/Telerik.UI.Drawing.winmd",
+        "lib/uap10.0/ARM/Telerik.UI.Drawing.xml",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Map.UWP.XML",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Map.UWP.dll",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Map.UWP.pdb",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Map.UWP.pri",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Map.UWP/Telerik.UI.Xaml.Map.UWP.xr.xml",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Map.UWP/Themes/Generic.xaml",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Map.UWP/Themes/Generic.xbf",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Map.UWP/Themes/ThemeResourcesDark.xaml",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Map.UWP/Themes/ThemeResourcesDark.xbf",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Map.UWP/Themes/ThemeResourcesLight.xaml",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Map.UWP/Themes/ThemeResourcesLight.xbf",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Primitives.UWP/Telerik.UI.Xaml.Primitives.UWP.xr.xml",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Primitives.UWP/Themes/Generic.xaml",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Primitives.UWP/Themes/HubTilePalette.xaml",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Primitives.UWP/Themes/Resources.xaml",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Primitives.UWP/Themes/SharedResources.xaml",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeColorsDark.xaml",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeColorsLight.xaml",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeResourcesDark.xaml",
+        "lib/uap10.0/ARM/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeResourcesLight.xaml",
+        "lib/uap10.0/Telerik.Core.XML",
+        "lib/uap10.0/Telerik.Core.dll",
+        "lib/uap10.0/Telerik.Core.pdb",
+        "lib/uap10.0/Telerik.Core.pri",
+        "lib/uap10.0/Telerik.Core/Properties/default.rd.xml",
+        "lib/uap10.0/Telerik.Data.XML",
+        "lib/uap10.0/Telerik.Data.dll",
+        "lib/uap10.0/Telerik.Data.pdb",
+        "lib/uap10.0/Telerik.Data.pri",
+        "lib/uap10.0/Telerik.Data/Properties/default.rd.xml",
+        "lib/uap10.0/Telerik.Geospatial.UWP.XML",
+        "lib/uap10.0/Telerik.Geospatial.UWP.dll",
+        "lib/uap10.0/Telerik.Geospatial.UWP.pdb",
+        "lib/uap10.0/Telerik.Geospatial.UWP.pri",
+        "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.dll",
+        "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.pdb",
+        "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP.pri",
+        "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP/CustomDictionary.xml",
+        "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP/Telerik.UI.Xaml.Chart.UWP.xr.xml",
+        "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP/Themes/Generic.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP/Themes/Generic.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP/Themes/ThemeResourcesDark.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP/Themes/ThemeResourcesDark.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP/Themes/ThemeResourcesLight.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Chart.UWP/Themes/ThemeResourcesLight.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Chart.XML",
+        "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.dll",
+        "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.pdb",
+        "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP.pri",
+        "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP/ListView/Resources/reorder-handle-dark.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP/ListView/Resources/reorder-handle-light.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP/Telerik.UI.Xaml.Controls.Data.UWP.xr.xml",
+        "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP/Themes/DataForm.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP/Themes/Generic.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP/Themes/Listbox.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP/Themes/ThemeResourcesDark.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Controls.Data.UWP/Themes/ThemeResourcesLight.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.dll",
+        "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.pdb",
+        "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP.pri",
+        "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP/Telerik.UI.Xaml.DataVisualization.UWP.xr.xml",
+        "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP/Themes/Generic.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP/Themes/Generic.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP/Themes/Resources.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP/Themes/Resources.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP/Themes/ThemeResourcesDark.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP/Themes/ThemeResourcesDark.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP/Themes/ThemeResourcesLight.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.UWP/Themes/ThemeResourcesLight.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.DataVisualization.XML",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.dll",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.pdb",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP.pri",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/FilterFlyout/ic_arrow_down.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/FilterFlyout/ic_arrow_down.scale-140.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/FilterFlyout/ic_arrow_down.scale-180.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/FilterFlyout/ic_arrow_down.scale-240.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/FilterFlyout/ic_arrow_down_white.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/FilterFlyout/ic_arrow_down_white.scale-140.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/FilterFlyout/ic_arrow_down_white.scale-180.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/FilterFlyout/ic_arrow_down_white.scale-240.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/close_btn.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/close_btn.scale-140.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/close_btn.scale-180.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/close_btn.scale-240.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/close_btn_blue.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/close_btn_blue.scale-140.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/close_btn_blue.scale-180.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/close_btn_blue.scale-240.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/column_chooser_btn.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/column_chooser_btn.scale-140.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/column_chooser_btn.scale-180.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/column_chooser_btn.scale-240.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/column_chooser_btn_blue.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/column_chooser_btn_blue.scale-140.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/column_chooser_btn_blue.scale-180.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/column_chooser_btn_blue.scale-240.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/ic_reorder_dark.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/ic_reorder_dark.scale-140.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/ic_reorder_dark.scale-180.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/ic_reorder_dark.scale-240.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/ic_reorder_light.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/ic_reorder_light.scale-140.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/ic_reorder_light.scale-180.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Assets/Reorder/ic_reorder_light.scale-240.png",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Telerik.UI.Xaml.Grid.UWP.xr.xml",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Themes/Generic.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Themes/Generic.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Themes/Resources.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Themes/Resources.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Themes/ThemeResourcesDark.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Themes/ThemeResourcesDark.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Themes/ThemeResourcesLight.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.UWP/Themes/ThemeResourcesLight.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Grid.XML",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.dll",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.pdb",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP.pri",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP/Telerik.UI.Xaml.Input.UWP.xr.xml",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP/Themes/Calendar.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP/Themes/Calendar.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP/Themes/CommonResources.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP/Themes/CommonResources.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP/Themes/Generic.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP/Themes/Generic.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP/Themes/Resources.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP/Themes/Resources.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP/Themes/ThemeResourcesDark.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP/Themes/ThemeResourcesDark.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP/Themes/ThemeResourcesLight.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.UWP/Themes/ThemeResourcesLight.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Input.XML",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.dll",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.pdb",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP.pri",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Telerik.UI.Xaml.Primitives.UWP.xr.xml",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/Generic.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/Generic.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/HubTilePalette.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/HubTilePalette.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/Resources.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/Resources.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/SharedResources.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/SharedResources.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeColorsDark.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeColorsDark.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeColorsLight.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeColorsLight.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeResourcesDark.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeResourcesDark.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeResourcesLight.xaml",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeResourcesLight.xbf",
+        "lib/uap10.0/Telerik.UI.Xaml.Primitives.XML",
+        "lib/uap10.0/x64/Telerik.Core/Properties/default.rd.xml",
+        "lib/uap10.0/x64/Telerik.UI.Drawing.dll",
+        "lib/uap10.0/x64/Telerik.UI.Drawing.exp",
+        "lib/uap10.0/x64/Telerik.UI.Drawing.iobj",
+        "lib/uap10.0/x64/Telerik.UI.Drawing.ipdb",
+        "lib/uap10.0/x64/Telerik.UI.Drawing.lib",
+        "lib/uap10.0/x64/Telerik.UI.Drawing.pdb",
+        "lib/uap10.0/x64/Telerik.UI.Drawing.pri",
+        "lib/uap10.0/x64/Telerik.UI.Drawing.winmd",
+        "lib/uap10.0/x64/Telerik.UI.Drawing.xml",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Map.UWP.XML",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Map.UWP.dll",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Map.UWP.pdb",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Map.UWP.pri",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Map.UWP/Telerik.UI.Xaml.Map.UWP.xr.xml",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Map.UWP/Themes/Generic.xaml",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Map.UWP/Themes/Generic.xbf",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Map.UWP/Themes/ThemeResourcesDark.xaml",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Map.UWP/Themes/ThemeResourcesDark.xbf",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Map.UWP/Themes/ThemeResourcesLight.xaml",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Map.UWP/Themes/ThemeResourcesLight.xbf",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Primitives.UWP/Telerik.UI.Xaml.Primitives.UWP.xr.xml",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Primitives.UWP/Themes/Generic.xaml",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Primitives.UWP/Themes/HubTilePalette.xaml",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Primitives.UWP/Themes/Resources.xaml",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Primitives.UWP/Themes/SharedResources.xaml",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeColorsDark.xaml",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeColorsLight.xaml",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeResourcesDark.xaml",
+        "lib/uap10.0/x64/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeResourcesLight.xaml",
+        "lib/uap10.0/x86/Telerik.Core/Properties/default.rd.xml",
+        "lib/uap10.0/x86/Telerik.UI.Drawing.dll",
+        "lib/uap10.0/x86/Telerik.UI.Drawing.exp",
+        "lib/uap10.0/x86/Telerik.UI.Drawing.iobj",
+        "lib/uap10.0/x86/Telerik.UI.Drawing.ipdb",
+        "lib/uap10.0/x86/Telerik.UI.Drawing.lib",
+        "lib/uap10.0/x86/Telerik.UI.Drawing.pdb",
+        "lib/uap10.0/x86/Telerik.UI.Drawing.pri",
+        "lib/uap10.0/x86/Telerik.UI.Drawing.winmd",
+        "lib/uap10.0/x86/Telerik.UI.Drawing.xml",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Map.UWP.XML",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Map.UWP.dll",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Map.UWP.pdb",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Map.UWP.pri",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Map.UWP/Telerik.UI.Xaml.Map.UWP.xr.xml",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Map.UWP/Themes/Generic.xaml",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Map.UWP/Themes/Generic.xbf",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Map.UWP/Themes/ThemeResourcesDark.xaml",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Map.UWP/Themes/ThemeResourcesDark.xbf",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Map.UWP/Themes/ThemeResourcesLight.xaml",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Map.UWP/Themes/ThemeResourcesLight.xbf",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Primitives.UWP/Telerik.UI.Xaml.Primitives.UWP.xr.xml",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Primitives.UWP/Themes/Generic.xaml",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Primitives.UWP/Themes/HubTilePalette.xaml",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Primitives.UWP/Themes/Resources.xaml",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Primitives.UWP/Themes/SharedResources.xaml",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeColorsDark.xaml",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeColorsLight.xaml",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeResourcesDark.xaml",
+        "lib/uap10.0/x86/Telerik.UI.Xaml.Primitives.UWP/Themes/ThemeResourcesLight.xaml"
+      ]
     }
   },
   "projectFileDependencyGroups": {
     "": [
       "Microsoft.NETCore.UniversalWindowsPlatform >= 5.0.0",
-      "SQLite.Net-PCL >= 3.1.1"
+      "SQLite.Net-PCL >= 3.1.1",
+      "Telerik.UI.for.UniversalWindowsPlatform >= 1.0.0.1"
     ],
     "UAP,Version=v10.0": []
   },

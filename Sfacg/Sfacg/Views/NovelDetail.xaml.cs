@@ -33,6 +33,7 @@ namespace Sfacg.Views
         {
             this.InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Enabled;
+            process.IsActive = true;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -42,12 +43,23 @@ namespace Sfacg.Views
                 var newNovelId = (string)e.Parameter;
                 if (novelId == newNovelId) return;
                 novelId = newNovelId;
-                NovelDetailVO novelDetail = await NovelUtil.getNovelDetail(newNovelId);
+                NovelDetailVO novelDetail;
+                try
+                {
+                    novelDetail = await NovelUtil.getNovelDetail(newNovelId);
+                }
+                catch (Exception)
+                {
+                    messShow.Show("网络异常", 3000);
+                    process.IsActive = false;
+                    return;
+                }
                 novelDetail.NovelCover = "http://rs.sfacg.com/web/novel/images/NovelCover/Big/" + novelDetail.NovelCover;
 
                 NovelDetailModel data = new NovelDetailModel();
                 data.novelDetail = novelDetail;
                 this.DataContext = data;
+                process.IsActive = false;
             }
             else
             {
