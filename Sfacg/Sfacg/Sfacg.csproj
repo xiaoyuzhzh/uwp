@@ -126,6 +126,7 @@
     <Compile Include="Model\CategoryNovelVO.cs" />
     <Compile Include="Model\JPNovelVO.cs" />
     <Compile Include="Model\NovelCatalogVO.cs" />
+    <Compile Include="Model\NovelContentVO.cs" />
     <Compile Include="Model\NovelDetailModel.cs" />
     <Compile Include="Model\NovelDetailVO.cs" />
     <Compile Include="Model\NovelJSON.cs" />

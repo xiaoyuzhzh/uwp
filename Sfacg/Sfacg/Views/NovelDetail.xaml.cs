@@ -58,6 +58,15 @@ namespace Sfacg.Views
 
                 NovelDetailModel data = new NovelDetailModel();
                 data.novelDetail = novelDetail;
+                if (string.IsNullOrEmpty(novelDetail.Intro))
+                {
+                    novelDetail.Intro = "连个简介都没有，😔";
+                }
+                if(novelDetail.Tags==null || novelDetail.Tags.Count == 0)
+                {
+                    novelDetail.Tags = new List<string>();
+                    novelDetail.Tags.Add("没有标签");
+                }
                 this.DataContext = data;
                 process.IsActive = false;
             }

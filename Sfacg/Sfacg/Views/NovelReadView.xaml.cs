@@ -30,8 +30,6 @@ namespace Sfacg.Views
     /// </summary>
     public sealed partial class NovelReadView : Page
     {
-        MainPage rootPage;
-
         private ChapterList chapter;
 
         StatusBar statusBar;
@@ -39,7 +37,6 @@ namespace Sfacg.Views
         public NovelReadView()
         {
             this.InitializeComponent();
-            rootPage = MainPage.Current;
             //Windows.UI.ViewManagement.ApplicationView.GetForCurrentView().TryEnterFullScreenMode();//全屏显示
 
             // 判断是否存在 StatusBar

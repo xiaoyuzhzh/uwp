@@ -101,11 +101,12 @@ namespace Sfacg.Views
 
         private void Chapter_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var Chapter = (ChapterList)e.ClickedItem;
+            var charpter = (ChapterList)e.ClickedItem;
 
             //var rootFrame = (Frame)Window.Current.Content;
 
-            this.Frame.Navigate(typeof(NovelReadView), Chapter);
+            //this.Frame.Navigate(typeof(NovelReadView), charpter);
+            this.Frame.Navigate(typeof(NovelReadV2), charpter);
 
         }
 
@@ -114,7 +115,8 @@ namespace Sfacg.Views
         {
             var bookmark = (Bookmark)e.ClickedItem;
             var charpter = new ChapterList() { novelId = bookmark.novelId,chapId = bookmark.chapId ,title = bookmark.chapName};
-            this.Frame.Navigate(typeof(NovelReadView), charpter);
+            //this.Frame.Navigate(typeof(NovelReadView), charpter);
+            this.Frame.Navigate(typeof(NovelReadV2), charpter);
         }
 
         private void menuitem_Dlete_Click(object sender, RoutedEventArgs e)

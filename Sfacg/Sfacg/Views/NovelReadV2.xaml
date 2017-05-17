@@ -7,7 +7,56 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+    <Grid Background="#FFF6F7E3"
+          Padding="5 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*" />
+            <!--<RowDefinition Height="60" />-->
+        </Grid.RowDefinitions>
+
+        <!-- 标题 -->
+        <TextBlock Text="{x:Bind chapter.title}"
+                   FontSize="12"
+                   Name="title"
+                   Margin=" 0 0 0 10"
+                   ></TextBlock>
+
+        <ScrollViewer Grid.Row="1" >
+            <ItemsControl Name="novelList">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Tapped="content_Tapped">
+                            <TextBlock Text="{Binding paragraph}"
+                                       TextWrapping="WrapWholeWords"
+                                       Margin=" 0 0 15 0"
+                                       LineHeight="30"
+                                       FontSize="16"
+                                       IsTextSelectionEnabled="False"></TextBlock>
+                            <Image Source="{Binding imageUrl}"></Image>
+                        </StackPanel>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+
+        <local:MessageShow x:Name="messShow" VerticalAlignment="Bottom" Grid.RowSpan="2" Margin="60" HorizontalAlignment="Center" />
+
+        <StackPanel Grid.Row="1" VerticalAlignment="Bottom" Margin="0 30">
+            <ProgressRing x:Name="process" Width="50" Height="50" IsActive="False" Margin="0 5" Foreground="Gray"></ProgressRing>
+            <TextBlock x:Name="txt_Load" HorizontalAlignment="Center"  Foreground="Gray" ></TextBlock>
+        </StackPanel>
+
+        <CommandBar x:Name="Down_ComBar" 
+                    Grid.Row="1"
+                    Visibility="Collapsed" 
+                    HorizontalAlignment="Stretch" 
+                    VerticalAlignment="Bottom"
+                    Background="#FFF6F7E3" 
+                    Foreground="Black"
+                    IsOpen="False">
+            <AppBarButton x:Name="btn_BookMark" Icon="Bookmarks"  Label="加入书签"  Foreground="Black" Click="btn_BookMark_Clicked"/>
+        </CommandBar>
 
     </Grid>
 </Page>
