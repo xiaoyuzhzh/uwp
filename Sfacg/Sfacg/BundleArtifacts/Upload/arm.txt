@@ -1,5 +1,5 @@
-MainPackage=D:\gitHub\uwp\Sfacg\Sfacg\bin\ARM\Release\Upload\Sfacg_1.2.17.0_ARM.appx
-SymbolPackage=C:\Users\xiaoy\Desktop\Sfacg_1.2.17.0\Sfacg_1.2.17.0_ARM.appxsym
+MainPackage=D:\gitHub\uwp\Sfacg\Sfacg\bin\ARM\Release\Upload\Sfacg_1.2.19.0_ARM.appx
+SymbolPackage=C:\Users\xiaoy\Desktop\Sfacg_1.2.19.0\Sfacg_1.2.19.0_ARM.appxsym
 ResourcePack=D:\gitHub\uwp\Sfacg\Sfacg\_scale-100.appx
 ResourcePack=D:\gitHub\uwp\Sfacg\Sfacg\_scale-140.appx
 ResourcePack=D:\gitHub\uwp\Sfacg\Sfacg\_scale-180.appx

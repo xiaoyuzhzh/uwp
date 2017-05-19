@@ -103,7 +103,7 @@ namespace Sfacg.Views
             var paragraphs = getParagraphs(novelStr);
 
             int i = 0;
-            string imageUrl;
+            string imageUrl = null;
             bool hasImage;
             hasImage = imageUrls.Count > 0;
             paragraphs.ForEach(p =>
@@ -113,10 +113,19 @@ namespace Sfacg.Views
                 
                 if (hasImage)
                 {
-                    imageUrl = imageUrls[i];
+
+                    try
+                    {
+                        imageUrl = imageUrls[i];
+                    }
+                    catch (Exception)
+                    {
+                        imageUrl = null;
+                    }
                     if (!string.IsNullOrEmpty(imageUrl))
                     {
                         novelContents.Add(new NovelContentVO() { imageUrl = imageUrl });
+                        i++;
                     }
                     else
                     {

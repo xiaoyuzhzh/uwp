@@ -1,2 +1,2 @@
-MainPackage=D:\gitHub\uwp\Sfacg\Sfacg\bin\x86\Release\Sfacg_1.2.17.0_x86.appx
-SymbolPackage=C:\Users\xiaoy\Desktop\Sfacg_1.2.17.0_Test\Sfacg_1.2.17.0_x86.appxsym
+MainPackage=D:\gitHub\uwp\Sfacg\Sfacg\bin\x86\Release\Sfacg_1.2.19.0_x86.appx
+SymbolPackage=C:\Users\xiaoy\Desktop\Sfacg_1.2.19.0_Test\Sfacg_1.2.19.0_x86.appxsym

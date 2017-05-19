@@ -40,6 +40,8 @@ namespace Sfacg.Views
             bookmarks = new ObservableCollection<Bookmark>();
             NavigationCacheMode = NavigationCacheMode.Enabled;
 
+            Volumes.Source = volumes;
+
             process.IsActive = true;
         }
 
@@ -74,6 +76,8 @@ namespace Sfacg.Views
                 }
                 volumes.Clear();
                 volumeList.ForEach(v => volumes.Add(v));
+
+                
 
                 process.IsActive = false;
             }

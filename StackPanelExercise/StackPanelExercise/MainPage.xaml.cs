@@ -26,5 +26,11 @@ namespace StackPanelExercise
         {
             this.InitializeComponent();
         }
+
+
+        private void Semantic_Zoom_Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(SemanticDemo));
+        }
     }
 }

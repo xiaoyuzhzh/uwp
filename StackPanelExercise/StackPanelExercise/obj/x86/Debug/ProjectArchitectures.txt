@@ -1,1 +1,0 @@
-D:\gitHub\uwp\StackPanelExercise\StackPanelExercise\StackPanelExercise.csproj;x86

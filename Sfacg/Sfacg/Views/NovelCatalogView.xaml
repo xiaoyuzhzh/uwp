@@ -6,9 +6,16 @@
     xmlns:local="using:Sfacg.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:Sfacg.Model"
     mc:Ignorable="d">
 
     <Page.Resources>
+        <CollectionViewSource x:Name="Volumes"  IsSourceGrouped="True" ItemsPath="chapterList" />
+
+        <DataTemplate x:Key="ChapterDataTemplate" x:DataType="model:ChapterList">
+            <TextBlock Text="{x:Bind title}" FontSize="14" TextWrapping="WrapWholeWords" MaxLines="1"></TextBlock>
+        </DataTemplate>
+        
         <MenuFlyout x:Name="right_menu">
             <MenuFlyoutItem x:Name="menuitem_Dlete" Click="menuitem_Dlete_Click">删除</MenuFlyoutItem>
         </MenuFlyout>
@@ -17,6 +24,8 @@
             <MenuFlyoutItem x:Name="menuitem_Delete_F" Click="menuitem_Delete_F_Click">删除</MenuFlyoutItem>
         </MenuFlyout>
     </Page.Resources>
+    
+    
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Pivot>
@@ -24,34 +33,24 @@
                 <PivotItem.Header>
                     <TextBlock Style="{StaticResource pivotItemNormalTextBlock}">目录</TextBlock>
                 </PivotItem.Header>
-                <ScrollViewer>
-                <ItemsControl ItemsSource="{x:Bind volumes}"
+                <ListView ItemsSource="{x:Bind Volumes.View}"
+                              ItemClick="Chapter_ItemClick"
+                              IsItemClickEnabled="True"
+                              SelectionMode="Single"
+                              ItemTemplate="{StaticResource ChapterDataTemplate}"
                           >
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate >
-                            <Grid >
-                                <Grid.RowDefinitions>
-                                    <RowDefinition  Height="40"/>
-                                    <RowDefinition  Height="*"/>
-                                </Grid.RowDefinitions>
-                                <TextBlock Text="{Binding title}"
-                                           />
-                                <ListView Grid.Row="1"
-                                          ItemsSource="{Binding chapterList}"
-                                          ItemClick="Chapter_ItemClick"
-                                          IsItemClickEnabled="True">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate>
-                                            <TextBlock Text="{Binding title}"></TextBlock>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-
-                            </Grid>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                </ScrollViewer>
+                    <ListView.GroupStyle>
+                        <GroupStyle >
+                            <GroupStyle.HeaderTemplate>
+                                <DataTemplate x:DataType="model:VolumeList">
+                                    <TextBlock Text="{x:Bind title}" 
+                                               FontSize="18"
+                                       Style="{ThemeResource TitleTextBlockStyle}"/>
+                                </DataTemplate>
+                            </GroupStyle.HeaderTemplate>
+                        </GroupStyle>
+                    </ListView.GroupStyle>
+                </ListView>
             </PivotItem>
             <PivotItem >
                 <PivotItem.Header>

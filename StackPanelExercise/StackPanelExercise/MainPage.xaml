@@ -80,7 +80,8 @@ Nunc a vehicula velit. Vivamus rutrum elementum massa in consectetur. Nunc place
                     </StackPanel>
                 </StackPanel>
             </StackPanel>-->
-            
+
+            <Button Click="Semantic_Zoom_Button_Click">语义式缩放</Button>
         </StackPanel>
 
     </Grid>
