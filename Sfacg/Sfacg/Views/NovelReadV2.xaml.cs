@@ -32,9 +32,13 @@ namespace Sfacg.Views
     {
         private ChapterList chapter;
 
+        private LinkedList<ChapterList> chapters;
+
         StatusBar statusBar;
 
         private ObservableCollection<NovelContentVO> novelContents;
+
+        private List<NovelContentVO> tempList = new List<NovelContentVO>();
 
         public NovelReadV2()
         {
@@ -47,8 +51,9 @@ namespace Sfacg.Views
             }
 
             novelContents = new ObservableCollection<NovelContentVO>();
-
             novelList.ItemsSource = novelContents;
+
+            chapters = new LinkedList<ChapterList>();
         }
 
         /**
@@ -61,6 +66,8 @@ namespace Sfacg.Views
                 chapter = (ChapterList)e.Parameter;
                 process.IsActive = true;
                 string novelStr;
+                tempList.Clear();
+                novelContents.Clear();
                 try
                 {
                     novelStr = await NovelUtil.getNovel(chapter.novelId, chapter.chapId);
@@ -73,6 +80,7 @@ namespace Sfacg.Views
                 }
                 ShowNovel(novelStr);
                 process.IsActive = false;
+
             }
             else
             {
@@ -99,18 +107,33 @@ namespace Sfacg.Views
             {
                 return;
             }
+            int length = novelStr.Length;
             var imageUrls = getImageUrls(novelStr);
             var paragraphs = getParagraphs(novelStr);
+            
 
             int i = 0;
+            int count = 0;
             string imageUrl = null;
             bool hasImage;
+            bool stopAdd2View = false;
             hasImage = imageUrls.Count > 0;
             paragraphs.ForEach(p =>
             {
-                novelContents.Add(new NovelContentVO() { paragraph = p});
 
-                
+                paragraphSlices2(p).ForEach(n => {
+                    if (count < 20&&!stopAdd2View)
+                    {
+                        novelContents.Add(n);
+                        count++;
+                    }
+                    else
+                    {
+                        stopAdd2View = true;
+                        tempList.Add(n);
+                    }    
+                });
+
                 if (hasImage)
                 {
 
@@ -124,7 +147,13 @@ namespace Sfacg.Views
                     }
                     if (!string.IsNullOrEmpty(imageUrl))
                     {
-                        novelContents.Add(new NovelContentVO() { imageUrl = imageUrl });
+                        if (!stopAdd2View)
+                        {
+                            novelContents.Add(new NovelContentVO() { imageUrl = imageUrl });
+                        }else
+                        {
+                            tempList.Add(new NovelContentVO() { imageUrl = imageUrl });
+                        }
                         i++;
                     }
                     else
@@ -135,6 +164,50 @@ namespace Sfacg.Views
 
             });
 
+        }
+
+        //private List<NovelContentVO> paragraphSlices(string paragraph)
+        //{
+        //    var paragraphSlices = new List<NovelContentVO>();
+        //    int length = paragraph.Length;
+        //    int endlength = 0;
+        //    int sliceLength = 1000;
+        //    if (length > sliceLength)
+        //    {
+        //        for (int i = 0; i < length; i += sliceLength)
+        //        {
+        //            if (length - endlength < sliceLength)
+        //            {
+        //                endlength = length - i;
+        //            }else
+        //            {
+        //                endlength = i+ sliceLength;
+        //            }
+        //            try
+        //            {
+        //                paragraphSlices.Add(new NovelContentVO() { paragraph = paragraph.Substring(i, endlength) });
+        //            }
+        //            catch (Exception)
+        //            {
+
+        //                break;
+        //            }
+        //        }
+        //    }else
+        //    {
+        //        paragraphSlices.Add(new NovelContentVO() { paragraph = paragraph });
+        //    }
+
+        //    return paragraphSlices;
+        //}
+
+        private List<NovelContentVO> paragraphSlices2(string paragraph)
+        {
+            var paragraphSlices = new List<NovelContentVO>();
+            string[] novelParagraph = Regex.Split(paragraph, @"\n");
+            novelParagraph.ToList().ForEach(p => paragraphSlices.Add(new NovelContentVO() { paragraph = p }));
+
+            return paragraphSlices;
         }
 
         private List<string> getParagraphs(string novelStr)
@@ -192,6 +265,33 @@ namespace Sfacg.Views
             Bookmark bookmark = new Bookmark() { novelId = chapter.novelId, chapId = chapter.chapId, chapName = chapter.title };
             BookmarkRepositoryUtil.save(bookmark);
             messShow.Show("书签添加成功", 1000);
+        }
+
+        private void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            if (sv.ScrollableHeight - sv.VerticalOffset <200 )
+            {
+                loadRestContent();
+            }
+        }
+
+        private void loadRestContent()
+        {
+            if (tempList.Count > 0)
+            {
+                if (tempList.Count >= 20)
+                {
+                    tempList.GetRange(0, 20).ForEach(n => novelContents.Add(n));
+                    tempList.RemoveRange(0, 20);
+                }
+                else
+                {
+                    tempList.GetRange(0, tempList.Count - 1).ForEach(n => novelContents.Add(n));
+                    tempList.Clear();
+                }
+                
+                
+            }
         }
     }
 }

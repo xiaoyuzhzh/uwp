@@ -19,18 +19,18 @@
         <TextBlock Text="{x:Bind chapter.title}"
                    FontSize="12"
                    Name="title"
-                   Margin=" 0 0 0 10"
+                   Margin=" 0 0 0 0"
                    ></TextBlock>
 
-        <ScrollViewer Grid.Row="1" >
+        <ScrollViewer Name="sv" Grid.Row="1" ViewChanged="sv_ViewChanged" >
             <ItemsControl Name="novelList">
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Tapped="content_Tapped">
                             <TextBlock Text="{Binding paragraph}"
                                        TextWrapping="WrapWholeWords"
-                                       Margin=" 0 0 15 0"
-                                       LineHeight="30"
+                                       Margin=" 0 0 15 -15"
+                                       LineHeight="25"
                                        FontSize="16"
                                        IsTextSelectionEnabled="False"></TextBlock>
                             <Image Source="{Binding imageUrl}"></Image>
@@ -52,9 +52,9 @@
                     Visibility="Collapsed" 
                     HorizontalAlignment="Stretch" 
                     VerticalAlignment="Bottom"
-                    Background="#FFF6F7E3" 
+                    Background="#66F6F7E3" 
                     Foreground="Black"
-                    IsOpen="False">
+                    IsOpen="False" >
             <AppBarButton x:Name="btn_BookMark" Icon="Bookmarks"  Label="加入书签"  Foreground="Black" Click="btn_BookMark_Clicked"/>
         </CommandBar>
 

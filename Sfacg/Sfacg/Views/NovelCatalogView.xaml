@@ -7,6 +7,7 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:model="using:Sfacg.Model"
+    xmlns:wuxdata="using:Windows.UI.Xaml.Data"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -15,7 +16,11 @@
         <DataTemplate x:Key="ChapterDataTemplate" x:DataType="model:ChapterList">
             <TextBlock Text="{x:Bind title}" FontSize="14" TextWrapping="WrapWholeWords" MaxLines="1"></TextBlock>
         </DataTemplate>
-        
+
+        <DataTemplate x:Key="ZoomedOutTemplate" x:DataType="wuxdata:ICollectionViewGroup">
+            <TextBlock Text="{x:Bind Group.(model:VolumeList.title)}" FontSize="18" Style="{ThemeResource TitleTextBlockStyle}"/>
+        </DataTemplate>
+
         <MenuFlyout x:Name="right_menu">
             <MenuFlyoutItem x:Name="menuitem_Dlete" Click="menuitem_Dlete_Click">删除</MenuFlyoutItem>
         </MenuFlyout>
@@ -33,24 +38,31 @@
                 <PivotItem.Header>
                     <TextBlock Style="{StaticResource pivotItemNormalTextBlock}">目录</TextBlock>
                 </PivotItem.Header>
-                <ListView ItemsSource="{x:Bind Volumes.View}"
-                              ItemClick="Chapter_ItemClick"
-                              IsItemClickEnabled="True"
-                              SelectionMode="Single"
-                              ItemTemplate="{StaticResource ChapterDataTemplate}"
-                          >
-                    <ListView.GroupStyle>
-                        <GroupStyle >
-                            <GroupStyle.HeaderTemplate>
-                                <DataTemplate x:DataType="model:VolumeList">
-                                    <TextBlock Text="{x:Bind title}" 
-                                               FontSize="18"
-                                       Style="{ThemeResource TitleTextBlockStyle}"/>
-                                </DataTemplate>
-                            </GroupStyle.HeaderTemplate>
-                        </GroupStyle>
-                    </ListView.GroupStyle>
-                </ListView>
+                <SemanticZoom>
+                    <SemanticZoom.ZoomedInView>
+                        <ListView ItemsSource="{x:Bind Volumes.View}"
+                                      ItemClick="Chapter_ItemClick"
+                                      IsItemClickEnabled="True"
+                                      SelectionMode="Single"
+                                      ItemTemplate="{StaticResource ChapterDataTemplate}"
+                                  >
+                            <ListView.GroupStyle>
+                                <GroupStyle >
+                                    <GroupStyle.HeaderTemplate>
+                                        <DataTemplate x:DataType="model:VolumeList">
+                                            <TextBlock Text="{x:Bind title}" 
+                                                       FontSize="18"
+                                               Style="{ThemeResource TitleTextBlockStyle}"/>
+                                        </DataTemplate>
+                                    </GroupStyle.HeaderTemplate>
+                                </GroupStyle>
+                            </ListView.GroupStyle>
+                        </ListView>
+                    </SemanticZoom.ZoomedInView>
+                    <SemanticZoom.ZoomedOutView>
+                        <ListView ItemsSource="{x:Bind Volumes.View.CollectionGroups}" SelectionMode="None" ItemTemplate="{StaticResource ZoomedOutTemplate}" />
+                    </SemanticZoom.ZoomedOutView>
+                </SemanticZoom>
             </PivotItem>
             <PivotItem >
                 <PivotItem.Header>

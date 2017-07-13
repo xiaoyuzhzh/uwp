@@ -52,7 +52,7 @@ namespace Sfacg.Utils
             catch (Exception)
             {
             }
-            
+
 
             if (novel == null)
             {
