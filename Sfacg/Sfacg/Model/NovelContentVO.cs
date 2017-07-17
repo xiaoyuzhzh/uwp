@@ -8,6 +8,7 @@ namespace Sfacg.Model
 {
     class NovelContentVO
     {
+        public int id { get; set; }
         /**
          * 小说段落
          */

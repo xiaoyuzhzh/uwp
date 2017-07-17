@@ -14,149 +14,161 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource Common-Background}">
-        <Border x:Name="bor_Width" Width="160" VerticalAlignment="Top"></Border>
-        <Pivot SelectionChanged="Pivot_SelectionChanged">
-            <PivotItem>
-                <PivotItem.Header>
-                    <TextBlock Style="{StaticResource pivotItemTextBlock}">最新</TextBlock>
-                </PivotItem.Header>
-                <Grid>
-                    <ScrollViewer Name="latest_Sv" ViewChanged="sv_ViewChanged">
-                    <StackPanel>
-                        <GridView Name="latest_Page"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Border x:Name="bor_Width" Width="120" VerticalAlignment="Top"></Border>
+            <Pivot SelectionChanged="Pivot_SelectionChanged">
+                <PivotItem>
+                    <PivotItem.Header>
+                        <TextBlock Style="{StaticResource pivotItemTextBlock}">最新</TextBlock>
+                    </PivotItem.Header>
+                    <Grid>
+                        <ScrollViewer Name="latest_Sv" ViewChanged="sv_ViewChanged">
+                            <StackPanel>
+                                <GridView Name="latest_Page"
                       IsItemClickEnabled="True"
                       ItemClick="page_ItemClick">
-                            <GridView.ItemContainerStyle>
-                                <Style TargetType="GridViewItem">
-                                    <!--<Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                    <GridView.ItemContainerStyle>
+                                        <Style TargetType="GridViewItem">
+                                            <!--<Setter Property="BorderThickness" Value="0,0,0,1"/>
                                             <Setter Property="BorderBrush" Value="#FFCBCBCB"/>-->
-                                    <Setter Property="Background" Value="{ThemeResource Common-Block-Background}"></Setter>
-                                    <Setter Property="Margin" Value="5"></Setter>
-                                </Style>
-                            </GridView.ItemContainerStyle>
-                            <GridView.ItemTemplate>
-                                <DataTemplate >
-                                    <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
-                                        <Grid Background="{ThemeResource Common-Block-Background}">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*" />
-                                                <RowDefinition Height="50" />
-                                            </Grid.RowDefinitions>
-                                            <Image Source="{Binding NovelCover}"></Image>
-                                            <TextBlock Grid.Row="1"
-                                       Text="{Binding NovelName}"
-                                       TextWrapping="Wrap"
-                                       Padding="5 5 5 0">
-                                            </TextBlock>
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </GridView.ItemTemplate>
-                        </GridView>
-                        <Button x:Name="btn_LoadMoreLatest" Background="#00DF85A0" FontSize="14" Padding="20 5" Foreground="Gray" HorizontalAlignment="Center" Click="btn_LoadMore_Click">点我加载更多</Button>
-                    </StackPanel>
-                </ScrollViewer>
-                    <StackPanel VerticalAlignment="Bottom" Margin="0 30">
-                        <ProgressRing x:Name="latestProcess" Width="50" Height="50" IsActive="False" Margin="0 5" Foreground="Gray"></ProgressRing>
-                    </StackPanel>
-                </Grid>
-            </PivotItem>
-            <PivotItem>
-                <PivotItem.Header>
-                    <TextBlock Style="{StaticResource pivotItemTextBlock}">热门</TextBlock>
-                </PivotItem.Header>
-                <Grid>
-                    <ScrollViewer Name="hot_Sv" ViewChanged="sv_ViewChanged">
-                    <StackPanel>
-                        <GridView Name="hot_Page"
-                      IsItemClickEnabled="True"
-                      ItemClick="page_ItemClick">
-                            <GridView.ItemContainerStyle>
-                                <Style TargetType="GridViewItem">
-                                    <!--<Setter Property="BorderThickness" Value="0,0,0,1"/>
-                                            <Setter Property="BorderBrush" Value="#FFCBCBCB"/>-->
-                                    <Setter Property="Background" Value="{ThemeResource Common-Block-Background}"></Setter>
-                                    <Setter Property="Margin" Value="5"></Setter>
-                                </Style>
-                            </GridView.ItemContainerStyle>
-                            <GridView.ItemTemplate>
-                                <DataTemplate >
-                                    <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
-                                        <Grid Background="{ThemeResource Common-Block-Background}">
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="*" />
-                                                <RowDefinition Height="50" />
-                                            </Grid.RowDefinitions>
-                                            <Image Source="{Binding NovelCover}"></Image>
-                                            <TextBlock Grid.Row="1"
-                                       Text="{Binding NovelName}"
-                                       TextWrapping="Wrap"
-                                       Padding="5 5 5 0">
-                                            </TextBlock>
-                                        </Grid>
-                                    </Border>
-                                </DataTemplate>
-                            </GridView.ItemTemplate>
-                        </GridView>
-                        <Button x:Name="btn_LoadMoreHot" Background="#00DF85A0" FontSize="14" Padding="20 5" Foreground="Gray" HorizontalAlignment="Center" Click="btn_LoadMore_Click">点我加载更多</Button>
-                    </StackPanel>
-                </ScrollViewer>
-                    <StackPanel VerticalAlignment="Bottom" Margin="0 30">
-                        <ProgressRing x:Name="hotProcess" Width="50" Height="50" IsActive="False" Margin="0 5" Foreground="Gray"></ProgressRing>
-                    </StackPanel>
-                </Grid>
-            </PivotItem>
-            <PivotItem>
-                <PivotItem.Header>
-                    <TextBlock Style="{StaticResource pivotItemTextBlock}">完结</TextBlock>
-                </PivotItem.Header>
-                <Grid>
-                    <ScrollViewer Name="finished_Sv" ViewChanged="sv_ViewChanged">
-                        <StackPanel>
-                            <GridView Name="finished_Page"
-                      IsItemClickEnabled="True"
-                      ItemClick="page_ItemClick">
-                                <GridView.ItemContainerStyle>
-                                    <Style TargetType="GridViewItem">
-                                        <!--<Setter Property="BorderThickness" Value="0,0,0,1"/>
-                                            <Setter Property="BorderBrush" Value="#FFCBCBCB"/>-->
-                                        <Setter Property="Background" Value="{ThemeResource Common-Block-Background}"></Setter>
-                                        <Setter Property="Margin" Value="5"></Setter>
-                                    </Style>
-                                </GridView.ItemContainerStyle>
-                                <GridView.ItemTemplate>
-                                    <DataTemplate >
-                                        <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
-                                            <Grid Background="{ThemeResource Common-Block-Background}">
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="*" />
-                                                    <RowDefinition Height="50" />
-                                                </Grid.RowDefinitions>
-                                                <Image Source="{Binding NovelCover}"></Image>
-                                                <TextBlock Grid.Row="1"
-                                       Text="{Binding NovelName}"
-                                       TextWrapping="Wrap"
-                                       Padding="5 5 5 0">
-                                                </TextBlock>
-                                            </Grid>
-                                        </Border>
-                                    </DataTemplate>
-                                </GridView.ItemTemplate>
-                            </GridView>
-                            <Button x:Name="btn_LoadMoreFinished" Background="#00DF85A0" FontSize="14" Padding="20 5" Foreground="Gray" HorizontalAlignment="Center" Click="btn_LoadMore_Click">点我加载更多</Button>
+                                            <Setter Property="Background" Value="{ThemeResource Common-Block-Background}"></Setter>
+                                            <Setter Property="Margin" Value="5"></Setter>
+                                        </Style>
+                                    </GridView.ItemContainerStyle>
+                                    <GridView.ItemTemplate>
+                                        <DataTemplate >
+                                            <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
+                                                <Grid Background="{ThemeResource Common-Block-Background}">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="48" />
+                                                    </Grid.RowDefinitions>
+                                                    <Image Source="{Binding NovelCover}"></Image>
+                                                    <TextBlock Grid.Row="1"
+                                                               Text="{Binding NovelName}"
+                                                               TextWrapping="Wrap"
+                                                               MaxLines="2"
+                                                               FontSize="14"
+                                                               Padding="5 5 5 0">
+                                                    </TextBlock>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </GridView.ItemTemplate>
+                                </GridView>
+                                <Button x:Name="btn_LoadMoreLatest" Background="#00DF85A0" FontSize="14" Padding="20 5" Foreground="Gray" HorizontalAlignment="Center" Click="btn_LoadMore_Click">点我加载更多</Button>
+                            </StackPanel>
+                        </ScrollViewer>
+                        <StackPanel VerticalAlignment="Bottom" Margin="0 30">
+                            <ProgressRing x:Name="latestProcess" Width="50" Height="50" IsActive="False" Margin="0 5" Foreground="Gray"></ProgressRing>
                         </StackPanel>
-                    </ScrollViewer>
-                    <StackPanel VerticalAlignment="Bottom" Margin="0 30">
-                        <ProgressRing x:Name="finishedProcess" Width="50" Height="50" IsActive="False" Margin="0 5" Foreground="Gray"></ProgressRing>
-                    </StackPanel>
-                </Grid>
-            </PivotItem>
-        </Pivot>
-        <StackPanel VerticalAlignment="Bottom" Margin="0 30">
-            <ProgressRing x:Name="process" Width="50" Height="50" IsActive="False" Margin="0 5" Foreground="Gray"></ProgressRing>
-        </StackPanel>
-        <local:MessageShow x:Name="messShow" VerticalAlignment="Bottom" Grid.RowSpan="2" Margin="60" HorizontalAlignment="Center" />
-        <CommandBar VerticalAlignment="Bottom"
+                    </Grid>
+                </PivotItem>
+                <PivotItem>
+                    <PivotItem.Header>
+                        <TextBlock Style="{StaticResource pivotItemTextBlock}">热门</TextBlock>
+                    </PivotItem.Header>
+                    <Grid>
+                        <ScrollViewer Name="hot_Sv" ViewChanged="sv_ViewChanged">
+                            <StackPanel>
+                                <GridView Name="hot_Page"
+                      IsItemClickEnabled="True"
+                      ItemClick="page_ItemClick">
+                                    <GridView.ItemContainerStyle>
+                                        <Style TargetType="GridViewItem">
+                                            <!--<Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                            <Setter Property="BorderBrush" Value="#FFCBCBCB"/>-->
+                                            <Setter Property="Background" Value="{ThemeResource Common-Block-Background}"></Setter>
+                                            <Setter Property="Margin" Value="5"></Setter>
+                                        </Style>
+                                    </GridView.ItemContainerStyle>
+                                    <GridView.ItemTemplate>
+                                        <DataTemplate >
+                                            <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
+                                                <Grid Background="{ThemeResource Common-Block-Background}">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="48" />
+                                                    </Grid.RowDefinitions>
+                                                    <Image Source="{Binding NovelCover}"></Image>
+                                                    <TextBlock Grid.Row="1"
+                                                               Text="{Binding NovelName}"
+                                                               TextWrapping="Wrap"
+                                                               MaxLines="2"
+                                                               FontSize="14"
+                                                               Padding="5 5 5 0">
+                                                    </TextBlock>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </GridView.ItemTemplate>
+                                </GridView>
+                                <Button x:Name="btn_LoadMoreHot" Background="#00DF85A0" FontSize="14" Padding="20 5" Foreground="Gray" HorizontalAlignment="Center" Click="btn_LoadMore_Click">点我加载更多</Button>
+                            </StackPanel>
+                        </ScrollViewer>
+                        <StackPanel VerticalAlignment="Bottom" Margin="0 30">
+                            <ProgressRing x:Name="hotProcess" Width="50" Height="50" IsActive="False" Margin="0 5" Foreground="Gray"></ProgressRing>
+                        </StackPanel>
+                    </Grid>
+                </PivotItem>
+                <PivotItem>
+                    <PivotItem.Header>
+                        <TextBlock Style="{StaticResource pivotItemTextBlock}">完结</TextBlock>
+                    </PivotItem.Header>
+                    <Grid>
+                        <ScrollViewer Name="finished_Sv" ViewChanged="sv_ViewChanged">
+                            <StackPanel>
+                                <GridView Name="finished_Page"
+                      IsItemClickEnabled="True"
+                      ItemClick="page_ItemClick">
+                                    <GridView.ItemContainerStyle>
+                                        <Style TargetType="GridViewItem">
+                                            <!--<Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                            <Setter Property="BorderBrush" Value="#FFCBCBCB"/>-->
+                                            <Setter Property="Background" Value="{ThemeResource Common-Block-Background}"></Setter>
+                                            <Setter Property="Margin" Value="5"></Setter>
+                                        </Style>
+                                    </GridView.ItemContainerStyle>
+                                    <GridView.ItemTemplate>
+                                        <DataTemplate >
+                                            <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
+                                                <Grid Background="{ThemeResource Common-Block-Background}">
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="48" />
+                                                    </Grid.RowDefinitions>
+                                                    <Image Source="{Binding NovelCover}"></Image>
+                                                    <TextBlock Grid.Row="1"
+                                                               Text="{Binding NovelName}"
+                                                               TextWrapping="Wrap"
+                                                               MaxLines="2"
+                                                               FontSize="14"
+                                                               Padding="5 5 5 0">
+                                                    </TextBlock>
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </GridView.ItemTemplate>
+                                </GridView>
+                                <Button x:Name="btn_LoadMoreFinished" Background="#00DF85A0" FontSize="14" Padding="20 5" Foreground="Gray" HorizontalAlignment="Center" Click="btn_LoadMore_Click">点我加载更多</Button>
+                            </StackPanel>
+                        </ScrollViewer>
+                        <StackPanel VerticalAlignment="Bottom" Margin="0 30">
+                            <ProgressRing x:Name="finishedProcess" Width="50" Height="50" IsActive="False" Margin="0 5" Foreground="Gray"></ProgressRing>
+                        </StackPanel>
+                    </Grid>
+                </PivotItem>
+            </Pivot>
+            <StackPanel VerticalAlignment="Bottom" Margin="0 30">
+                <ProgressRing x:Name="process" Width="50" Height="50" IsActive="False" Margin="0 5" Foreground="Gray"></ProgressRing>
+            </StackPanel>
+            <local:MessageShow x:Name="messShow" VerticalAlignment="Bottom" Grid.RowSpan="2" Margin="60" HorizontalAlignment="Center" />
+        </Grid>
+        <CommandBar Grid.Row="1" VerticalAlignment="Bottom"
                     Background="{ThemeResource Common-Background}"
                     Foreground="Black">
             <AppBarButton x:Name="btn_refresh" Icon="Refresh"  Label="刷新"  Foreground="Black" Click="btn_refresh_Clicked"/>

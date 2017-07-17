@@ -59,7 +59,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="60"/>
         </Grid.RowDefinitions>
-        <ScrollViewer Grid.RowSpan="2"
+        <ScrollViewer Grid.Row="0"
                       VerticalScrollBarVisibility="Hidden">
             <StackPanel>
                 <Grid Padding="10 5" Background="{ThemeResource Novel-Detail-Header}"
@@ -215,8 +215,9 @@
                     Content="目录列表" />
             <Button Grid.Column="2" 
                     HorizontalAlignment="Center"
+                    Click="Read_btn_Click"
                     Style="{StaticResource buttonStyle}"
-                    Content="缓存下载" />
+                    Content="继续阅读" />
 
         </Grid>
         <StackPanel VerticalAlignment="Bottom" Margin="0 30">

@@ -11,59 +11,62 @@
     SizeChanged="Page_SizeChanged">
 
     <Grid Background="{ThemeResource Common-Background}">
-        <Border x:Name="bor_Width" Width="160" VerticalAlignment="Top"></Border>
-        <ScrollViewer Name="sv" ViewChanged="sv_ViewChanged"
-                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                      HorizontalScrollBarVisibility="Disabled">
-            <GridView Name="page"
-                      IsItemClickEnabled="True"
-                      ItemClick="page_ItemClick"
-                      >
-                <GridView.ItemContainerStyle>
-                    <Style TargetType="GridViewItem">
-                        <!--<Setter Property="BorderThickness" Value="0,0,0,1"/>
-                                            <Setter Property="BorderBrush" Value="#FFCBCBCB"/>-->
-                        <Setter Property="Background" Value="{ThemeResource Common-Block-Background}"></Setter>
-                        <Setter Property="Margin" Value="5"></Setter>
-                    </Style>
-                </GridView.ItemContainerStyle>
-                <GridView.ItemTemplate>
-                    <DataTemplate >
-                        <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
-                            <Grid Background="{ThemeResource Common-Block-Background}">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="50" />
-                                </Grid.RowDefinitions>
-                                <Image Source="{Binding novelCover}"
-                                   VerticalAlignment="Top"
-                                   ></Image>
-                                <TextBlock Grid.Row="1"
-                                       Text="{Binding novelName}"
-                                       TextWrapping="Wrap"
-                                       MaxLines="2" 
-                                       FontSize="14"
-                                       Padding="5 0 5 0">
-
-                                </TextBlock>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-            </GridView>
-        </ScrollViewer>
-        <ustr:MessageShow x:Name="messShow" VerticalAlignment="Bottom" Grid.RowSpan="2" Margin="60" HorizontalAlignment="Center" />
-
-        <CommandBar VerticalAlignment="Bottom"
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Border x:Name="bor_Width" Width="120" VerticalAlignment="Top"></Border>
+            <ScrollViewer Name="sv" ViewChanged="sv_ViewChanged"
+                          ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                          HorizontalScrollBarVisibility="Disabled">
+                <GridView Name="page"
+                          IsItemClickEnabled="True"
+                          ItemClick="page_ItemClick"
+                          >
+                    <GridView.ItemContainerStyle>
+                        <Style TargetType="GridViewItem">
+                            <!--<Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                                <Setter Property="BorderBrush" Value="#FFCBCBCB"/>-->
+                            <Setter Property="Background" Value="{ThemeResource Common-Block-Background}"></Setter>
+                            <Setter Property="Margin" Value="5"></Setter>
+                        </Style>
+                    </GridView.ItemContainerStyle>
+                    <GridView.ItemTemplate>
+                        <DataTemplate >
+                            <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
+                                <Grid Background="{ThemeResource Common-Block-Background}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="48" />
+                                    </Grid.RowDefinitions>
+                                    <Image x:Name="NovelCoverImage" Source="{Binding novelCover}"
+                                       VerticalAlignment="Top"
+                                       ></Image>
+                                    <TextBlock Grid.Row="1"
+                                           Text="{Binding novelName}"
+                                           TextWrapping="Wrap"
+                                           MaxLines="2" 
+                                           FontSize="14"
+                                           Padding="5 5 5 0">
+                                    </TextBlock>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </ScrollViewer>
+            <ustr:MessageShow x:Name="messShow" VerticalAlignment="Bottom" Grid.RowSpan="2" Margin="60" HorizontalAlignment="Center" />
+            <StackPanel VerticalAlignment="Bottom" Margin="0 30">
+                <ProgressRing x:Name="process" Width="50" Height="50" IsActive="False" Margin="0 5" Foreground="Gray"></ProgressRing>
+                <TextBlock x:Name="txt_Load" HorizontalAlignment="Center"  Foreground="Gray" ></TextBlock>
+            </StackPanel>
+        </Grid>
+        <CommandBar Grid.Row="1" VerticalAlignment="Bottom"
                     Background="{ThemeResource Common-Background}"
                     Foreground="Black">
             <AppBarButton x:Name="btn_refresh" Icon="Refresh"  Label="刷新"  Foreground="Black" Click="btn_refresh_Clicked"/>
         </CommandBar>
-
-        <StackPanel VerticalAlignment="Bottom" Margin="0 30">
-            <ProgressRing x:Name="process" Width="50" Height="50" IsActive="False" Margin="0 5" Foreground="Gray"></ProgressRing>
-            <TextBlock x:Name="txt_Load" HorizontalAlignment="Center"  Foreground="Gray" ></TextBlock>
-        </StackPanel>
     </Grid>
     
 </Page>

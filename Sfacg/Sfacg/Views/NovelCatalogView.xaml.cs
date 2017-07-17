@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
 using Windows.UI.Xaml;
@@ -39,8 +40,6 @@ namespace Sfacg.Views
             volumes = new ObservableCollection<VolumeList>();
             bookmarks = new ObservableCollection<Bookmark>();
             NavigationCacheMode = NavigationCacheMode.Enabled;
-
-            Volumes.Source = volumes;
 
             process.IsActive = true;
         }
@@ -77,7 +76,15 @@ namespace Sfacg.Views
                 volumes.Clear();
                 volumeList.ForEach(v => volumes.Add(v));
 
-                
+                var bookmark = BaseUtil.getSetting<Bookmark>("readPoint" + novelId,true);
+                if (bookmark != null)
+                {
+                    CatalogListView.SelectedIndex = getIndex(bookmark);
+                    CatalogListView.ScrollIntoView(getItem(bookmark),ScrollIntoViewAlignment.Leading);
+                }
+
+
+
 
                 process.IsActive = false;
             }
@@ -85,6 +92,36 @@ namespace Sfacg.Views
             {
 
             }
+        }
+
+        private int getIndex(Bookmark bookmark)
+        {
+            int index = 0;
+            var array = CatalogListView.Items.ToArray();
+            for (; index < array.Length; index++)
+            {
+                if (((ChapterList)array[index]).chapId.Equals(bookmark.chapId))
+                {
+                    return index;
+                }
+            }
+
+            return 0;
+
+        }
+
+        private Object getItem(Bookmark bookmark)
+        {
+            int index = 0;
+            var array = CatalogListView.Items.ToArray();
+            for (; index < array.Length; index++)
+            {
+                if (((ChapterList)array[index]).chapId.Equals(bookmark.chapId))
+                {
+                    return array[index];
+                }
+            }
+            return null;
         }
 
         private void RefreshBookmark(string novelId)
@@ -107,9 +144,17 @@ namespace Sfacg.Views
         {
             var charpter = (ChapterList)e.ClickedItem;
 
-            //var rootFrame = (Frame)Window.Current.Content;
+            
 
-            //this.Frame.Navigate(typeof(NovelReadView), charpter);
+            var bookmark = BaseUtil.getSetting<Bookmark>("readPoint" + novelId, true);
+            if (bookmark != null&&charpter.chapId.Equals(bookmark.chapId))
+            {
+                charpter.itemId = bookmark.itemId;
+                charpter.itemContainerHeight = bookmark.itemContainerHeight;
+                charpter.listPosition = bookmark.listPosition;
+            }
+
+
             this.Frame.Navigate(typeof(NovelReadV2), charpter);
 
         }
@@ -118,7 +163,7 @@ namespace Sfacg.Views
         private void bookmark_ItemClick(object sender, ItemClickEventArgs e)
         {
             var bookmark = (Bookmark)e.ClickedItem;
-            var charpter = new ChapterList() { novelId = bookmark.novelId,chapId = bookmark.chapId ,title = bookmark.chapName};
+            var charpter = new ChapterList() { novelId = bookmark.novelId,chapId = bookmark.chapId ,title = bookmark.chapName,itemId= bookmark.itemId, listPosition = bookmark.listPosition, itemContainerHeight = bookmark.itemContainerHeight};
             //this.Frame.Navigate(typeof(NovelReadView), charpter);
             this.Frame.Navigate(typeof(NovelReadV2), charpter);
         }

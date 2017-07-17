@@ -143,7 +143,9 @@
       <DependentUpon>SplashPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Utils\AppDatabaseUtil.cs" />
+    <Compile Include="Utils\BaseUtil.cs" />
     <Compile Include="Utils\BookmarkRepositoryUtil.cs" />
+    <Compile Include="Utils\JSONUtil.cs" />
     <Compile Include="Utils\NovelRepositoryUtil.cs" />
     <Compile Include="Utils\NovelUtil.cs" />
     <Compile Include="Views\CategoryPage.xaml.cs">

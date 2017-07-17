@@ -18,7 +18,10 @@ namespace Sfacg.Utils
             qo.novelId = bookmark.novelId;
             qo.progress = bookmark.progress;
 
-            if (getList(qo).Count > 0) return bookmark;
+            if (getList(qo).Count > 0)
+            {
+                getList(qo).ForEach(b => AppDatabaseUtil.deleteOne(b));
+            }
 
             SQLiteConnection conn = null;
             try
@@ -52,7 +55,10 @@ namespace Sfacg.Utils
             {
                 tb = tb.Where(c => c.novelId == qo.novelId);
             }
-            tb = tb.Where(c => c.progress == qo.progress);
+            if (qo.progress != 0)
+            {
+                tb = tb.Where(c => c.progress == qo.progress);
+            }
 
             bookmarks = tb.ToList();
             return bookmarks;

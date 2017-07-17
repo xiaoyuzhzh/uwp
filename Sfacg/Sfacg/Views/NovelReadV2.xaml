@@ -5,7 +5,8 @@
     xmlns:local="using:Sfacg.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    Loaded="Page_Loaded">
 
     <Grid Background="#FFF6F7E3"
           Padding="5 0">
@@ -16,29 +17,45 @@
         </Grid.RowDefinitions>
 
         <!-- 标题 -->
-        <TextBlock Text="{x:Bind chapter.title}"
-                   FontSize="12"
-                   Name="title"
-                   Margin=" 0 0 0 0"
-                   ></TextBlock>
-
-        <ScrollViewer Name="sv" Grid.Row="1" ViewChanged="sv_ViewChanged" >
-            <ItemsControl Name="novelList">
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel Tapped="content_Tapped">
+        <RelativePanel>
+            <TextBlock Text="{x:Bind chapter.title}"
+                       FontSize="12"
+                       Name="title"
+                       RelativePanel.AlignLeftWithPanel="True"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"
+                       ></TextBlock>
+            <TextBlock Name="ProgressText"
+                       FontSize="12"
+                       RelativePanel.AlignRightWithPanel="True"
+                       RelativePanel.AlignHorizontalCenterWithPanel="True"></TextBlock>
+        </RelativePanel>
+        <ListView Grid.Row="1" Name="novelList"
+                      SelectionMode="None"
+                      ContainerContentChanging="ItemsListView_ContainerContentChanging"
+                      Tapped="content_Tapped">
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                </Style>
+            </ListView.ItemContainerStyle>
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid >
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="auto"/>
+                        </Grid.RowDefinitions>
                             <TextBlock Text="{Binding paragraph}"
                                        TextWrapping="WrapWholeWords"
-                                       Margin=" 0 0 15 -15"
-                                       LineHeight="25"
+                                       Margin=" 0 0 15 0"
+                                       LineHeight="30"
                                        FontSize="16"
                                        IsTextSelectionEnabled="False"></TextBlock>
-                            <Image Source="{Binding imageUrl}"></Image>
-                        </StackPanel>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
+                        <Image Source="{Binding imageUrl}"></Image>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
 
         <local:MessageShow x:Name="messShow" VerticalAlignment="Bottom" Grid.RowSpan="2" Margin="60" HorizontalAlignment="Center" />
 
@@ -52,10 +69,12 @@
                     Visibility="Collapsed" 
                     HorizontalAlignment="Stretch" 
                     VerticalAlignment="Bottom"
-                    Background="#66F6F7E3" 
+                    Background="#CCF6F7E3" 
                     Foreground="Black"
                     IsOpen="False" >
+            
             <AppBarButton x:Name="btn_BookMark" Icon="Bookmarks"  Label="加入书签"  Foreground="Black" Click="btn_BookMark_Clicked"/>
+            <AppBarButton x:Name="btn_StatusBar" Icon="Switch"  Label="显示状态栏"  Foreground="Black" Click="btn_StatusBar_Clicked"/>
         </CommandBar>
 
     </Grid>

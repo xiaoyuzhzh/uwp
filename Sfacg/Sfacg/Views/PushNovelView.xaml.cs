@@ -43,7 +43,7 @@ namespace Sfacg.Views
             process.IsActive = true;
             try
             {
-                novels = await NovelUtil.getPushNovels(10);
+                novels = await NovelUtil.getPushNovels(12);
             }
             catch (Exception)
             {
@@ -83,13 +83,13 @@ namespace Sfacg.Views
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            int d = Convert.ToInt32(this.ActualWidth / 160);
+            int d = Convert.ToInt32(this.ActualWidth / 120);
             if (d > 10)
             {
                 d = 10;
             }
 
-            bor_Width.Width = this.ActualWidth / d - 15;
+            bor_Width.Width = (this.ActualWidth - 10 * d) / d - 3;
         }
 
         private async void btn_refresh_Clicked(object sender, RoutedEventArgs e)

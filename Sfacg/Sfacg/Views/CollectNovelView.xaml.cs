@@ -94,5 +94,16 @@ namespace Sfacg.Views
         {
 
         }
+
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            int d = Convert.ToInt32(this.ActualWidth / 120);
+            if (d > 10)
+            {
+                d = 10;
+            }
+
+            bor_Width.Width = (this.ActualWidth - 10 * d) / d - 3;
+        }
     }
 }

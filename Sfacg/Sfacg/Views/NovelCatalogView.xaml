@@ -11,10 +11,10 @@
     mc:Ignorable="d">
 
     <Page.Resources>
-        <CollectionViewSource x:Name="Volumes"  IsSourceGrouped="True" ItemsPath="chapterList" />
+        <CollectionViewSource x:Name="Volumes" Source="{x:Bind volumes}"  IsSourceGrouped="True" ItemsPath="chapterList" />
 
         <DataTemplate x:Key="ChapterDataTemplate" x:DataType="model:ChapterList">
-            <TextBlock Text="{x:Bind title}" FontSize="14" TextWrapping="WrapWholeWords" MaxLines="1"></TextBlock>
+            <TextBlock x:Name="ChapterName" Text="{x:Bind title}" FontSize="14" TextWrapping="WrapWholeWords" MaxLines="1"></TextBlock>
         </DataTemplate>
 
         <DataTemplate x:Key="ZoomedOutTemplate" x:DataType="wuxdata:ICollectionViewGroup">
@@ -40,7 +40,7 @@
                 </PivotItem.Header>
                 <SemanticZoom>
                     <SemanticZoom.ZoomedInView>
-                        <ListView ItemsSource="{x:Bind Volumes.View}"
+                        <ListView Name="CatalogListView" ItemsSource="{x:Bind Volumes.View}"
                                       ItemClick="Chapter_ItemClick"
                                       IsItemClickEnabled="True"
                                       SelectionMode="Single"
@@ -80,8 +80,15 @@
                         </ListView.ItemContainerStyle>
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Grid Holding="Grid_Holding" RightTapped="Grid_RightTapped">
-                                    <TextBlock Text="{Binding chapName}" ></TextBlock>
+                                <Grid Holding="Grid_Holding" RightTapped="Grid_RightTapped" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding chapName}" />
+                                    <TextBlock Grid.Column="1" Text="{Binding progress}" />
+                                    <TextBlock Grid.Column="2" Text="%" />
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

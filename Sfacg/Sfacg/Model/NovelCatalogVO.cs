@@ -39,6 +39,19 @@ namespace Sfacg.Model
         public string isVip { get; set; }
         [DataMember]
         public string AddTime { get; set; }
+
+        /**
+         * 列表位置
+         */
+        public string listPosition { get; set; }
+        /**
+         * 列表项
+         */
+        public int itemId { get; set; }
+        /**
+         * 项高度
+         */
+        public double itemContainerHeight { get; set; }
     }
 
     [DataContract]

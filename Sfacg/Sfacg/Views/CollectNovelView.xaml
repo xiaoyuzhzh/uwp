@@ -5,7 +5,8 @@
     xmlns:local="using:Sfacg.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d">
+    mc:Ignorable="d"
+    SizeChanged="Page_SizeChanged">
 
     <Page.Resources>
         <MenuFlyout x:Name="right_menu">
@@ -18,49 +19,55 @@
     </Page.Resources>
 
     <Grid Background="{ThemeResource Common-Background}">
-        <Border x:Name="bor_Width" Width="160" VerticalAlignment="Top"></Border>
-        <ScrollViewer Name="sv" ViewChanged="sv_ViewChanged"
-                      ScrollViewer.VerticalScrollBarVisibility="Disabled"
-                      HorizontalScrollBarVisibility="Disabled">
-            <GridView Name="page"
-                      IsItemClickEnabled="True"
-                      ItemClick="page_ItemClick"
-                      >
-                <GridView.ItemContainerStyle>
-                    <Style TargetType="GridViewItem">
-                        <!--<Setter Property="BorderThickness" Value="0,0,0,1"/>
-                                            <Setter Property="BorderBrush" Value="#FFCBCBCB"/>-->
-                        <Setter Property="Background" Value="{ThemeResource Common-Block-Background}"></Setter>
-                        <Setter Property="Margin" Value="5"></Setter>
-                    </Style>
-                </GridView.ItemContainerStyle>
-                <GridView.ItemTemplate>
-                    <DataTemplate >
-                        <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
-                            <Grid Background="{ThemeResource Common-Block-Background}" Holding="Grid_Holding" RightTapped="Grid_RightTapped">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="*" />
-                                    <RowDefinition Height="50" />
-                                </Grid.RowDefinitions>
-                                <Image Source="{Binding novelCover}"
-                                   VerticalAlignment="Top"
-                                   ></Image>
-                                <TextBlock Grid.Row="1"
-                                       Text="{Binding novelName}"
-                                       TextWrapping="Wrap"
-                                       MaxLines="2" 
-                                       FontSize="14"
-                                       Padding="5 0 5 0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Border x:Name="bor_Width" Width="120" VerticalAlignment="Top"></Border>
+            <ScrollViewer Name="sv" ViewChanged="sv_ViewChanged"
+                          ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                          HorizontalScrollBarVisibility="Disabled">
+                <GridView Name="page"
+                          IsItemClickEnabled="True"
+                          ItemClick="page_ItemClick"
+                          >
+                    <GridView.ItemContainerStyle>
+                        <Style TargetType="GridViewItem">
+                            <!--<Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                                <Setter Property="BorderBrush" Value="#FFCBCBCB"/>-->
+                            <Setter Property="Background" Value="{ThemeResource Common-Block-Background}"></Setter>
+                            <Setter Property="Margin" Value="5"></Setter>
+                        </Style>
+                    </GridView.ItemContainerStyle>
+                    <GridView.ItemTemplate>
+                        <DataTemplate >
+                            <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
+                                <Grid Background="{ThemeResource Common-Block-Background}" Holding="Grid_Holding" RightTapped="Grid_RightTapped">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="50" />
+                                    </Grid.RowDefinitions>
+                                    <Image Source="{Binding novelCover}"
+                                       VerticalAlignment="Top"
+                                       ></Image>
+                                    <TextBlock Grid.Row="1"
+                                           Text="{Binding novelName}"
+                                           TextWrapping="Wrap"
+                                           MaxLines="2" 
+                                           FontSize="14"
+                                           Padding="5 5 5 0">
 
-                                </TextBlock>
-                            </Grid>
-                        </Border>
-                    </DataTemplate>
-                </GridView.ItemTemplate>
-            </GridView>
-        </ScrollViewer>
-        <TextBlock Name="textInfo" FontSize="15" Foreground="Gray" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0 10 0 0"> 暂无收藏 </TextBlock>
-        <CommandBar VerticalAlignment="Bottom"
+                                    </TextBlock>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                </GridView>
+            </ScrollViewer>
+            <TextBlock Name="textInfo" FontSize="15" Foreground="Gray" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0 10 0 0"> 暂无收藏 </TextBlock>
+        </Grid>
+        <CommandBar Grid.Row="1" VerticalAlignment="Bottom"
                     Background="{ThemeResource Common-Background}"
                     Foreground="Black">
             <AppBarButton x:Name="btn_refresh" Icon="Refresh"  Label="刷新"  Foreground="Black" Click="btn_refresh_Clicked"/>

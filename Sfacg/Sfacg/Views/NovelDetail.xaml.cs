@@ -8,6 +8,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -29,11 +30,17 @@ namespace Sfacg.Views
         private NovelsVOData novelInfo;
         private string novelId;
 
+        ApplicationData applicationData = null;
+        ApplicationDataContainer roamingSettings = null;
+
         public NovelDetail()
         {
             this.InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Enabled;
             process.IsActive = true;
+
+            applicationData = ApplicationData.Current;
+            roamingSettings = applicationData.RoamingSettings;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -103,6 +110,22 @@ namespace Sfacg.Views
             NovelRepositoryUtil.save(novel);
 
             messShow.Show("收藏成功", 1000);
+        }
+
+        private void Read_btn_Click(object sender, RoutedEventArgs e)
+        {
+            var bookmarkStr = roamingSettings.Values["readPoint" + novelId] as string;
+            
+            if (!string.IsNullOrEmpty(bookmarkStr))
+            {
+                var bookmark = JSONUtil.deSerialize<Bookmark>(bookmarkStr);
+                var charpter = new ChapterList() { novelId = bookmark.novelId, chapId = bookmark.chapId, title = bookmark.chapName, itemId = bookmark.itemId, listPosition = bookmark.listPosition, itemContainerHeight = bookmark.itemContainerHeight };
+                //this.Frame.Navigate(typeof(NovelReadView), charpter);
+                this.Frame.Navigate(typeof(NovelReadV2), charpter);
+            }else
+            {
+                messShow.Show("没有阅读记录", 1000);
+            }
         }
     }
 }

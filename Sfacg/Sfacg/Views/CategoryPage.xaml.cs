@@ -380,13 +380,13 @@ namespace Sfacg.Views
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            int d = Convert.ToInt32(this.ActualWidth / 160);
+            int d = Convert.ToInt32(this.ActualWidth / 120);
             if (d > 10)
             {
                 d = 10;
             }
 
-            bor_Width.Width = this.ActualWidth / d - 25;
+            bor_Width.Width = (this.ActualWidth - 10 * d - 20) / d - 3;
         }
 
 
