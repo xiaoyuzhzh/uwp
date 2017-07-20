@@ -11,7 +11,7 @@
     <AssemblyName>Sfacg</AssemblyName>
     <DefaultLanguage>zh-CN</DefaultLanguage>
     <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
-    <TargetPlatformVersion>10.0.15063.0</TargetPlatformVersion>
+    <TargetPlatformVersion>10.0.14393.0</TargetPlatformVersion>
     <TargetPlatformMinVersion>10.0.10586.0</TargetPlatformMinVersion>
     <MinimumVisualStudioVersion>14</MinimumVisualStudioVersion>
     <FileAlignment>512</FileAlignment>
@@ -22,7 +22,6 @@
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|arm</AppxBundlePlatforms>
     <PackageCertificateThumbprint>CE6CA0C772AC375331DA956223FA34EC671A627E</PackageCertificateThumbprint>
-    <RuntimeIdentifiers>win10-arm;win10-arm-aot;win10-x86;win10-x86-aot;win10-x64;win10-x64-aot</RuntimeIdentifiers>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
     <DebugSymbols>true</DebugSymbols>
@@ -110,8 +109,8 @@
     <Content Include="Assets\category\fenlei_wx.jpg" />
     <Content Include="Assets\category\fenlei_xy.jpg" />
     <Content Include="Assets\category\fenlei_yd.jpg" />
-    <Content Include="Assets\defaultCover.jpg" />
     <Content Include="Assets\iconfont.ttf" />
+    <None Include="project.json" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App.xaml.cs">
@@ -123,29 +122,21 @@
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Model\ApiVO\BaseApiVO.cs" />
-    <Compile Include="Model\ApiVO\CategoryNovelApiVO.cs" />
-    <Compile Include="Model\ApiVO\JPNovelApiVO.cs" />
-    <Compile Include="Model\ApiVO\NovelDetailApiVO.cs" />
-    <Compile Include="Model\ApiVO\SearchNovelsApiVO.cs" />
-    <Compile Include="Model\ApiVO\SearchSuggessApiVO.cs" />
     <Compile Include="Model\Base\BaseModel.cs" />
     <Compile Include="Model\CategoryNovelVO.cs" />
-    <Compile Include="Model\InAppVO\NovelVO.cs" />
     <Compile Include="Model\JPNovelVO.cs" />
-    <Compile Include="Model\ApiVO\NovelCatalogApiVO.cs" />
+    <Compile Include="Model\NovelCatalogVO.cs" />
     <Compile Include="Model\NovelContentVO.cs" />
     <Compile Include="Model\NovelDetailModel.cs" />
     <Compile Include="Model\NovelDetailVO.cs" />
     <Compile Include="Model\NovelJSON.cs" />
-    <Compile Include="Model\ApiVO\PushNovelApiVO.cs" />
+    <Compile Include="Model\NovelsVO.cs" />
     <Compile Include="Model\QueryModel\BookmarkQO.cs" />
     <Compile Include="Model\QueryModel\NovelQO.cs" />
     <Compile Include="Model\QueryNovelsVo.cs" />
     <Compile Include="Model\ReadInfo.cs" />
     <Compile Include="Model\StoreModel\Bookmark.cs" />
     <Compile Include="Model\StoreModel\Novel.cs" />
-    <Compile Include="Model\StoreModel\Volume.cs" />
     <Compile Include="Model\SuggestionVO.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SplashPage.xaml.cs">
@@ -154,10 +145,7 @@
     <Compile Include="Utils\AppDatabaseUtil.cs" />
     <Compile Include="Utils\BaseUtil.cs" />
     <Compile Include="Utils\BookmarkRepositoryUtil.cs" />
-    <Compile Include="Utils\HttpUtil.cs" />
     <Compile Include="Utils\JSONUtil.cs" />
-    <Compile Include="Utils\MapperUtil.cs" />
-    <Compile Include="Utils\NovelApiUtil.cs" />
     <Compile Include="Utils\NovelRepositoryUtil.cs" />
     <Compile Include="Utils\NovelUtil.cs" />
     <Compile Include="Views\CategoryPage.xaml.cs">
@@ -180,6 +168,9 @@
     </Compile>
     <Compile Include="Views\NovelReadV2.xaml.cs">
       <DependentUpon>NovelReadV2.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\NovelReadView.xaml.cs">
+      <DependentUpon>NovelReadView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\PushNovelView.xaml.cs">
       <DependentUpon>PushNovelView.xaml</DependentUpon>
@@ -259,6 +250,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Views\NovelReadView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\PushNovelView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -272,26 +267,12 @@
     <SDKReference Include="Microsoft.VCLibs, Version=14.0">
       <Name>Visual C++ 2015 Runtime for Universal Windows Platform Apps</Name>
     </SDKReference>
-    <SDKReference Include="SQLite.UWP.2015, Version=3.19.3">
+    <SDKReference Include="SQLite.UWP.2015, Version=3.18.0">
       <Name>SQLite for Universal Windows Platform</Name>
     </SDKReference>
-    <SDKReference Include="WindowsMobile, Version=10.0.15063.0">
+    <SDKReference Include="WindowsMobile, Version=10.0.14393.0">
       <Name>Windows Mobile Extensions for the UWP</Name>
     </SDKReference>
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="AutoMapper">
-      <Version>6.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
-      <Version>5.3.3</Version>
-    </PackageReference>
-    <PackageReference Include="SQLite.Net-PCL">
-      <Version>3.1.1</Version>
-    </PackageReference>
-    <PackageReference Include="Telerik.UI.for.UniversalWindowsPlatform">
-      <Version>1.0.0.4</Version>
-    </PackageReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

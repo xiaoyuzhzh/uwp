@@ -1,4 +1,6 @@
 ﻿using Sfacg.Model;
+using Sfacg.Model.ApiVO;
+using Sfacg.Model.StoreModel;
 using Sfacg.Utils;
 using System;
 using System.Collections.Generic;
@@ -53,35 +55,41 @@ namespace Sfacg.Views
 
         private int tid = 0;
 
-        private ObservableCollection<CategoryNovelVO> latestNovels;
+        private ObservableCollection<Novel> latestNovels;
 
-        private ObservableCollection<CategoryNovelVO> hotNovels;
+        private ObservableCollection<Novel> hotNovels;
 
-        private ObservableCollection<CategoryNovelVO> finishedNovels;
+        private ObservableCollection<Novel> finishedNovels;
 
-        private ListType currentListType;
+        private FilterType currentFilterType;
 
 
         public CategoryPage()
         {
             this.InitializeComponent();
 
-            latestNovels = new ObservableCollection<CategoryNovelVO>();
+            latestNovels = new ObservableCollection<Novel>();
             latest_Page.ItemsSource = latestNovels;
 
-            hotNovels = new ObservableCollection<CategoryNovelVO>();
+            hotNovels = new ObservableCollection<Novel>();
             hot_Page.ItemsSource = hotNovels;
 
-            finishedNovels = new ObservableCollection<CategoryNovelVO>();
+            finishedNovels = new ObservableCollection<Novel>();
             finished_Page.ItemsSource = finishedNovels;
+
+            NavigationCacheMode = NavigationCacheMode.Enabled;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
             Category category = e.Parameter as Category;
+            if(tid == category.tid)
+            {
+                return;
+            }
             tid = category.tid;
-            currentListType = ListType.latest;
-            loadNextPage(2, true);
+            currentFilterType = FilterType.all;
+            loadNextPage(1, true);
         }
 
         private void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
@@ -89,23 +97,23 @@ namespace Sfacg.Views
             var sv = getScrollViewer();
             if (sv.VerticalOffset == sv.ScrollableHeight)
             {
-                loadNextPage(2, false);
+                loadNextPage(1, false);
             }
         }
 
         private ScrollViewer getScrollViewer()
         {
-            switch (currentListType)
+            switch (currentFilterType)
             {
-                case ListType.latest:
+                case FilterType.all:
                     {
                         return latest_Sv;
                     }
-                case ListType.hot:
+                case FilterType.vip:
                     {
                         return hot_Sv;
                     }
-                case ListType.recommend:
+                case FilterType.finish:
                     {
                         return finished_Sv;
                     }
@@ -142,10 +150,10 @@ namespace Sfacg.Views
 
                 for (int i = 0; i < pageNum; i++)
                 {
-                    List<CategoryNovelVO> nextPageNovels;
+                    List<Novel> novelsInPage;
                     try
                     {
-                        nextPageNovels = await NovelUtil.queryCategoryNovels(tid, currentListType, getPageIndex());
+                        novelsInPage = await NovelApiUtil.queryCategoryNovels(tid,getPageIndex(),20,currentFilterType);
                     }
                     catch (Exception)
                     {
@@ -155,14 +163,14 @@ namespace Sfacg.Views
                         return;
                     }
                     setPageIndex(getPageIndex()+1);
-                    if (nextPageNovels.Count == 0)
+                    if (novelsInPage.Count == 0)
                     {
                         setNoData(true);
                         messShow.Show("没有更多数据了", 3000);
                     }
                     else
                     {
-                        nextPageNovels.ForEach(n =>
+                        novelsInPage.ForEach(n =>
                         {
                             var novels = getNovels();
                             novels.Add(n);
@@ -177,19 +185,19 @@ namespace Sfacg.Views
 
         private void setProcessActive(bool v)
         {
-            switch (currentListType)
+            switch (currentFilterType)
             {
-                case ListType.latest:
+                case FilterType.all:
                     {
                         latestProcess.IsActive = v;
                         break;
                     }
-                case ListType.hot:
+                case FilterType.vip:
                     {
                         hotProcess.IsActive = v;
                         break;
                     }
-                case ListType.recommend:
+                case FilterType.finish:
                     {
                         finishedProcess.IsActive = v;
                         break;
@@ -199,17 +207,17 @@ namespace Sfacg.Views
 
         private bool getNoData()
         {
-            switch (currentListType)
+            switch (currentFilterType)
             {
-                case ListType.latest:
+                case FilterType.all:
                     {
                         return latestNoData;
                     }
-                case ListType.hot:
+                case FilterType.vip:
                     {
                         return hotNoData;
                     }
-                case ListType.recommend:
+                case FilterType.finish:
                     {
                         return finishedNoData;
                     }
@@ -222,19 +230,19 @@ namespace Sfacg.Views
 
         private void setNoData(bool v)
         {
-            switch (currentListType)
+            switch (currentFilterType)
             {
-                case ListType.latest:
+                case FilterType.all:
                     {
                         latestNoData = v;
                         break;
                     }
-                case ListType.hot:
+                case FilterType.vip:
                     {
                         hotNoData = v;
                         break;
                     }
-                case ListType.recommend:
+                case FilterType.finish:
                     {
                         finishedNoData = v;
                         break;
@@ -244,19 +252,19 @@ namespace Sfacg.Views
 
         private void setLoading(bool v)
         {
-            switch (currentListType)
+            switch (currentFilterType)
             {
-                case ListType.latest:
+                case FilterType.all:
                     {
                         latestLoading = v;
                         break;
                     }
-                case ListType.hot:
+                case FilterType.vip:
                     {
                         hotLoading = v;
                         break;
                     }
-                case ListType.recommend:
+                case FilterType.finish:
                     {
                         finishedLoading = v;
                         break;
@@ -266,17 +274,17 @@ namespace Sfacg.Views
 
         private bool getLoading()
         {
-            switch (currentListType)
+            switch (currentFilterType)
             {
-                case ListType.latest:
+                case FilterType.all:
                     {
                         return latestLoading;
                     }
-                case ListType.hot:
+                case FilterType.vip:
                     {
                         return hotLoading;
                     }
-                case ListType.recommend:
+                case FilterType.finish:
                     {
                         return finishedLoading;
                     }
@@ -289,17 +297,17 @@ namespace Sfacg.Views
 
         private int getPageIndex()
         {
-            switch (currentListType)
+            switch (currentFilterType)
             {
-                case ListType.latest:
+                case FilterType.all:
                     {
                         return latestPageIndex ;
                     }
-                case ListType.hot:
+                case FilterType.vip:
                     {
                         return hotPageIndex;
                     }
-                case ListType.recommend:
+                case FilterType.finish:
                     {
                         return finishedPageIndex;
                     }
@@ -311,19 +319,19 @@ namespace Sfacg.Views
 
         private void setPageIndex(int v)
         {
-            switch (currentListType)
+            switch (currentFilterType)
             {
-                case ListType.latest:
+                case FilterType.all:
                     {
                         latestPageIndex = v;
                         break;
                     }
-                case ListType.hot:
+                case FilterType.vip:
                     {
                         hotPageIndex = v;
                         break;
                     }
-                case ListType.recommend:
+                case FilterType.finish:
                     {
                         finishedPageIndex = v;
                         break;
@@ -337,19 +345,19 @@ namespace Sfacg.Views
             novels.Clear();
         }
 
-        private ObservableCollection<CategoryNovelVO> getNovels()
+        private ObservableCollection<Novel> getNovels()
         {
-            switch (currentListType)
+            switch (currentFilterType)
             {
-                case ListType.latest:
+                case FilterType.all:
                     {
                         return latestNovels;
                     }
-                case ListType.hot:
+                case FilterType.vip:
                     {
                         return hotNovels;
                     }
-                case ListType.recommend:
+                case FilterType.finish:
                     {
                         return finishedNovels;
                     }
@@ -359,21 +367,46 @@ namespace Sfacg.Views
             }
         }
 
+        private GridView getGridView()
+        {
+            switch (currentFilterType)
+            {
+                case FilterType.all:
+                    {
+                        return this.latest_Page;
+                    }
+                case FilterType.vip:
+                    {
+                        return this.hot_Page;
+                    }
+                case FilterType.finish:
+                    {
+                        return this.finished_Page;
+                    }
+                default:
+                    {
+                        return null;
+                    }
+            }
+        }
+
         private void page_ItemClick(object sender, ItemClickEventArgs e)
         {
-            CategoryNovelVO item = (CategoryNovelVO)e.ClickedItem;
+            Novel item = (Novel)e.ClickedItem;
 
-            MainPage.secondFrame.Navigate(typeof(NovelDetail), item.NovelID.ToString());
+            getGridView().PrepareConnectedAnimation("novelCover", item, "NovelCoverImage");
+            getGridView().PrepareConnectedAnimation("novelName", item, "NovelName");
+            MainPage.secondFrame.Navigate(typeof(NovelDetail), item);
         }
 
         private void btn_LoadMore_Click(object sender, RoutedEventArgs e)
         {
-            loadNextPage(2, false);
+            loadNextPage(1, false);
         }
 
         private void btn_refresh_Clicked(object sender, RoutedEventArgs e)
         {
-            loadNextPage(2, true);
+            loadNextPage(1, true);
             setInited(true);
         }
 
@@ -392,19 +425,19 @@ namespace Sfacg.Views
 
         private void setInited(bool v)
         {
-            switch (currentListType)
+            switch (currentFilterType)
             {
-                case ListType.latest:
+                case FilterType.all:
                     {
                         latestedInited = v;
                         break;
                     }
-                case ListType.hot:
+                case FilterType.vip:
                     {
                         hotInited = v;
                         break;
                     }
-                case ListType.recommend:
+                case FilterType.finish:
                     {
                         finishedInited = v;
                         break;
@@ -419,41 +452,41 @@ namespace Sfacg.Views
             switch (pivot.SelectedIndex)
             {
                 case 0: {
-                        currentListType = ListType.latest;
+                        currentFilterType = FilterType.all;
                         break;
                     }
                 case 1:
                     {
-                        currentListType = ListType.hot;
+                        currentFilterType = FilterType.vip;
                         break;
                     }
                 case 2:
                     {
-                        currentListType = ListType.recommend;
+                        currentFilterType = FilterType.finish;
                         break;
                     }
             }
 
             if (!getInited())
             {
-                loadNextPage(2, true);
+                loadNextPage(1, true);
                 setInited(true);
             }
         }
 
         private bool getInited()
         {
-            switch (currentListType)
+            switch (currentFilterType)
             {
-                case ListType.latest:
+                case FilterType.all:
                     {
                         return latestedInited;
                     }
-                case ListType.hot:
+                case FilterType.vip:
                     {
                         return hotInited;
                     }
-                case ListType.recommend:
+                case FilterType.finish:
                     {
                         return finishedInited;
                     }

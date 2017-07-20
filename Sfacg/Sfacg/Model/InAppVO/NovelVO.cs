@@ -5,30 +5,9 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sfacg.Model
+namespace Sfacg.Model.InAppVO
 {
-    [DataContract]
-    class NovelsVO
-    {
-        [DataMember]
-        public NovelsVOStatus status { get; set; }
-        [DataMember]
-        public List<NovelsVOData> data { get; set; }
-    }
-
-    [DataContract]
-    public class NovelsVOStatus
-    {
-        [DataMember]
-        public string httpCode { get; set; }
-        [DataMember]
-        public string errorCode { get; set; }
-        [DataMember]
-        public string msg { get; set; }
-    }
-
-    [DataContract]
-    public class NovelsVOData
+    class NovelVO
     {
         [DataMember]
         public string authorId { get; set; }
@@ -60,7 +39,5 @@ namespace Sfacg.Model
         public string allowDown { get; set; }
         [DataMember]
         public string signStatus { get; set; }
-
     }
-
 }

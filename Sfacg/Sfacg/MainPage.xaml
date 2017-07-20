@@ -140,11 +140,11 @@
         </Grid>-->
 
         <Frame x:Name="frame"  Visibility="Visible"  Navigated="frame_Navigated">
-            <Frame.ContentTransitions >
+            <!--<Frame.ContentTransitions >
                 <TransitionCollection>
                     <EdgeUIThemeTransition Edge="Right"/>
                 </TransitionCollection>
-            </Frame.ContentTransitions>
+            </Frame.ContentTransitions>-->
         </Frame>
 
         <Frame x:Name="novelDetail_frame"  Visibility="Visible"  Navigated="novelDetail_frame_Navigated">

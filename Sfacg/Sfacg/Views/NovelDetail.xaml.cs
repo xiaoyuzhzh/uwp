@@ -1,4 +1,5 @@
 ﻿using Sfacg.Model;
+using Sfacg.Model.ApiVO;
 using Sfacg.Model.StoreModel;
 using Sfacg.Utils;
 using System;
@@ -15,6 +16,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
@@ -27,8 +29,9 @@ namespace Sfacg.Views
     public sealed partial class NovelDetail : Page
     {
 
-        private NovelsVOData novelInfo;
+        //private PushNovelApiVOData novelInfo;
         private string novelId;
+        private string novelCover = "ms-appx:///Assets/defaultCover.jpg";
 
         ApplicationData applicationData = null;
         ApplicationDataContainer roamingSettings = null;
@@ -36,7 +39,7 @@ namespace Sfacg.Views
         public NovelDetail()
         {
             this.InitializeComponent();
-            NavigationCacheMode = NavigationCacheMode.Enabled;
+            //NavigationCacheMode = NavigationCacheMode.Enabled;
             process.IsActive = true;
 
             applicationData = ApplicationData.Current;
@@ -47,39 +50,49 @@ namespace Sfacg.Views
         {
             if (e.Parameter is string)
             {
-                var newNovelId = (string)e.Parameter;
-                if (novelId == newNovelId) return;
-                novelId = newNovelId;
-                NovelDetailVO novelDetail;
-                try
-                {
-                    novelDetail = await NovelUtil.getNovelDetail(newNovelId);
-                }
-                catch (Exception)
-                {
-                    messShow.Show("网络异常", 3000);
-                    process.IsActive = false;
-                    return;
-                }
-                novelDetail.NovelCover = "http://rs.sfacg.com/web/novel/images/NovelCover/Big/" + novelDetail.NovelCover;
-
-                NovelDetailModel data = new NovelDetailModel();
-                data.novelDetail = novelDetail;
-                if (string.IsNullOrEmpty(novelDetail.Intro))
-                {
-                    novelDetail.Intro = "连个简介都没有，😔";
-                }
-                if(novelDetail.Tags==null || novelDetail.Tags.Count == 0)
-                {
-                    novelDetail.Tags = new List<string>();
-                    novelDetail.Tags.Add("没有标签");
-                }
-                this.DataContext = data;
-                process.IsActive = false;
+                novelId = (string)e.Parameter;
             }
-            else
+            else if (e.Parameter is Novel)
             {
-                
+                var novel = (Novel)e.Parameter;
+                novelId = novel.novelId;
+                NovelName.Text = novel.novelName;
+                novelCover = novel.novelCover;
+            }
+
+            StartAnimation();//开始切换动画
+            
+            var novelDetail = await NovelApiUtil.getNovelDetail(novelId);
+            if (string.IsNullOrEmpty(novelDetail.intro))
+            {
+                novelDetail.intro = "连个简介都没有，😔";
+            }
+            if (novelDetail.tags == null || novelDetail.tags.Count == 0)
+            {
+                novelDetail.tags = new List<string>();
+                novelDetail.tags.Add("没有标签");
+            }
+            this.DataContext = novelDetail;
+            process.IsActive = false;
+
+
+        }
+
+        /// <summary>
+        /// 启动切换动画
+        /// </summary>
+        private void StartAnimation()
+        {
+            ConnectedAnimation imageAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("novelCover");
+            if (imageAnimation != null)
+            {
+                imageAnimation.TryStart(NovelCover);
+            }
+
+            var testAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("novelName");
+            if (testAnimation != null)
+            {
+                testAnimation.TryStart(NovelName);
             }
         }
 
@@ -103,10 +116,7 @@ namespace Sfacg.Views
 
         private void Collect_btn_Click(object sender, RoutedEventArgs e)
         {
-            var data = (NovelDetailModel)this.DataContext;
-            Novel novel = new Novel() { novelId = data.novelDetail.NovelID,
-                                        novelCover = data.novelDetail.NovelCover,
-                                        novelName = data.novelDetail.NovelName};
+            Novel novel = (Novel)this.DataContext;
             NovelRepositoryUtil.save(novel);
 
             messShow.Show("收藏成功", 1000);
@@ -114,13 +124,10 @@ namespace Sfacg.Views
 
         private void Read_btn_Click(object sender, RoutedEventArgs e)
         {
-            var bookmarkStr = roamingSettings.Values["readPoint" + novelId] as string;
-            
-            if (!string.IsNullOrEmpty(bookmarkStr))
+            var bookmark = BaseUtil.getSetting<Bookmark>(BaseUtil.READ_POINT_PREFIX + novelId,true);
+            if (bookmark!=null)
             {
-                var bookmark = JSONUtil.deSerialize<Bookmark>(bookmarkStr);
-                var charpter = new ChapterList() { novelId = bookmark.novelId, chapId = bookmark.chapId, title = bookmark.chapName, itemId = bookmark.itemId, listPosition = bookmark.listPosition, itemContainerHeight = bookmark.itemContainerHeight };
-                //this.Frame.Navigate(typeof(NovelReadView), charpter);
+                var charpter = new Chapter() { novelId = bookmark.novelId, chapId = bookmark.chapId, title = bookmark.chapName, itemId = bookmark.itemId, listPosition = bookmark.listPosition, itemContainerHeight = bookmark.itemContainerHeight };
                 this.Frame.Navigate(typeof(NovelReadV2), charpter);
             }else
             {

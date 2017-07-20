@@ -4,16 +4,40 @@ using System.Linq;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
+using Sfacg.Model.StoreModel;
+using Sfacg.Utils;
 
-namespace Sfacg.Model
+namespace Sfacg.Model.ApiVO
 {
     [DataContract]
-    class NovelCatalogVO
+    class NovelCatalogApiVO
     {
         [DataMember]
         public Status status { get; set; }
         [DataMember]
-        public NovelCatalogVOData data { get; set; }
+        public NovelCatalogApiVOData data { get; set; }
+
+        internal List<Volume> getVolumes()
+        {
+            var volumes = new List<Volume>();
+
+            if (this.data != null && this.data.volumeList!= null && this.data.volumeList.Count > 0)
+            {
+                this.data.volumeList.ForEach(v => {
+                    var volume = new Volume();
+                    volume = MapperUtil.map(v, volume);
+                    var chapters = new List<Chapter>();
+                    if (v.chapterList != null && v.chapterList.Count > 0)
+                    {
+                        chapters = v.getChapters();
+                    }
+                    volume.chapters = chapters;
+                    volumes.Add(volume);
+                });
+            }
+
+            return volumes;
+        }
     }
 
     [DataContract]
@@ -65,10 +89,24 @@ namespace Sfacg.Model
         public string sno { get; set; }
         [DataMember]
         public List<ChapterList> chapterList { get; set; }
+
+        internal List<Chapter> getChapters()
+        {
+            var chapters = new List<Chapter>();
+            if (this.chapterList != null && this.chapterList.Count > 0)
+            {
+                this.chapterList.ForEach(c => {
+                    var chapter = new Chapter();
+                    chapter = MapperUtil.map(c, chapter);
+                    chapters.Add(chapter);
+                });
+            }
+            return chapters;
+        }
     }
 
     [DataContract]
-    public class NovelCatalogVOData
+    public class NovelCatalogApiVOData
     {
         [DataMember]
         public string novelId { get; set; }

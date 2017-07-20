@@ -5,12 +5,31 @@
     xmlns:local="using:Sfacg.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:model="using:Sfacg.Model.StoreModel"
     mc:Ignorable="d"
     SizeChanged="Page_SizeChanged">
     <Page.Resources>
         <Style x:Key="pivotItemTextBlock" TargetType="TextBlock">
             <Setter Property="FontSize" Value="16" />
         </Style>
+        <DataTemplate x:Key="novelViewTemplate" x:DataType="model:Novel">
+            <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
+                <Grid Background="{ThemeResource Common-Block-Background}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="48" />
+                    </Grid.RowDefinitions>
+                    <Image x:Name="NovelCoverImage" Source="{Binding novelCover}"></Image>
+                    <TextBlock x:Name="NovelName" Grid.Row="1"
+                                Text="{Binding novelName}"
+                                TextWrapping="Wrap"
+                                MaxLines="2"
+                                FontSize="14"
+                                Padding="5 5 5 0">
+                    </TextBlock>
+                </Grid>
+            </Border>
+        </DataTemplate>
     </Page.Resources>
 
     <Grid Background="{ThemeResource Common-Background}">
@@ -23,14 +42,15 @@
             <Pivot SelectionChanged="Pivot_SelectionChanged">
                 <PivotItem>
                     <PivotItem.Header>
-                        <TextBlock Style="{StaticResource pivotItemTextBlock}">最新</TextBlock>
+                        <TextBlock Style="{StaticResource pivotItemTextBlock}">全部</TextBlock>
                     </PivotItem.Header>
                     <Grid>
                         <ScrollViewer Name="latest_Sv" ViewChanged="sv_ViewChanged">
                             <StackPanel>
                                 <GridView Name="latest_Page"
-                      IsItemClickEnabled="True"
-                      ItemClick="page_ItemClick">
+                                          IsItemClickEnabled="True"
+                                          ItemClick="page_ItemClick"
+                                          ItemTemplate="{StaticResource novelViewTemplate}">
                                     <GridView.ItemContainerStyle>
                                         <Style TargetType="GridViewItem">
                                             <!--<Setter Property="BorderThickness" Value="0,0,0,1"/>
@@ -39,26 +59,6 @@
                                             <Setter Property="Margin" Value="5"></Setter>
                                         </Style>
                                     </GridView.ItemContainerStyle>
-                                    <GridView.ItemTemplate>
-                                        <DataTemplate >
-                                            <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
-                                                <Grid Background="{ThemeResource Common-Block-Background}">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="*" />
-                                                        <RowDefinition Height="48" />
-                                                    </Grid.RowDefinitions>
-                                                    <Image Source="{Binding NovelCover}"></Image>
-                                                    <TextBlock Grid.Row="1"
-                                                               Text="{Binding NovelName}"
-                                                               TextWrapping="Wrap"
-                                                               MaxLines="2"
-                                                               FontSize="14"
-                                                               Padding="5 5 5 0">
-                                                    </TextBlock>
-                                                </Grid>
-                                            </Border>
-                                        </DataTemplate>
-                                    </GridView.ItemTemplate>
                                 </GridView>
                                 <Button x:Name="btn_LoadMoreLatest" Background="#00DF85A0" FontSize="14" Padding="20 5" Foreground="Gray" HorizontalAlignment="Center" Click="btn_LoadMore_Click">点我加载更多</Button>
                             </StackPanel>
@@ -76,8 +76,9 @@
                         <ScrollViewer Name="hot_Sv" ViewChanged="sv_ViewChanged">
                             <StackPanel>
                                 <GridView Name="hot_Page"
-                      IsItemClickEnabled="True"
-                      ItemClick="page_ItemClick">
+                                          IsItemClickEnabled="True"
+                                          ItemClick="page_ItemClick"
+                                          ItemTemplate="{StaticResource novelViewTemplate}">
                                     <GridView.ItemContainerStyle>
                                         <Style TargetType="GridViewItem">
                                             <!--<Setter Property="BorderThickness" Value="0,0,0,1"/>
@@ -86,26 +87,6 @@
                                             <Setter Property="Margin" Value="5"></Setter>
                                         </Style>
                                     </GridView.ItemContainerStyle>
-                                    <GridView.ItemTemplate>
-                                        <DataTemplate >
-                                            <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
-                                                <Grid Background="{ThemeResource Common-Block-Background}">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="*" />
-                                                        <RowDefinition Height="48" />
-                                                    </Grid.RowDefinitions>
-                                                    <Image Source="{Binding NovelCover}"></Image>
-                                                    <TextBlock Grid.Row="1"
-                                                               Text="{Binding NovelName}"
-                                                               TextWrapping="Wrap"
-                                                               MaxLines="2"
-                                                               FontSize="14"
-                                                               Padding="5 5 5 0">
-                                                    </TextBlock>
-                                                </Grid>
-                                            </Border>
-                                        </DataTemplate>
-                                    </GridView.ItemTemplate>
                                 </GridView>
                                 <Button x:Name="btn_LoadMoreHot" Background="#00DF85A0" FontSize="14" Padding="20 5" Foreground="Gray" HorizontalAlignment="Center" Click="btn_LoadMore_Click">点我加载更多</Button>
                             </StackPanel>
@@ -123,8 +104,9 @@
                         <ScrollViewer Name="finished_Sv" ViewChanged="sv_ViewChanged">
                             <StackPanel>
                                 <GridView Name="finished_Page"
-                      IsItemClickEnabled="True"
-                      ItemClick="page_ItemClick">
+                                          IsItemClickEnabled="True"
+                                          ItemClick="page_ItemClick"
+                                          ItemTemplate="{StaticResource novelViewTemplate}">
                                     <GridView.ItemContainerStyle>
                                         <Style TargetType="GridViewItem">
                                             <!--<Setter Property="BorderThickness" Value="0,0,0,1"/>
@@ -133,26 +115,6 @@
                                             <Setter Property="Margin" Value="5"></Setter>
                                         </Style>
                                     </GridView.ItemContainerStyle>
-                                    <GridView.ItemTemplate>
-                                        <DataTemplate >
-                                            <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
-                                                <Grid Background="{ThemeResource Common-Block-Background}">
-                                                    <Grid.RowDefinitions>
-                                                        <RowDefinition Height="*" />
-                                                        <RowDefinition Height="48" />
-                                                    </Grid.RowDefinitions>
-                                                    <Image Source="{Binding NovelCover}"></Image>
-                                                    <TextBlock Grid.Row="1"
-                                                               Text="{Binding NovelName}"
-                                                               TextWrapping="Wrap"
-                                                               MaxLines="2"
-                                                               FontSize="14"
-                                                               Padding="5 5 5 0">
-                                                    </TextBlock>
-                                                </Grid>
-                                            </Border>
-                                        </DataTemplate>
-                                    </GridView.ItemTemplate>
                                 </GridView>
                                 <Button x:Name="btn_LoadMoreFinished" Background="#00DF85A0" FontSize="14" Padding="20 5" Foreground="Gray" HorizontalAlignment="Center" Click="btn_LoadMore_Click">点我加载更多</Button>
                             </StackPanel>

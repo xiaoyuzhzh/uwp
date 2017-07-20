@@ -6,19 +6,19 @@
     xmlns:local="using:Sfacg.Views"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:model="using:Sfacg.Model"
+    xmlns:model="using:Sfacg.Model.StoreModel"
     xmlns:wuxdata="using:Windows.UI.Xaml.Data"
     mc:Ignorable="d">
 
     <Page.Resources>
-        <CollectionViewSource x:Name="Volumes" Source="{x:Bind volumes}"  IsSourceGrouped="True" ItemsPath="chapterList" />
+        <CollectionViewSource x:Name="Volumes" Source="{x:Bind volumes}"  IsSourceGrouped="True" ItemsPath="chapters" />
 
-        <DataTemplate x:Key="ChapterDataTemplate" x:DataType="model:ChapterList">
+        <DataTemplate x:Key="ChapterDataTemplate" x:DataType="model:Chapter">
             <TextBlock x:Name="ChapterName" Text="{x:Bind title}" FontSize="14" TextWrapping="WrapWholeWords" MaxLines="1"></TextBlock>
         </DataTemplate>
 
         <DataTemplate x:Key="ZoomedOutTemplate" x:DataType="wuxdata:ICollectionViewGroup">
-            <TextBlock Text="{x:Bind Group.(model:VolumeList.title)}" FontSize="18" Style="{ThemeResource TitleTextBlockStyle}"/>
+            <TextBlock Text="{x:Bind Group.(model:Volume.title)}" FontSize="18" Style="{ThemeResource TitleTextBlockStyle}"/>
         </DataTemplate>
 
         <MenuFlyout x:Name="right_menu">
@@ -29,10 +29,41 @@
             <MenuFlyoutItem x:Name="menuitem_Delete_F" Click="menuitem_Delete_F_Click">删除</MenuFlyoutItem>
         </MenuFlyout>
     </Page.Resources>
-    
-    
+
+    <Page.BottomAppBar>
+        <CommandBar>
+            <AppBarButton x:Name="SelectItmesBtn" FontFamily="OverflowCheckGlyph" Label="Select Items" Click="SelectItems">
+                <AppBarButton.Icon>
+                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe762;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+            <AppBarButton x:Name="CancelSelectionBtn" Label="Cancel" Icon="Cancel" Click="CancelSelection" />
+        </CommandBar>
+    </Page.BottomAppBar>
+
+
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="CatalogListVisualGroup">
+                <VisualState x:Name="SingleSelectionState">
+                    <VisualState.Setters>
+                        <Setter Target="CatalogListView.SelectionMode" Value="Single"/>
+                        <Setter Target="CatalogListView.IsItemClickEnabled" Value="True"/>
+                        <Setter Target="SelectItmesBtn.Visibility" Value="Visible" />
+                        <Setter Target="CancelSelectionBtn.Visibility" Value="Collapsed" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="MultipleSelectionState">
+                    <VisualState.Setters>
+                        <Setter Target="CatalogListView.SelectionMode" Value="Multiple"/>
+                        <Setter Target="CatalogListView.IsItemClickEnabled" Value="False"/>
+                        <Setter Target="SelectItmesBtn.Visibility" Value="Collapsed" />
+                        <Setter Target="CancelSelectionBtn.Visibility" Value="Visible" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <Pivot>
             <PivotItem >
                 <PivotItem.Header>
@@ -45,11 +76,12 @@
                                       IsItemClickEnabled="True"
                                       SelectionMode="Single"
                                       ItemTemplate="{StaticResource ChapterDataTemplate}"
+                                  Loaded="CatalogListView_Loaded"
                                   >
                             <ListView.GroupStyle>
                                 <GroupStyle >
                                     <GroupStyle.HeaderTemplate>
-                                        <DataTemplate x:DataType="model:VolumeList">
+                                        <DataTemplate x:DataType="model:Volume">
                                             <TextBlock Text="{x:Bind title}" 
                                                        FontSize="18"
                                                Style="{ThemeResource TitleTextBlockStyle}"/>
@@ -72,7 +104,8 @@
                     <TextBlock Name="textInfo" FontSize="15" Foreground="Gray" Visibility="Collapsed" HorizontalAlignment="Center" Margin="0 10 0 0"> 暂无书签</TextBlock>
                     <ListView ItemsSource="{x:Bind bookmarks}"
                               ItemClick="bookmark_ItemClick"
-                              IsItemClickEnabled="True">
+                              IsItemClickEnabled="True"
+                              >
                         <ListView.ItemContainerStyle>
                             <Style TargetType="ListViewItem">
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>

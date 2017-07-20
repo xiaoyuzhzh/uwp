@@ -48,10 +48,10 @@
                                         <RowDefinition Height="*" />
                                         <RowDefinition Height="50" />
                                     </Grid.RowDefinitions>
-                                    <Image Source="{Binding novelCover}"
+                                    <Image x:Name="NovelCoverImage" Source="{Binding novelCover}"
                                        VerticalAlignment="Top"
                                        ></Image>
-                                    <TextBlock Grid.Row="1"
+                                    <TextBlock x:Name="NovelName" Grid.Row="1"
                                            Text="{Binding novelName}"
                                            TextWrapping="Wrap"
                                            MaxLines="2" 

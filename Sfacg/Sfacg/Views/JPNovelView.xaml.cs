@@ -1,4 +1,5 @@
 ﻿using Sfacg.Model;
+using Sfacg.Model.StoreModel;
 using Sfacg.Utils;
 using System;
 using System.Collections.Generic;
@@ -25,7 +26,7 @@ namespace Sfacg.Views
     /// </summary>
     public sealed partial class JPNovelView : Page
     {
-        private ObservableCollection<JPNovelData> novels;
+        private ObservableCollection<Novel> novels;
 
         private bool loading = false;
 
@@ -39,7 +40,7 @@ namespace Sfacg.Views
         {
             this.InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Enabled;
-            novels = new ObservableCollection<JPNovelData>();
+            novels = new ObservableCollection<Novel>();
             page.ItemsSource = novels;
         }
 
@@ -56,9 +57,10 @@ namespace Sfacg.Views
 
         private void page_ItemClick(object sender, ItemClickEventArgs e)
         {
-            JPNovelData item = (JPNovelData)e.ClickedItem;
-
-            MainPage.secondFrame.Navigate(typeof(NovelDetail), item.NovelID);
+            Novel item = (Novel)e.ClickedItem;
+            page.PrepareConnectedAnimation("novelCover", item, "NovelCoverImage");
+            page.PrepareConnectedAnimation("novelName", item, "NovelName");
+            MainPage.secondFrame.Navigate(typeof(NovelDetail), item);
         }
 
         private void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
@@ -83,16 +85,16 @@ namespace Sfacg.Views
 
                 if (init)
                 {
-                    pageIndex = 1;
+                    pageIndex = 0;
                     novels.Clear();
                 }
 
                 for (int i = 0; i< pageNum; i++)
                 {
-                    List<JPNovelData> nextPageNovels;
+                    List<Novel> novelsInPage;
                     try
                     {
-                        nextPageNovels = await NovelUtil.getJPNovels(pageIndex, ListType.latest);
+                        novelsInPage = await NovelApiUtil.getJPNovels(pageIndex, 12, ListType.latest);
                     }
                     catch (Exception)
                     {
@@ -102,18 +104,19 @@ namespace Sfacg.Views
                         return;
                     }
                     pageIndex++;
-                    if (nextPageNovels.Count == 0)
+                    if (novelsInPage.Count == 0)
                     {
                         noData = true;
                         messShow.Show("没有更多数据了", 3000);
                     }else
                     {
-                        nextPageNovels.ForEach(n =>
+                        novelsInPage.ForEach(n =>
                         {
                             novels.Add(n);
                         });
                     }
                 }
+                
                 loading = false;
                 process.IsActive = false;
             }

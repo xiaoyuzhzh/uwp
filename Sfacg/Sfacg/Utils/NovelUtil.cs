@@ -1,4 +1,5 @@
 ﻿using Sfacg.Model;
+using Sfacg.Model.ApiVO;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -79,7 +80,7 @@ namespace Sfacg.Utils
             }
         }
 
-        public static async Task<List<NovelsVOData>> getPushNovels(int size)
+        public static async Task<List<PushNovelApiVOData>> getPushNovels(int size)
         {
             //调用接口获取文本
             HttpClient httpClient = new HttpClient();
@@ -88,10 +89,10 @@ namespace Sfacg.Utils
             HttpResponseMessage x = await httpClient.GetAsync(uri);
             var result = await x.Content.ReadAsStringAsync();
 
-            var serializer = new DataContractJsonSerializer(typeof(NovelsVO));
+            var serializer = new DataContractJsonSerializer(typeof(PushNovelApiVO));
             var ms = new MemoryStream(Encoding.UTF8.GetBytes(result));
 
-            NovelsVO data = (NovelsVO)serializer.ReadObject(ms);
+            PushNovelApiVO data = (PushNovelApiVO)serializer.ReadObject(ms);
 
 
             return data.data;
@@ -131,10 +132,10 @@ namespace Sfacg.Utils
             HttpResponseMessage x = await httpClient.GetAsync(uri);
             var result = await x.Content.ReadAsStringAsync();
 
-            var serializer = new DataContractJsonSerializer(typeof(NovelCatalogVO));
+            var serializer = new DataContractJsonSerializer(typeof(NovelCatalogApiVO));
             var ms = new MemoryStream(Encoding.UTF8.GetBytes(result));
 
-            NovelCatalogVO response = (NovelCatalogVO)serializer.ReadObject(ms);
+            NovelCatalogApiVO response = (NovelCatalogApiVO)serializer.ReadObject(ms);
 
             return response.data.volumeList;
 

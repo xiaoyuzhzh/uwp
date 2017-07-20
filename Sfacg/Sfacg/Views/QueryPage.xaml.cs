@@ -1,4 +1,5 @@
 ﻿using Sfacg.Model;
+using Sfacg.Model.StoreModel;
 using Sfacg.Utils;
 using System;
 using System.Collections.Generic;
@@ -54,7 +55,7 @@ namespace Sfacg.Views
                 return;
             }
             keyword = Uri.EscapeDataString(text);
-            List<Novels> novels = await NovelUtil.queryNovels(keyword);
+            List<Novel> novels = await NovelApiUtil.queryNovels(keyword);
             result.ItemsSource = novels;
         }
 
@@ -68,7 +69,7 @@ namespace Sfacg.Views
         {
             try
             {
-                return await NovelUtil.getSugges(text);
+                return await NovelApiUtil.getSugges(text);
             }
             catch (Exception)
             {
@@ -79,8 +80,10 @@ namespace Sfacg.Views
 
         private void page_ItemClick(object sender, ItemClickEventArgs e)
         {
-            Novels novel = (Novels)e.ClickedItem;
-            this.Frame.Navigate(typeof(NovelDetail), novel.NovelID);
+            Novel novel = (Novel)e.ClickedItem;
+            result.PrepareConnectedAnimation("novelCover", novel, "NovelCoverImage");
+            result.PrepareConnectedAnimation("novelName", novel, "NovelName");
+            this.Frame.Navigate(typeof(NovelDetail), novel);
         }
     }
 }

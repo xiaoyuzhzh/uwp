@@ -1,10 +1,12 @@
 ﻿using Sfacg.Model;
+using Sfacg.Model.ApiVO;
 using Sfacg.Model.StoreModel;
 using Sfacg.Utils;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -21,6 +23,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
@@ -32,9 +35,9 @@ namespace Sfacg.Views
     /// </summary>
     public sealed partial class NovelReadV2 : Page
     {
-        private ChapterList chapter;
+        private Chapter chapter;
 
-        private LinkedList<ChapterList> chapters;
+        private LinkedList<Chapter> chapters;
 
         StatusBar statusBar;
 
@@ -54,16 +57,14 @@ namespace Sfacg.Views
 
         private bool hasLoadPosition = false;//是否已经跳跃到指定位置，主要用在ListView的contentChanging方法中，跳转之后，不再需要监听事件
 
-        private static double itemContainerHeight = -1;
-        private static int itemId = -1;
+        private static double itemContainerHeight = 0;
+        private static int itemId = 0;
         private static string _persistedPosition = "";
 
         private ScrollViewer scrollViewer = null;
 
         private int progress = 0;
 
-        ApplicationData applicationData = null;
-        ApplicationDataContainer roamingSettings = null;
 
         public NovelReadV2()
         {
@@ -78,10 +79,8 @@ namespace Sfacg.Views
             novelContents = new ObservableCollection<NovelContentVO>();
             novelList.ItemsSource = novelContents;
 
-            chapters = new LinkedList<ChapterList>();
+            chapters = new LinkedList<Chapter>();
 
-            applicationData = ApplicationData.Current;
-            roamingSettings = applicationData.RoamingSettings;
         }
 
         /**
@@ -89,19 +88,37 @@ namespace Sfacg.Views
          */
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            if (e.Parameter is ChapterList)
+            if (e.Parameter is Chapter)
             {
-                chapter = (ChapterList)e.Parameter;
+                chapter = (Chapter)e.Parameter;
+                ChapterName.Text = chapter.title;
                 process.IsActive = true;
                 string novelStr;
-                itemId = chapter.itemId == 0? -1:chapter.itemId;
                 _persistedPosition = chapter.listPosition;
-                itemContainerHeight = chapter.itemContainerHeight;
-                hasLoadPosition = false;//刚进入页面，需要跳转
+                if (!string.IsNullOrEmpty(_persistedPosition)) {
+                    itemId = chapter.itemId;
+                    itemContainerHeight = chapter.itemContainerHeight;
+                    hasLoadPosition = false;//刚进入页面，需要跳转
+                }
+                else
+                {
+                    itemId = 0;
+                    itemContainerHeight = 0;
+                    hasLoadPosition = true;//没有阅读断点，标记为已跳转
+                }
+
+                
+
+                var titleAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("chapterName");
+                if (titleAnimation != null) {
+                    titleAnimation.TryStart(ChapterName);
+                }
+
+                
 
                 try
                 {
-                    novelStr = await NovelUtil.getNovel(chapter.novelId, chapter.chapId);
+                    novelStr = await NovelApiUtil.getNovel(chapter.novelId, chapter.chapId);
                 }
                 catch (Exception)
                 {
@@ -126,6 +143,7 @@ namespace Sfacg.Views
          */ 
         protected override void OnNavigatedFrom(NavigationEventArgs e)
         {
+
             showStatusBar(true);
         }
 
@@ -145,6 +163,7 @@ namespace Sfacg.Views
             showSomeContent(start);
             loadPosition();
             ProgressText.Text = getProgress() + "%";
+            updateReadPoint();
         }
 
         private void showSomeContent(int offset)
@@ -307,6 +326,7 @@ namespace Sfacg.Views
             {
                 Down_ComBar.Visibility = Visibility.Collapsed;
             }
+
         }
 
         private void btn_BookMark_Clicked(object sender, RoutedEventArgs e)
@@ -320,7 +340,7 @@ namespace Sfacg.Views
         private int getProgress()
         {
             markPosition();
-            return Convert.ToInt32(((double)itemId / (double)tempArray.Length * 100));
+            return Convert.ToInt32(itemId / (double)tempArray.Length * 100);
         }
 
         private void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
@@ -357,9 +377,7 @@ namespace Sfacg.Views
                 }
 
                 //缓存阅读进度
-
-                var bookmark = new Bookmark() { novelId = chapter.novelId, chapId = chapter.chapId, chapName = chapter.title, itemId = itemId, itemContainerHeight = itemContainerHeight, listPosition = _persistedPosition, progress = getProgress() };
-                roamingSettings.Values["readPoint" + chapter.novelId] = JSONUtil.serialize<Bookmark>(bookmark);
+                updateReadPoint();
             }
             catch (Exception)
             {
@@ -372,9 +390,19 @@ namespace Sfacg.Views
             
         }
 
+        /// <summary>
+        /// 更新阅读进度
+        /// </summary>
+        private void updateReadPoint()
+        {
+            markPosition();
+            var bookmark = new Bookmark() { novelId = chapter.novelId, chapId = chapter.chapId, chapName = chapter.title, itemId = itemId, itemContainerHeight = itemContainerHeight, listPosition = _persistedPosition, progress = getProgress() };
+            BaseUtil.setSetting<Bookmark>(BaseUtil.READ_POINT_PREFIX + chapter.novelId, bookmark, true);
+        }
+
         private async void loadPosition()
         {
-            if (!string.IsNullOrEmpty(_persistedPosition))
+            if (!hasLoadPosition&&!string.IsNullOrEmpty(_persistedPosition))
             {
                 // Here we kick off the async function to use the saved string _persistedPosition and the function GetItem to restore the scroll posistion
                 await ListViewPersistenceHelper.SetRelativeScrollPositionAsync(this.novelList, _persistedPosition, this.GetItem);
@@ -391,7 +419,7 @@ namespace Sfacg.Views
             // a unique key this function returns
             return Task.Run(() =>
             {
-                if (novelContents.Count <= 0)
+                if (novelContents.Count <= 0||string.IsNullOrEmpty(key))
                 {
                     return null;
                 }
@@ -418,7 +446,7 @@ namespace Sfacg.Views
             }
             else
             {
-                return string.Empty;
+                return "0";
             }
         }
 
@@ -511,8 +539,6 @@ namespace Sfacg.Views
         {
             scrollViewer = FindFirstChild<ScrollViewer>(novelList);
             scrollViewer.ViewChanged += sv_ViewChanged;
-
-            
         }
 
         private void btn_StatusBar_Clicked(object sender, RoutedEventArgs e)

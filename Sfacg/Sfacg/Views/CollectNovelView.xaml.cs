@@ -59,7 +59,9 @@ namespace Sfacg.Views
         private void page_ItemClick(object sender, ItemClickEventArgs e)
         {
             Novel item = (Novel)e.ClickedItem;
-            MainPage.secondFrame.Navigate(typeof(NovelDetail), item.novelId);
+            page.PrepareConnectedAnimation("novelCover", item, "NovelCoverImage");
+            page.PrepareConnectedAnimation("novelName", item, "NovelName");
+            MainPage.secondFrame.Navigate(typeof(NovelDetail), item);
         }
 
         private void btn_refresh_Clicked(object sender, RoutedEventArgs e)

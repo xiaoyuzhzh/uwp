@@ -1,4 +1,5 @@
 ﻿using Sfacg.Model;
+using Sfacg.Model.ApiVO;
 using Sfacg.Model.QueryModel;
 using Sfacg.Model.StoreModel;
 using Sfacg.Utils;
@@ -17,6 +18,7 @@ using Windows.UI.Xaml.Controls.Primitives;
 using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Animation;
 using Windows.UI.Xaml.Navigation;
 
 // “空白页”项模板在 http://go.microsoft.com/fwlink/?LinkId=234238 上提供
@@ -29,7 +31,7 @@ namespace Sfacg.Views
     /// </summary>
     public sealed partial class NovelCatalogView : Page
     {
-        private ObservableCollection<VolumeList> volumes;
+        private ObservableCollection<Volume> volumes;
         private ObservableCollection<Bookmark> bookmarks;
 
         private string novelId;
@@ -37,16 +39,18 @@ namespace Sfacg.Views
         public NovelCatalogView()
         {
             this.InitializeComponent();
-            volumes = new ObservableCollection<VolumeList>();
+            volumes = new ObservableCollection<Volume>();
             bookmarks = new ObservableCollection<Bookmark>();
-            NavigationCacheMode = NavigationCacheMode.Enabled;
+            //NavigationCacheMode = NavigationCacheMode.Enabled;
 
             process.IsActive = true;
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            
+
+            //初始化界面
+            VisualStateManager.GoToState(this, SingleSelectionState.Name, true);
 
             if (e.Parameter is string)
             {
@@ -62,10 +66,14 @@ namespace Sfacg.Views
 
                 novelId = novelIdNew;
 
-                List<VolumeList> volumeList;
+                List<Volume> volumeList;
                 try
                 {
-                    volumeList = await NovelUtil.getNovelCatalog(novelId);
+                    volumeList = await NovelApiUtil.getNovelCatalog(novelId);
+                    volumes.Clear();
+                    volumeList.ForEach(v => volumes.Add(v));
+
+                    process.IsActive = false;
                 }
                 catch (Exception)
                 {
@@ -73,26 +81,26 @@ namespace Sfacg.Views
                     process.IsActive = false;
                     return;
                 }
-                volumes.Clear();
-                volumeList.ForEach(v => volumes.Add(v));
-
-                var bookmark = BaseUtil.getSetting<Bookmark>("readPoint" + novelId,true);
-                if (bookmark != null)
-                {
-                    CatalogListView.SelectedIndex = getIndex(bookmark);
-                    CatalogListView.ScrollIntoView(getItem(bookmark),ScrollIntoViewAlignment.Leading);
-                }
-
-
-
-
-                process.IsActive = false;
             }
             else
             {
 
             }
+
+            var bookmark = BaseUtil.getSetting<Bookmark>(BaseUtil.READ_POINT_PREFIX + novelId, true);
+            if (bookmark != null)
+            {
+                var item = getItem(bookmark);
+                if (item == null)
+                {
+                    return;
+                }
+                CatalogListView.SelectedItem = item;
+                CatalogListView.ScrollIntoView(item, ScrollIntoViewAlignment.Leading);
+
+            }
         }
+
 
         private int getIndex(Bookmark bookmark)
         {
@@ -116,7 +124,7 @@ namespace Sfacg.Views
             var array = CatalogListView.Items.ToArray();
             for (; index < array.Length; index++)
             {
-                if (((ChapterList)array[index]).chapId.Equals(bookmark.chapId))
+                if (((Chapter)array[index]).chapId.Equals(bookmark.chapId))
                 {
                     return array[index];
                 }
@@ -142,19 +150,17 @@ namespace Sfacg.Views
 
         private void Chapter_ItemClick(object sender, ItemClickEventArgs e)
         {
-            var charpter = (ChapterList)e.ClickedItem;
+            var charpter = (Chapter)e.ClickedItem;
 
-            
+            CatalogListView.PrepareConnectedAnimation("chapterName", charpter, "ChapterName");
 
-            var bookmark = BaseUtil.getSetting<Bookmark>("readPoint" + novelId, true);
+            var bookmark = BaseUtil.getSetting<Bookmark>(BaseUtil.READ_POINT_PREFIX + novelId, true);
             if (bookmark != null&&charpter.chapId.Equals(bookmark.chapId))
             {
                 charpter.itemId = bookmark.itemId;
                 charpter.itemContainerHeight = bookmark.itemContainerHeight;
                 charpter.listPosition = bookmark.listPosition;
             }
-
-
             this.Frame.Navigate(typeof(NovelReadV2), charpter);
 
         }
@@ -195,6 +201,30 @@ namespace Sfacg.Views
         private void Grid_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             right_menu.ShowAt(sender as Grid, e.GetPosition(sender as Grid));
+        }
+
+        private void SelectItems(object sender, RoutedEventArgs e)
+        {
+            if (CatalogListView.Items.Count > 0)
+            {
+                VisualStateManager.GoToState(this, MultipleSelectionState.Name, true);
+            }
+        }
+
+        private void CancelSelection(object sender, RoutedEventArgs e)
+        {
+            VisualStateManager.GoToState(this,SingleSelectionState.Name, true);
+        }
+
+        private void ListView_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private async void CatalogListView_Loaded(object sender, RoutedEventArgs e)
+        {
+
+
         }
     }
 }

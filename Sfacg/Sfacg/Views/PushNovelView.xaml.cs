@@ -1,4 +1,5 @@
 ﻿using Sfacg.Model;
+using Sfacg.Model.StoreModel;
 using Sfacg.Utils;
 using Sfacg.Views;
 using System;
@@ -25,7 +26,7 @@ namespace Sfacg.Views
     /// </summary>
     public sealed partial class PushNovelView : Page
     {
-        private List<NovelsVOData> novels;
+        private List<Novel> novels;
 
         public PushNovelView()
         {
@@ -34,7 +35,6 @@ namespace Sfacg.Views
         }
         protected override async void OnNavigatedTo(NavigationEventArgs e)
         {
-            
             getPushNovels();
         }
 
@@ -43,7 +43,7 @@ namespace Sfacg.Views
             process.IsActive = true;
             try
             {
-                novels = await NovelUtil.getPushNovels(12);
+                novels = await NovelApiUtil.getPushNovels(12);
             }
             catch (Exception)
             {
@@ -58,8 +58,11 @@ namespace Sfacg.Views
 
         private void page_ItemClick(object sender, ItemClickEventArgs e)
         {
-            NovelsVOData item = (NovelsVOData)e.ClickedItem;
-            MainPage.secondFrame.Navigate(typeof(NovelDetail), item.novelId);
+            
+            Novel item = (Novel)e.ClickedItem;
+            page.PrepareConnectedAnimation("novelCover", item, "NovelCoverImage");
+            page.PrepareConnectedAnimation("novelName", item, "NovelName");
+            MainPage.secondFrame.Navigate(typeof(NovelDetail), item);
         }
 
 
@@ -96,5 +99,6 @@ namespace Sfacg.Views
         {
             getPushNovels();
         }
+
     }
 }
