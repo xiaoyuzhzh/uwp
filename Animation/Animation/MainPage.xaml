@@ -8,6 +8,14 @@
     mc:Ignorable="d">
 
     <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
-        <Rectangle Fill="{ThemeResource SystemControlAcrylicWindowBrush}" />
+        <NavigationView>
+            <NavigationView.MenuItems>
+                <TextBlock>aaa</TextBlock>
+                <TextBlock>bbb</TextBlock>
+            </NavigationView.MenuItems>
+            <NavigationView.AutoSuggestBox>
+                <AutoSuggestBox PlaceholderText="搜索内容" QueryIcon="Find" />
+            </NavigationView.AutoSuggestBox>
+        </NavigationView>
     </Grid>
 </Page>
