@@ -61,8 +61,18 @@ namespace Sfacg.Views
             }
 
             StartAnimation();//开始切换动画
-            
-            var novelDetail = await NovelApiUtil.getNovelDetail(novelId);
+
+            Novel novelDetail;
+            try
+            {
+                novelDetail = await NovelApiUtil.getNovelDetail(novelId);
+            }
+            catch (Exception)
+            {
+                messShow.Show("网络异常", 3000);
+                process.IsActive = false;
+                return;
+            }
             if (string.IsNullOrEmpty(novelDetail.intro))
             {
                 novelDetail.intro = "连个简介都没有，😔";
@@ -72,6 +82,10 @@ namespace Sfacg.Views
                 novelDetail.tags = new List<string>();
                 novelDetail.tags.Add("没有标签");
             }
+
+            setKeepReadButtionStyle();
+
+
             this.DataContext = novelDetail;
             process.IsActive = false;
 
@@ -83,16 +97,22 @@ namespace Sfacg.Views
         /// </summary>
         private void StartAnimation()
         {
-            ConnectedAnimation imageAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("novelCover");
-            if (imageAnimation != null)
+            try
             {
-                imageAnimation.TryStart(NovelCover);
-            }
+                ConnectedAnimation imageAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("novelCover");
+                if (imageAnimation != null)
+                {
+                    imageAnimation.TryStart(NovelCover);
+                }
 
-            var testAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("novelName");
-            if (testAnimation != null)
+                var testAnimation = ConnectedAnimationService.GetForCurrentView().GetAnimation("novelName");
+                if (testAnimation != null)
+                {
+                    testAnimation.TryStart(NovelName);
+                }
+            }
+            catch (Exception)
             {
-                testAnimation.TryStart(NovelName);
             }
         }
 
@@ -117,13 +137,32 @@ namespace Sfacg.Views
         private void Collect_btn_Click(object sender, RoutedEventArgs e)
         {
             Novel novel = (Novel)this.DataContext;
-            NovelRepositoryUtil.save(novel);
+            try
+            {
+                NovelRepositoryUtil.save(novel);
+            }
+            catch (Exception)
+            {
+                messShow.Show("收藏失败，书籍信息可能有误，请反馈开发", 1000);
+            }
 
             messShow.Show("收藏成功", 1000);
         }
 
-        private void Read_btn_Click(object sender, RoutedEventArgs e)
+        private void setKeepReadButtionStyle()
         {
+            var bookmark = BaseUtil.getSetting<Bookmark>(BaseUtil.READ_POINT_PREFIX + novelId, true);
+            if (bookmark == null)
+            {
+                //KeepReadingButton.IsEnabled = false;
+                //KeepReadingButton.Foreground = new SolidColorBrush(Windows.UI.Color.FromArgb(0xFF, 0xE9, 0xE9, 0xE9));
+                KeepReadingButton.Content = "开始阅读";
+            }
+        }
+
+        private async void Read_btn_Click(object sender, RoutedEventArgs e)
+        {
+            
             var bookmark = BaseUtil.getSetting<Bookmark>(BaseUtil.READ_POINT_PREFIX + novelId,true);
             if (bookmark!=null)
             {
@@ -131,7 +170,37 @@ namespace Sfacg.Views
                 this.Frame.Navigate(typeof(NovelReadV2), charpter);
             }else
             {
-                messShow.Show("没有阅读记录", 1000);
+                //messShow.Show("没有阅读记录", 1000);
+                await ReadFirstChapter();
+            }
+        }
+
+        /// <summary>
+        /// 直接阅读第一个章节
+        /// </summary>
+        /// <returns></returns>
+        private async System.Threading.Tasks.Task ReadFirstChapter()
+        {
+            process.IsActive = true;
+            var catalog = await NovelApiUtil.getNovelCatalog(novelId,false);
+            if (catalog != null && catalog.Count > 0)
+            {
+                var volume = catalog[0];
+                if (volume != null && volume.chapters != null && volume.chapters.Count > 0)
+                {
+                    var chapter = volume.chapters[0];
+                    if (chapter != null)
+                    {
+                        process.IsActive = false;
+                        this.Frame.Navigate(typeof(NovelReadV2), chapter);
+                    }
+                    else
+                    {
+                        process.IsActive = false;
+                        messShow.Show("没有可以阅读的章节", 1000);
+                    }
+
+                }
             }
         }
     }

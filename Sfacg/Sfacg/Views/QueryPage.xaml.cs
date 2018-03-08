@@ -81,9 +81,27 @@ namespace Sfacg.Views
         private void page_ItemClick(object sender, ItemClickEventArgs e)
         {
             Novel novel = (Novel)e.ClickedItem;
-            result.PrepareConnectedAnimation("novelCover", novel, "NovelCoverImage");
-            result.PrepareConnectedAnimation("novelName", novel, "NovelName");
+            try
+            {
+                result.PrepareConnectedAnimation("novelCover", novel, "NovelCoverImage");
+                result.PrepareConnectedAnimation("novelName", novel, "NovelName");
+            }
+            catch (Exception)
+            {
+                
+            }
             this.Frame.Navigate(typeof(NovelDetail), novel);
+        }
+
+        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            int d = Convert.ToInt32(this.ActualWidth / 120);
+            if (d > 10)
+            {
+                d = 10;
+            }
+
+            bor_Width.Width = (this.ActualWidth - 10 * d) / d - 3;
         }
     }
 }

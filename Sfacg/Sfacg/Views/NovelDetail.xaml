@@ -213,7 +213,8 @@
                     Click="Catalog_Button_Click"
                     Style="{StaticResource buttonStyle}"
                     Content="目录列表" />
-            <Button Grid.Column="2" 
+            <Button x:Name="KeepReadingButton"
+                    Grid.Column="2" 
                     HorizontalAlignment="Center"
                     Click="Read_btn_Click"
                     Style="{StaticResource buttonStyle}"

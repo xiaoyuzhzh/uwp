@@ -39,7 +39,7 @@ namespace Sfacg.Views
 
         private void getCollectedNovels()
         {
-            List<Novel> novels = NovelRepositoryUtil.getList(new NovelQO());
+            List<Novel> novels = NovelRepositoryUtil.getList(new NovelQO() { inCollection = true});
             collectedNovels.Clear();
             if(novels.Count <= 0)
             {
@@ -59,8 +59,14 @@ namespace Sfacg.Views
         private void page_ItemClick(object sender, ItemClickEventArgs e)
         {
             Novel item = (Novel)e.ClickedItem;
-            page.PrepareConnectedAnimation("novelCover", item, "NovelCoverImage");
-            page.PrepareConnectedAnimation("novelName", item, "NovelName");
+            try
+            {
+                page.PrepareConnectedAnimation("novelCover", item, "NovelCoverImage");
+                page.PrepareConnectedAnimation("novelName", item, "NovelName");
+            }
+            catch (Exception)
+            {
+            }
             MainPage.secondFrame.Navigate(typeof(NovelDetail), item);
         }
 
@@ -107,5 +113,6 @@ namespace Sfacg.Views
 
             bor_Width.Width = (this.ActualWidth - 10 * d) / d - 3;
         }
+
     }
 }

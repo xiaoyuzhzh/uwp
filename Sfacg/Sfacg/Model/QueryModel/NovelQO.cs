@@ -11,5 +11,6 @@ namespace Sfacg.Model.QueryModel
         public string novelId { get; set; }
         public string novelName { get; set; }
         public string novelCover { get; set; }
+        public bool inCollection { get; set; } = false;
     }
 }

@@ -12,6 +12,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -44,6 +45,7 @@ namespace Sfacg.Views
             //NavigationCacheMode = NavigationCacheMode.Enabled;
 
             process.IsActive = true;
+
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -52,6 +54,7 @@ namespace Sfacg.Views
             //初始化界面
             VisualStateManager.GoToState(this, SingleSelectionState.Name, true);
 
+            Bookmark bookmark = null;
             if (e.Parameter is string)
             {
                 var novelIdNew = (string)e.Parameter;
@@ -65,13 +68,49 @@ namespace Sfacg.Views
                 }
 
                 novelId = novelIdNew;
+                bookmark = BaseUtil.getSetting<Bookmark>(BaseUtil.READ_POINT_PREFIX + novelId, true);
 
                 List<Volume> volumeList;
                 try
                 {
-                    volumeList = await NovelApiUtil.getNovelCatalog(novelId);
+                    volumeList = await NovelApiUtil.getNovelCatalog(novelId,false);
                     volumes.Clear();
-                    volumeList.ForEach(v => volumes.Add(v));
+                    StorageFolder novelFolder = await NovelApiUtil.folder.CreateFolderAsync(novelId, CreationCollisionOption.OpenIfExists);
+                    List<StorageFile> files = (await novelFolder.GetFilesAsync()).ToList();
+                    volumeList.ForEach(v =>
+                    {
+                        if (files.Count>0&&v.chapters != null && v.chapters.Count > 0)
+                        {
+                            v.chapters.ForEach(c => {
+                                //更新已缓存标记
+                                files.ForEach(f => {
+                                    if (f.Name.Equals(c.chapId))
+                                    {
+                                        c.cached = "已缓存";
+                                    }
+                                });
+                                //更新阅读进度
+                                if (bookmark != null && bookmark.chapId.Equals(c.chapId))
+                                {
+                                    c.title = c.title + "  " + bookmark.progress + "%";
+                                }
+                            });
+                        }
+
+                        volumes.Add(v);
+                    });
+
+                    if (bookmark != null)
+                    {
+                        var item = getItem(bookmark);
+                        if (item == null)
+                        {
+                            return;
+                        }
+                        CatalogListView.SelectedItem = item;
+                        CatalogListView.ScrollIntoView(item, ScrollIntoViewAlignment.Leading);
+
+                    }
 
                     process.IsActive = false;
                 }
@@ -87,18 +126,6 @@ namespace Sfacg.Views
 
             }
 
-            var bookmark = BaseUtil.getSetting<Bookmark>(BaseUtil.READ_POINT_PREFIX + novelId, true);
-            if (bookmark != null)
-            {
-                var item = getItem(bookmark);
-                if (item == null)
-                {
-                    return;
-                }
-                CatalogListView.SelectedItem = item;
-                CatalogListView.ScrollIntoView(item, ScrollIntoViewAlignment.Leading);
-
-            }
         }
 
 
@@ -152,7 +179,13 @@ namespace Sfacg.Views
         {
             var charpter = (Chapter)e.ClickedItem;
 
-            CatalogListView.PrepareConnectedAnimation("chapterName", charpter, "ChapterName");
+            try
+            {
+                CatalogListView.PrepareConnectedAnimation("chapterName", charpter, "ChapterName");
+            }
+            catch (Exception)
+            {
+            }
 
             var bookmark = BaseUtil.getSetting<Bookmark>(BaseUtil.READ_POINT_PREFIX + novelId, true);
             if (bookmark != null&&charpter.chapId.Equals(bookmark.chapId))
@@ -169,8 +202,7 @@ namespace Sfacg.Views
         private void bookmark_ItemClick(object sender, ItemClickEventArgs e)
         {
             var bookmark = (Bookmark)e.ClickedItem;
-            var charpter = new ChapterList() { novelId = bookmark.novelId,chapId = bookmark.chapId ,title = bookmark.chapName,itemId= bookmark.itemId, listPosition = bookmark.listPosition, itemContainerHeight = bookmark.itemContainerHeight};
-            //this.Frame.Navigate(typeof(NovelReadView), charpter);
+            var charpter = new Chapter() { novelId = bookmark.novelId,chapId = bookmark.chapId ,title = bookmark.chapName,itemId= bookmark.itemId, listPosition = bookmark.listPosition, itemContainerHeight = bookmark.itemContainerHeight};
             this.Frame.Navigate(typeof(NovelReadV2), charpter);
         }
 
@@ -221,10 +253,5 @@ namespace Sfacg.Views
 
         }
 
-        private async void CatalogListView_Loaded(object sender, RoutedEventArgs e)
-        {
-
-
-        }
     }
 }

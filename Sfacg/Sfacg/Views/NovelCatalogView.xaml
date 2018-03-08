@@ -14,7 +14,10 @@
         <CollectionViewSource x:Name="Volumes" Source="{x:Bind volumes}"  IsSourceGrouped="True" ItemsPath="chapters" />
 
         <DataTemplate x:Key="ChapterDataTemplate" x:DataType="model:Chapter">
-            <TextBlock x:Name="ChapterName" Text="{x:Bind title}" FontSize="14" TextWrapping="WrapWholeWords" MaxLines="1"></TextBlock>
+            <StackPanel>
+                <TextBlock x:Name="ChapterName" Text="{x:Bind title}" FontSize="14" TextWrapping="WrapWholeWords" MaxLines="1"></TextBlock>
+                <TextBlock Text="{x:Bind cached}" Foreground="#FF787878" FontSize="14" TextWrapping="WrapWholeWords" MaxLines="1"></TextBlock>
+            </StackPanel>
         </DataTemplate>
 
         <DataTemplate x:Key="ZoomedOutTemplate" x:DataType="wuxdata:ICollectionViewGroup">
@@ -44,6 +47,7 @@
 
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="CatalogListVisualGroup">
                 <VisualState x:Name="SingleSelectionState">
@@ -76,7 +80,6 @@
                                       IsItemClickEnabled="True"
                                       SelectionMode="Single"
                                       ItemTemplate="{StaticResource ChapterDataTemplate}"
-                                  Loaded="CatalogListView_Loaded"
                                   >
                             <ListView.GroupStyle>
                                 <GroupStyle >

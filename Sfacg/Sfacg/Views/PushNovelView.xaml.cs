@@ -2,6 +2,7 @@
 using Sfacg.Model.StoreModel;
 using Sfacg.Utils;
 using Sfacg.Views;
+using Sfacg.Views.Controls;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -24,7 +25,7 @@ namespace Sfacg.Views
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class PushNovelView : Page
+    public sealed partial class PushNovelView
     {
         private List<Novel> novels;
 
@@ -33,12 +34,12 @@ namespace Sfacg.Views
             this.InitializeComponent();
             NavigationCacheMode = NavigationCacheMode.Enabled;
         }
-        protected override async void OnNavigatedTo(NavigationEventArgs e)
-        {
-            getPushNovels();
-        }
 
-        private async System.Threading.Tasks.Task getPushNovels()
+
+        /// <summary>
+        /// 拉取推荐小说
+        /// </summary>
+        private async void getPushNovels()
         {
             process.IsActive = true;
             try
@@ -56,34 +57,61 @@ namespace Sfacg.Views
             process.IsActive = false;
         }
 
+        private async void btn_refresh_Clicked(object sender, RoutedEventArgs e)
+        {
+            getPushNovels();
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+            getPushNovels();
+        }
+
+
+        /// <summary>
+        /// 给抽象类调用，传入gridView
+        /// </summary>
+        /// <returns></returns>
+        private GridView getPage()
+        {
+            return this.page;
+        }
+
+        /// <summary>
+        /// 设置项高
+        /// </summary>
+        /// <param name="width"></param>
+        private void setItemWidth(double width)
+        {
+            bor_Width.Width = width;
+        }
+
+        /// <summary>
+        /// 列表对象被点击
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void page_ItemClick(object sender, ItemClickEventArgs e)
         {
-            
+
             Novel item = (Novel)e.ClickedItem;
-            page.PrepareConnectedAnimation("novelCover", item, "NovelCoverImage");
-            page.PrepareConnectedAnimation("novelName", item, "NovelName");
+            try
+            {
+                getPage().PrepareConnectedAnimation("novelCover", item, "NovelCoverImage");
+                getPage().PrepareConnectedAnimation("novelName", item, "NovelName");
+            }
+            catch (Exception)
+            {
+
+            }
             MainPage.secondFrame.Navigate(typeof(NovelDetail), item);
         }
 
-
-        private void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
-        {
-            if (sv.VerticalOffset == sv.ScrollableHeight)
-            {
-                //TODO 滑动到底部了，准备加载新的内容
-            }
-        }
-
-        private void Border_RightTapped(object sender, RightTappedRoutedEventArgs e)
-        {
-
-        }
-
-        private void Border_Holding(object sender, HoldingRoutedEventArgs e)
-        {
-
-        }
-
+        /// <summary>
+        /// 页面大小改变
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
         {
             int d = Convert.ToInt32(this.ActualWidth / 120);
@@ -92,13 +120,12 @@ namespace Sfacg.Views
                 d = 10;
             }
 
-            bor_Width.Width = (this.ActualWidth - 10 * d) / d - 3;
+            setItemWidth((this.ActualWidth - 10 * d) / d - 3);
         }
 
-        private async void btn_refresh_Clicked(object sender, RoutedEventArgs e)
+        private void sv_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
-            getPushNovels();
-        }
 
+        }
     }
 }

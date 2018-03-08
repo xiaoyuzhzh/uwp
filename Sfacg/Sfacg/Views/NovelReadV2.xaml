@@ -30,7 +30,8 @@
         <ListView Grid.Row="1" Name="novelList"
                       SelectionMode="None"
                       ContainerContentChanging="ItemsListView_ContainerContentChanging"
-                      Tapped="content_Tapped">
+                      Tapped="content_Tapped"
+                        ManipulationMode="System,TranslateX">
             <ListView.ItemContainerStyle>
                 <Style TargetType="ListViewItem">
                     <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
@@ -40,7 +41,7 @@
                 <DataTemplate>
                     <Grid >
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="auto"/>
+                            <RowDefinition Height="*"/>
                             <RowDefinition Height="auto"/>
                         </Grid.RowDefinitions>
                             <TextBlock Text="{Binding paragraph}"
@@ -49,7 +50,7 @@
                                        LineHeight="30"
                                        FontSize="16"
                                        IsTextSelectionEnabled="False"></TextBlock>
-                        <Image Source="{Binding imageUrl}" MaxWidth="500"></Image>
+                        <Image Grid.Row="1" Source="{Binding imageUrl}" MaxWidth="500"></Image>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -71,8 +72,10 @@
                     Foreground="Black"
                     IsOpen="False" >
             
-            <AppBarButton x:Name="btn_BookMark" Icon="Bookmarks"  Label="加入书签"  Foreground="Black" Click="btn_BookMark_Clicked"/>
+            <AppBarButton x:Name="btn_BookMark" Icon="Bookmarks"  Label="加入书签"  Foreground="Black" Click="btn_BookMark_Clicked" FontFamily="Segoe UI"/>
             <AppBarButton x:Name="btn_StatusBar" Icon="Switch"  Label="显示状态栏"  Foreground="Black" Click="btn_StatusBar_Clicked"/>
+            <AppBarButton x:Name="btn_PrevChapter" Icon="Previous"  Label="上一章"  Foreground="Black" Click="btn_PrevChapter_Click" FontFamily="Segoe UI"/>
+            <AppBarButton x:Name="btn_NextChapter" Icon="Next"  Label="下一章"  Foreground="Black" Click="btn_NextChapter_Click" FontFamily="Segoe UI"/>
         </CommandBar>
 
     </Grid>

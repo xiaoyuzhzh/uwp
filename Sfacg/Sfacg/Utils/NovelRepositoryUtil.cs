@@ -13,10 +13,15 @@ namespace Sfacg.Utils
     {
         public static Novel save(Novel novel)
         {
+
+            //删除现有缓存
             NovelQO qo = new NovelQO();
             qo.novelId = novel.novelId;
-
-            if (getList(qo).Count > 0) return novel;
+            var novels = getList(qo);
+            if (novels != null && novels.Count > 0)
+            {
+                novels.ForEach(n => NovelRepositoryUtil.deleteOne<Novel>(n));
+            }
 
             SQLiteConnection conn = null;
             try
@@ -38,16 +43,56 @@ namespace Sfacg.Utils
             return novel;
         }
 
+        /// <summary>
+        /// 更新一个对象
+        /// </summary>
+        /// <param name="novel"></param>
+        public static void updateOne(Novel novel)
+        {
+            if(novel.id == null)
+            {
+                return;
+            }
+            SQLiteConnection conn = null;
+            try
+            {
+                conn = AppDatabaseUtil.GetDbConnection();
+                conn.Update(novel);
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    AppDatabaseUtil.closeConn(conn);
+                }
+            }
+        }
+
         public static List<Novel> getList(NovelQO qo)
         {
-            List<Novel> novels;
-            TableQuery<Novel> tb = AppDatabaseUtil.GetDbConnection().Table<Novel>();
-            if (!string.IsNullOrEmpty(qo.novelId))
+            List<Novel> novels = new List<Novel>();
+            var conn = AppDatabaseUtil.GetDbConnection();
+            try
             {
-                tb = tb.Where(c => c.novelId.Equals(qo.novelId));
+                TableQuery<Novel> tb = conn.Table<Novel>();
+                if (!string.IsNullOrEmpty(qo.novelId))
+                {
+                    tb = tb.Where(c => c.novelId.Equals(qo.novelId));
+                }
+                novels = tb.ToList();
+                return novels;
             }
-            novels = tb.ToList();
-            return novels;
+            catch (Exception)
+            {
+                return novels;
+            }
+            finally
+            {
+                if (conn != null)
+                {
+                    AppDatabaseUtil.closeConn(conn);
+                }
+            }
         }
     }
 }

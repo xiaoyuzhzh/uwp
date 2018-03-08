@@ -1,1 +1,1 @@
-C:\Users\xiaoy\Desktop\Sfacg_1.2.24.0\Sfacg_1.2.24.0_x86_arm.appxbundle
+D:\gitHub\uwp\Sfacg\Sfacg\bin\ARM\Release\Upload\Sfacg_1.2.42.0\Sfacg_1.2.42.0_x86_arm.appxbundle

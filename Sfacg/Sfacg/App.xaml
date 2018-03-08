@@ -15,6 +15,11 @@
                     <SolidColorBrush x:Key="Common-Block-Background" Color="#FFFFFFFF"/>
                     <!--  小说详情页顶部颜色  -->
                     <SolidColorBrush x:Key="Novel-Detail-Header" Color="#FFFFFFFF"/>
+                    <!--普通字体颜色-->
+                    <SolidColorBrush x:Key="FontColor" Color="#FF131313" />
+                    <!--前景颜色-->
+                    <SolidColorBrush x:Key="ForeColor" Color="#FFDF85A0" />
+                    <SolidColorBrush x:Key="List-Background" Color="#7FFFFFFF" />
 
                 </ResourceDictionary>
             </ResourceDictionary.ThemeDictionaries>
@@ -53,7 +58,36 @@
             <Style x:Key="pivotItemNormalTextBlock" TargetType="TextBlock">
                 <Setter Property="FontSize" Value="16" />
             </Style>
+            <!-- 列表模板 -->
+            <DataTemplate x:Key="novelListTemplate">
+                <Border Width="{Binding ElementName=bor_Width,Path=Width}" >
+                    <Grid Background="{ThemeResource Common-Block-Background}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="48" />
+                        </Grid.RowDefinitions>
+                        <Image x:Name="NovelCoverImage" Source="{Binding novelCover}"
+                                       VerticalAlignment="Top"
+                                       ></Image>
+                        <TextBlock x:Name="NovelName" Grid.Row="1"
+                                           Text="{Binding novelName}"
+                                           TextWrapping="Wrap"
+                                           MaxLines="2" 
+                                           FontSize="14"
+                                           Padding="5 5 5 0">
+                        </TextBlock>
+                    </Grid>
+                </Border>
+            </DataTemplate>
+            <!-- 列表样式 -->
+            <Style x:Key="novelListStyle" TargetType="GridViewItem">
+                <!--<Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                                <Setter Property="BorderBrush" Value="#FFCBCBCB"/>-->
+                <Setter Property="Background" Value="{ThemeResource Common-Block-Background}"></Setter>
+                <Setter Property="Margin" Value="5"></Setter>
+            </Style>
         </ResourceDictionary>
+
     </Application.Resources>
 
 </Application>

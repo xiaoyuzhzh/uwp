@@ -9,7 +9,6 @@ using System.Threading.Tasks;
 
 namespace Sfacg.Model.StoreModel
 {
-    [Table("VOLUME")]
     [DataContract]
     class Volume : BaseModel
     {
@@ -49,6 +48,10 @@ namespace Sfacg.Model.StoreModel
         public string isVip { get; set; }
         [DataMember]
         public string AddTime { get; set; }
+        /// <summary>
+        /// 是否缓存了的视图属性
+        /// </summary>
+        public string cached { get; set; }
 
         /**
          * 列表位置

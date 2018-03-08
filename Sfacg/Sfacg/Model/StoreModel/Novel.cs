@@ -29,12 +29,22 @@ namespace Sfacg.Model.StoreModel
         public string isFinish { get; set; }
         [Ignore]
         public string serial { get{
-                if (bool.Parse(isFinish)){
-                    return "已完结";
-                }
-                else {
-                    return "连载中";
-                }
+
+                    try
+                    {
+                        if (bool.Parse(isFinish))
+                        {
+                            return "已完结";
+                        }
+                        else
+                        {
+                            return "连载中";
+                        }
+                    }
+                    catch (Exception)
+                    {
+                    return "";
+                    }
                 }
                 set { }
         }

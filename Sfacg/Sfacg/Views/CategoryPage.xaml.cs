@@ -2,6 +2,7 @@
 using Sfacg.Model.ApiVO;
 using Sfacg.Model.StoreModel;
 using Sfacg.Utils;
+using Sfacg.Views.Controls;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -26,7 +27,7 @@ namespace Sfacg.Views
     /// <summary>
     /// 可用于自身或导航至 Frame 内部的空白页。
     /// </summary>
-    public sealed partial class CategoryPage : Page
+    public sealed partial class CategoryPage
     {
 
         private bool latestLoading = false;//最新是否正在加载
@@ -76,8 +77,7 @@ namespace Sfacg.Views
 
             finishedNovels = new ObservableCollection<Novel>();
             finished_Page.ItemsSource = finishedNovels;
-
-            NavigationCacheMode = NavigationCacheMode.Enabled;
+            
         }
 
         protected override async void OnNavigatedTo(NavigationEventArgs e)
@@ -88,6 +88,15 @@ namespace Sfacg.Views
                 return;
             }
             tid = category.tid;
+        }
+
+        /// <summary>
+        /// 页面加载完成，开始加载列表数据
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
             currentFilterType = FilterType.all;
             loadNextPage(1, true);
         }
@@ -390,14 +399,6 @@ namespace Sfacg.Views
             }
         }
 
-        private void page_ItemClick(object sender, ItemClickEventArgs e)
-        {
-            Novel item = (Novel)e.ClickedItem;
-
-            getGridView().PrepareConnectedAnimation("novelCover", item, "NovelCoverImage");
-            getGridView().PrepareConnectedAnimation("novelName", item, "NovelName");
-            MainPage.secondFrame.Navigate(typeof(NovelDetail), item);
-        }
 
         private void btn_LoadMore_Click(object sender, RoutedEventArgs e)
         {
@@ -411,16 +412,6 @@ namespace Sfacg.Views
         }
 
 
-        private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            int d = Convert.ToInt32(this.ActualWidth / 120);
-            if (d > 10)
-            {
-                d = 10;
-            }
-
-            bor_Width.Width = (this.ActualWidth - 10 * d - 20) / d - 3;
-        }
 
 
         private void setInited(bool v)
@@ -496,5 +487,54 @@ namespace Sfacg.Views
                     }
             }
         }
+
+        protected GridView getPage()
+        {
+            return this.getGridView();
+        }
+
+        protected void setItemWidth(double width)
+        {
+            bor_Width.Width = width;
+        }
+
+        /// <summary>
+        /// new 关键字用于标识刻意覆盖父类方法
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private new void Page_SizeChanged(object sender, SizeChangedEventArgs e)
+        {
+            int d = Convert.ToInt32(this.ActualWidth / 120);
+            if (d > 10)
+            {
+                d = 10;
+            }
+
+            bor_Width.Width = (this.ActualWidth - 10 * d - 20) / d - 3;
+        }
+
+        /// <summary>
+        /// 列表对象被点击
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void page_ItemClick(object sender, ItemClickEventArgs e)
+        {
+
+            Novel item = (Novel)e.ClickedItem;
+            try
+            {
+                getPage().PrepareConnectedAnimation("novelCover", item, "NovelCoverImage");
+                getPage().PrepareConnectedAnimation("novelName", item, "NovelName");
+            }
+            catch (Exception)
+            {
+
+            }
+            MainPage.secondFrame.Navigate(typeof(NovelDetail), item);
+        }
+
+
     }
 }

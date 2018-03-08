@@ -1,8 +1,10 @@
 ﻿using Sfacg.Model;
 using Sfacg.Model.ApiVO;
+using Sfacg.Model.QueryModel;
 using Sfacg.Model.StoreModel;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Json;
@@ -15,7 +17,9 @@ namespace Sfacg.Utils
 {
     class NovelApiUtil
     {
-        private static StorageFolder folder = ApplicationData.Current.LocalFolder;
+        public static StorageFolder folder = ApplicationData.Current.LocalFolder;
+
+        private static string ApiCacheFolder = "apicache";
 
         private static string NovelContentAccessurl = "https://api.sfacg.com/Chaps/#chapId#?expand=content,needFireMoney";//小说内容
 
@@ -30,12 +34,10 @@ namespace Sfacg.Utils
         private static string QuerySuggestionUrl = "https://api.sfacg.com/search/all/reffers?q=#text#";//搜索提示
 
         private static string QueryNovelsUrl = "https://api.sfacg.com/search/all/result?expand=typeName,tags,intro,latestchaptitle,latestchapintro,authorname,authorName&q=#keyword#";//搜索小说
-
-        //private static string CategoryNovelsUrl = "https://api.sfacg.com/APP/API/HTML5.ashx?op=typenovels&index=#index#&listype=#listType#&tid=#tid#";//分类小说
-
+        
         private static string CategoryNovelsUrl = "https://api.sfacg.com/novels/#tid#/sysTags/0/novels?expand=typeName&filter=#filter#&page=#pageNo#&size=#pageSize#&sort=Lastest";//分类小说,sort有四种枚举，后面再做
 
-        
+
 
         /// <summary>
         /// 获取小说章节内容数据
@@ -51,6 +53,7 @@ namespace Sfacg.Utils
             }
 
             StorageFolder novelFolder = await folder.CreateFolderAsync(novelId, CreationCollisionOption.OpenIfExists);
+
 
             StorageFile novel = null;
 
@@ -92,7 +95,7 @@ namespace Sfacg.Utils
         public static async Task<List<Novel>> getPushNovels(int size)
         {
             //调用接口
-            var result = await HttpUtil.get(PushNovelsUrl.Replace("#size#", size.ToString()));
+            var result = await HttpUtil.getWithCache(PushNovelsUrl.Replace("#size#", size.ToString()));
             PushNovelApiVO response = JSONUtil.deSerialize<PushNovelApiVO>(result);
             var novels = new List<Novel>();
             if (response != null)
@@ -127,18 +130,41 @@ namespace Sfacg.Utils
         /// 获取目录列表
         /// </summary>
         /// <param name="novelId"></param>
+        /// <param name="getCache">是否直接使用缓存，不提交网络请求</param>
         /// <returns></returns>
-        public static async Task<List<Volume>> getNovelCatalog(string novelId)
+        public static async Task<List<Volume>> getNovelCatalog(string novelId,bool getCache)
         {
-            //调用接口获取文本
-            var result = await HttpUtil.get(NovelCatalogUrl.Replace("#novelId#", novelId));
-            var response = JSONUtil.deSerialize<NovelCatalogApiVO>(result);
-
             var volumes = new List<Volume>();
-            if (response != null)
+
+
+            //调用接口获取文本
+            try
             {
-                volumes = response.getVolumes();
+                string url = NovelCatalogUrl.Replace("#novelId#", novelId);
+                string result;
+                if (getCache)
+                {
+                    result = await HttpUtil.getCache(url);
+                }
+                else
+                {
+                    result = await HttpUtil.getWithCache(url);
+                }
+                
+                if (result !=null && !String.IsNullOrEmpty(result))
+                {
+                    var response = JSONUtil.deSerialize<NovelCatalogApiVO>(result);
+                    if (response != null)
+                    {
+                        volumes = response.getVolumes();
+                    }
+                }
             }
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+            }
+
             return volumes;
         }
 
@@ -149,19 +175,53 @@ namespace Sfacg.Utils
         /// <returns></returns>
         public static async Task<Novel> getNovelDetail(string novelId)
         {
-            var result = await HttpUtil.get(NovelDetailUrl.Replace("#novelId#", novelId));
-            var response = JSONUtil.deSerialize<NovelDetailApiVO>(result);
+            Novel novel = new Novel();
+            var localNovel = getLocalNovel(novelId);
 
-
-
-            var novel = new Novel();
-            if (response != null)
+            try
             {
-                novel = response.getNovel();
+                var result = await HttpUtil.getWithCache(NovelDetailUrl.Replace("#novelId#", novelId));
+                //var result = await HttpUtil.get(NovelDetailUrl.Replace("#novelId#", novelId));
+                if (!string.IsNullOrEmpty(result))
+                {
+                    var response = JSONUtil.deSerialize<NovelDetailApiVO>(result);
+                    if (response != null)
+                    {
+                        novel = response.getNovel();
+                        if (localNovel != null)
+                        {
+                            novel.id = localNovel.id;
+                            NovelRepositoryUtil.updateOne(novel);
+                        }
+                    }
+                }
+                else
+                {
+                    if (localNovel != null)
+                    {
+                        novel = localNovel;
+                    }
+                }
             }
-            
+            catch (Exception e)
+            {
+                Debug.Write(e.Message);
+            }
 
             return novel;
+        }
+
+        private static Novel getLocalNovel(string novelId)
+        {
+            Novel localNovel = null;
+            //先查询本地novel
+            NovelQO qo = new NovelQO() { novelId = novelId };
+            var novels = NovelRepositoryUtil.getList(qo);
+            if (novels != null && novels.Count > 0)
+            {
+                localNovel = novels.First();
+            }
+            return localNovel;
         }
 
         /// <summary>
@@ -193,7 +253,14 @@ namespace Sfacg.Utils
             return novels;
         }
 
-
+        /// <summary>
+        /// 查询分类小说
+        /// </summary>
+        /// <param name="tid"></param>
+        /// <param name="pageNo"></param>
+        /// <param name="pageSize"></param>
+        /// <param name="filterType"></param>
+        /// <returns></returns>
         public static async Task<List<Novel>> queryCategoryNovels(int tid,int pageNo,int pageSize, FilterType filterType)
         {
 

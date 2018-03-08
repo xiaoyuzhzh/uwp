@@ -47,12 +47,43 @@ namespace Sfacg.Utils
             return t;
         }
 
+        public static T saveOne<T>(T t,bool re) where T : BaseModel
+        {
+            SQLiteConnection conn = null;
+            try
+            {
+                conn = GetDbConnection();
+                if (t.id == null)
+                {
+                    t.id = Guid.NewGuid().ToString();
+                }
+                conn.Insert(t);
+                if (re)
+                {
+                    t = conn.Get<T>(t.id);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            finally
+            {
+                if(conn != null)
+                {
+                    conn.Close();
+                }
+            }
+            
+            return t;
+        }
+
         public static int deleteOne<T>(T t) where T : BaseModel
         {
             SQLiteConnection conn = GetDbConnection();
             try
             {
-                return conn.Delete(t);
+                return conn.Delete(t); 
             }
             catch (Exception)
             {
@@ -75,6 +106,7 @@ namespace Sfacg.Utils
             var conn = GetDbConnection();
             conn.CreateTable<Bookmark>();
             conn.CreateTable<Novel>();
+            conn.CreateTable<Catalog>();
             closeConn(conn);
         }
 
