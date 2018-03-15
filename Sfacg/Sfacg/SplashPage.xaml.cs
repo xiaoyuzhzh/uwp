@@ -93,7 +93,7 @@ namespace Sfacg
             }
             else
             {
-                this.Frame.Navigate(typeof(MainPageV2));
+                this.Frame.Navigate(typeof(MainPage));
 
             }
         }
@@ -106,7 +106,7 @@ namespace Sfacg
 
         private void grid_Load_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            this.Frame.Navigate(typeof(MainPageV2));
+            this.Frame.Navigate(typeof(MainPage));
         }
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
