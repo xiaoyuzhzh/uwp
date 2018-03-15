@@ -1,1 +1,0 @@
-D:\gitHub\uwp\ComplicatedApp\ComplicatedApp\ComplicatedApp.csproj;x86

@@ -1,0 +1,104 @@
+﻿<Page
+    x:Class="Sfacg.Pages.HomePage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Sfacg.Pages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <Page.Resources>
+        <Style x:Key="GridViewItemStyle" TargetType="GridViewItem">
+            <Setter Property="Background" Value="{ThemeResource List-Background}"></Setter>
+            <Setter Property="BorderBrush" Value="Transparent"></Setter>
+            <!--<Setter Property="BorderBrush" Value="#FFE9E9E9"></Setter>-->
+            <Setter Property="BorderThickness" Value="1"></Setter>
+            <Setter Property="Margin" Value="5"></Setter>
+        </Style>
+    </Page.Resources>
+
+
+    <Grid Background="{ThemeResource Common-Background}">
+        <StackPanel>
+            <ScrollViewer>
+                <StackPanel Margin="5 0">
+                    <Grid>
+                        <HyperlinkButton x:Name="Btn_Push" Click="Btn_Push_Click" Tag="0"  Margin="5 0" Foreground="{ThemeResource FontColor}"  >
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="ms-appx:///Assets/PartIcon/ic_header_hot.png" Width="24" Height="24" Margin="0,0,5,0"></Image>
+                                <TextBlock Text="每日推荐" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                            </StackPanel>
+                        </HyperlinkButton>
+                        <HyperlinkButton Tag="0"  HorizontalAlignment="Right" Margin="5 0" Foreground="{ThemeResource ForeColor}">
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Ellipse Fill="{ThemeResource ForeColor}" ></Ellipse>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" Margin="5" FontSize="12" Foreground="White"/>
+                                </Grid>
+                                <TextBlock Text="刷新" Visibility="Collapsed" Margin="5 0" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                            </StackPanel>
+                        </HyperlinkButton>
+                    </Grid>
+                    <GridView  x:Name="home_GridView_Push"  
+                               ScrollViewer.VerticalScrollMode="Disabled" 
+                               ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                               IsItemClickEnabled="True" 
+                               HorizontalAlignment="Center"  
+                               SelectionMode="None" 
+                               ItemContainerStyle="{StaticResource GridViewItemStyle}"  >
+                    </GridView>
+                    <Grid>
+                        <HyperlinkButton x:Name="Btn_JP" Tag="0"  Margin="5 0" Foreground="{ThemeResource FontColor}"  >
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="ms-appx:///Assets/PartIcon/ic_header_hot.png" Width="24" Height="24" Margin="0,0,5,0"></Image>
+                                <TextBlock Text="日轻小说" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                            </StackPanel>
+                        </HyperlinkButton>
+                        <HyperlinkButton Tag="0"  HorizontalAlignment="Right" Margin="5 0" Foreground="{ThemeResource ForeColor}">
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Ellipse Fill="{ThemeResource ForeColor}" ></Ellipse>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" Margin="5" FontSize="12" Foreground="White"/>
+                                </Grid>
+                                <TextBlock Text="刷新" Visibility="Collapsed" Margin="5 0" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                            </StackPanel>
+                        </HyperlinkButton>
+                    </Grid>
+                    <GridView  x:Name="home_GridView_JP"  
+                               ScrollViewer.VerticalScrollMode="Disabled" 
+                               ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                               IsItemClickEnabled="True" 
+                               HorizontalAlignment="Center"  
+                               SelectionMode="None" 
+                               ItemContainerStyle="{StaticResource GridViewItemStyle}"  >
+                    </GridView>
+                    <Grid>
+                        <HyperlinkButton x:Name="Btn_Store" Tag="0"  Margin="5 0" Foreground="{ThemeResource FontColor}"  >
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="ms-appx:///Assets/PartIcon/ic_header_hot.png" Width="24" Height="24" Margin="0,0,5,0"></Image>
+                                <TextBlock Text="收藏书架" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                            </StackPanel>
+                        </HyperlinkButton>
+                        <HyperlinkButton Tag="0"  HorizontalAlignment="Right" Margin="5 0" Foreground="{ThemeResource ForeColor}">
+                            <StackPanel Orientation="Horizontal">
+                                <Grid>
+                                    <Ellipse Fill="{ThemeResource ForeColor}" ></Ellipse>
+                                    <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xE117;" Margin="5" FontSize="12" Foreground="White"/>
+                                </Grid>
+                                <TextBlock Text="刷新" Visibility="Collapsed" Margin="5 0" VerticalAlignment="Center" FontSize="16"></TextBlock>
+                            </StackPanel>
+                        </HyperlinkButton>
+                    </Grid>
+                    <GridView  x:Name="home_GridView_Store"  
+                               ScrollViewer.VerticalScrollMode="Disabled" 
+                               ScrollViewer.VerticalScrollBarVisibility="Disabled"
+                               IsItemClickEnabled="True" 
+                               HorizontalAlignment="Center"  
+                               SelectionMode="None" 
+                               ItemContainerStyle="{StaticResource GridViewItemStyle}"  >
+                    </GridView>
+                </StackPanel>
+            </ScrollViewer>
+        </StackPanel>
+    </Grid>
+</Page>
