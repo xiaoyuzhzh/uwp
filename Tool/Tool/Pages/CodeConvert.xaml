@@ -7,58 +7,129 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
-    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+    <Page.Resources>
+        <Style x:Key="button" TargetType="Button" BasedOn="{StaticResource ButtonRevealStyle}">
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="Height" Value="30"/>
+            <Setter Property="Width" Value="52"/>
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontFamily" Value="Segoe MDL2 Assets"/>
+            <Setter Property="Margin" Value="2"/>
+            <Setter Property="BorderThickness" Value="0"/>
+        </Style>
+        <Style x:Key="textbox" TargetType="TextBox" >
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="BorderThickness" Value="0.5"/>
+            <Setter Property="FontFamily" Value="DengXian Light"/>
+        </Style>
+        <Style x:Key="comboboxItem" TargetType="ComboBoxItem" BasedOn="{StaticResource ComboBoxItemRevealStyle}">
+            <!--<Setter Property="FontSize" Value="3"/>-->
+        </Style>
+    </Page.Resources>
+
+    <Grid x:Name="thisGrid" Background="{ThemeResource SystemControlAcrylicWindowBrush}" Margin="12">
         
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="group">
+                <VisualState x:Name="narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Switch.Height" Value="26"/>
+                        <Setter Target="Switch.FontSize" Value="12"/>
+                        <Setter Target="ToLeft.Height" Value="25"/>
+                        <Setter Target="ToLeft.Width" Value="40"/>
+                        <Setter Target="ToRight.Height" Value="25"/>
+                        <Setter Target="ToRight.Width" Value="40"/>
+                        <Setter Target="sourceTextBox.FontSize" Value="12"/>
+                        <Setter Target="thisGrid.Margin" Value="12"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="Switch.Height" Value="36"/>
+                        <Setter Target="Switch.FontSize" Value="18"/>
+                        <Setter Target="ToLeft.Height" Value="32"/>
+                        <Setter Target="ToLeft.Width" Value="50"/>
+                        <Setter Target="ToRight.Height" Value="32"/>
+                        <Setter Target="ToRight.Width" Value="50"/>
+                        <Setter Target="sourceTextBox.FontSize" Value="20"/>
+                        <Setter Target="thisGrid.Margin" Value="24"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
         <Grid>
             <ComboBox   Name="Switch"
                         Height="36"
-                        FontSize="16" 
-                        RelativePanel.AlignHorizontalCenterWithPanel="True"
-                        SelectedIndex="0">
+                        SelectedIndex="0"
+                        ItemContainerStyle="{StaticResource comboboxItem}"
+                        Margin="0 5"
+                        BorderThickness="0.5"
+                        >
                 <x:String>Native/Unicode</x:String>
             </ComboBox>
         </Grid>
-        <Grid Grid.Row="1" Padding="5 10" >
+        <Grid Grid.Row="1" >
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="2*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
             
             <TextBox x:Name="sourceTextBox"
-                     TextWrapping="Wrap" 
                      PlaceholderText="输入文本"
+                     Style="{StaticResource textbox}"
                      ></TextBox>
 
             <Grid Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
-                <RelativePanel>
-                    <Button Name="Left2Right"
-                            FontSize="36" 
-                            Width="70"
-                            Click="ConvertStr"
-                            FontFamily="Segoe MDL2 Assets"
-                            Content="&#xE0AB;"
-                            Margin="0 0 0 5"
-                            RelativePanel.AlignHorizontalCenterWithPanel="True"
-                            ></Button>
-                    <Button FontSize="36" 
-                            Width="70"
+                <StackPanel Orientation="Horizontal">
+                    <Button x:Name="ToLeft"
                             Click="Reverse"
-                            FontFamily="Segoe MDL2 Assets"
                             Content="&#xE0A6;"
-                            RelativePanel.AlignHorizontalCenterWithPanel="True"
-                            RelativePanel.Below="Left2Right"></Button>
-                </RelativePanel>
+                            Style="{StaticResource button}">
+                        <Button.Resources>
+                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver">#FF42A214</SolidColorBrush>
+                            <SolidColorBrush x:Key="ButtonBackgroundPressed">#FF359308</SolidColorBrush>
+                            <SolidColorBrush x:Key="ButtonForegroundPointerOver">white</SolidColorBrush>
+                            <SolidColorBrush x:Key="ButtonForegroundPressed">white</SolidColorBrush>
+                            <SolidColorBrush x:Key="ButtonBorderBrushPointerOver">#FF267600</SolidColorBrush>
+                            <SolidColorBrush x:Key="ButtonBorderBrushPressed">#FF267600</SolidColorBrush>
+                        </Button.Resources>
+                    </Button>
+                    <Button Name="ToRight"
+                            Click="ConvertStr"
+                            Content="&#xE0AB;"
+                            Style="{StaticResource button}"
+                            >
+                        <Button.Resources>
+                            <SolidColorBrush x:Key="ButtonBackgroundPointerOver">#FF42A214</SolidColorBrush>
+                            <SolidColorBrush x:Key="ButtonBackgroundPressed">#FF359308</SolidColorBrush>
+                            <SolidColorBrush x:Key="ButtonForegroundPointerOver">white</SolidColorBrush>
+                            <SolidColorBrush x:Key="ButtonForegroundPressed">white</SolidColorBrush>
+                            <SolidColorBrush x:Key="ButtonBorderBrushPointerOver">#FF267600</SolidColorBrush>
+                            <SolidColorBrush x:Key="ButtonBorderBrushPressed">#FF267600</SolidColorBrush>
+                        </Button.Resources>
+                    </Button>
+                </StackPanel>
             </Grid>
                 
-            <TextBox x:Name="resultTextBox" Grid.Column="2"
-                     TextWrapping="Wrap" >
+            <TextBox x:Name="resultTextBox" 
+                     Grid.Column="2"
+                     Style="{StaticResource textbox}" 
+                     >
                 
             </TextBox>
         </Grid>

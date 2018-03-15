@@ -17,20 +17,53 @@
         <Style x:Key="listBoxTextBlock" TargetType="TextBlock">
             <Setter Property="FontSize" Value="20" />
         </Style>
+        <DataTemplate x:Key="littleHeaderText">
+            <TextBlock Text="{Binding ElementName=ContentHeader,Path=Text}" 
+                       FontSize="16"
+                       Margin="8"
+                       Style="{StaticResource CaptionTextBlockStyle}"/>
+        </DataTemplate>
+        <DataTemplate x:Key="largerHeaderText">
+            <TextBlock Text="{Binding ElementName=ContentHeader,Path=Text}" 
+                       Margin="8"
+                       FontSize="24"
+                       FontFamily="DengXian Light"
+                       Style="{StaticResource CaptionTextBlockStyle}"/>
+        </DataTemplate>
     </Page.Resources>
 
-    <Grid Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+    <Grid x:Name="MainGrid" Background="{ThemeResource SystemControlAcrylicWindowBrush}">
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="group">
+                <VisualState x:Name="narrow">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowHeight="0"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NavView.HeaderTemplate" Value="{StaticResource littleHeaderText}"/>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="wide">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="900"/>
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="NavView.HeaderTemplate" Value="{StaticResource largerHeaderText}"/>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+        
         <NavigationView x:Name="NavView"
                         Loaded="NavigationView_Loaded" 
-                        
                         Margin="0,12,0,0" 
                         Grid.Row="1" 
                         SelectionChanged="NavigationView_SelectionChanged"
-                        Header="Tool"
+                        HeaderTemplate="{StaticResource littleHeaderText}"
                         >
             <NavigationView.MenuItems>
-                <NavigationViewItem Icon="Play" Content="编码转换" Tag="codeChange"/>
-                <NavigationViewItem Icon="Save" Content="时间戳转换" Tag="timestampTranslate"/>
+                <NavigationViewItem Icon="ClosedCaption" FontFamily="DengXian Light" Content="编码转换" Tag="codeChange"/>
+                <NavigationViewItem Icon="Clock" FontFamily="DengXian Light" Content="时间戳转换" Tag="timestampTranslate"/>
             </NavigationView.MenuItems>
 
             <Frame x:Name="contentFrame">
@@ -42,6 +75,8 @@
             </Frame>
 
         </NavigationView>
+
+        <TextBlock x:Name="ContentHeader" Visibility="Collapsed"/>
     </Grid>
     <!--<Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Grid.RowDefinitions>

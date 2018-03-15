@@ -53,11 +53,11 @@ namespace Tool
                 {
                     case "codeChange":
                         contentFrame.Navigate(typeof(CodeConvert));
-                        NavView.Header = "编码转换";
+                        ContentHeader.Text = "编码转换";
                         break;
                     case "timestampTranslate":
                         contentFrame.Navigate(typeof(TimestampConvert));
-                        NavView.Header = "时间戳转换";
+                        ContentHeader.Text = "时间戳转换";
                         break;
                 }
             }
