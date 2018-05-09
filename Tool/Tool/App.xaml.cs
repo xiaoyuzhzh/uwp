@@ -85,8 +85,8 @@ namespace Tool
             var appTitleBar = ApplicationView.GetForCurrentView().TitleBar;
             if (appTitleBar != null)
             {
-                appTitleBar.BackgroundColor = Color.FromArgb(125, 255, 255, 255);
-                appTitleBar.ButtonBackgroundColor = Color.FromArgb(125, 255, 255, 255);
+                appTitleBar.BackgroundColor = Colors.Transparent;
+                appTitleBar.ButtonBackgroundColor = Colors.Transparent;
             }
         }
 

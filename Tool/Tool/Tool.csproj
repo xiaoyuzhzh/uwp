@@ -98,6 +98,9 @@
     <Compile Include="Pages\CodeConvert.xaml.cs">
       <DependentUpon>CodeConvert.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\JSONFormat.xaml.cs">
+      <DependentUpon>JSONFormat.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Pages\TimestampConvert.xaml.cs">
       <DependentUpon>TimestampConvert.xaml</DependentUpon>
     </Compile>
@@ -129,6 +132,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\CodeConvert.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\JSONFormat.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

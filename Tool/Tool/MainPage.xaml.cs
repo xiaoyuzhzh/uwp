@@ -59,6 +59,10 @@ namespace Tool
                         contentFrame.Navigate(typeof(TimestampConvert));
                         ContentHeader.Text = "时间戳转换";
                         break;
+                    case "jsonFormat":
+                        contentFrame.Navigate(typeof(JSONFormat));
+                        ContentHeader.Text = "json转换";
+                        break;
                 }
             }
         }
