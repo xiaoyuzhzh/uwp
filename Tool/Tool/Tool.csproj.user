@@ -4,4 +4,20 @@
     <DeviceId>30F105C9-681E-420b-A277-7C086EAD8A4E</DeviceId>
     <UseEmulator>true</UseEmulator>
   </PropertyGroup>
+  <PropertyGroup>
+    <Source>C:\Users\xiaoy\Desktop\boluobao\res\drawable-xhdpi-v4\add_sf_girl.png</Source>
+    <SmallTileSource>C:\Users\xiaoy\Desktop\boluobao\res\drawable-xhdpi-v4\add_sf_girl.png</SmallTileSource>
+    <MediumTileSource>C:\Users\xiaoy\Desktop\boluobao\res\drawable-xhdpi-v4\add_sf_girl.png</MediumTileSource>
+    <WideTileSource>C:\Users\xiaoy\Desktop\boluobao\res\drawable-xhdpi-v4\add_sf_girl.png</WideTileSource>
+    <LargeTileSource>C:\Users\xiaoy\Desktop\boluobao\res\drawable-xhdpi-v4\add_sf_girl.png</LargeTileSource>
+    <AppIconSource>C:\Users\xiaoy\Desktop\boluobao\res\drawable-xhdpi-v4\add_sf_girl.png</AppIconSource>
+    <SplashScreenSource>C:\Users\xiaoy\Desktop\boluobao\res\drawable-xhdpi-v4\add_sf_girl.png</SplashScreenSource>
+    <PackageLogoSource>C:\Users\xiaoy\Desktop\boluobao\res\drawable-xhdpi-v4\add_sf_girl.png</PackageLogoSource>
+    <BadgeLogoSource>C:\Users\xiaoy\Desktop\boluobao\res\drawable-xhdpi-v4\add_sf_girl.png</BadgeLogoSource>
+    <ProjectView>ShowAllFiles</ProjectView>
+    <AppxPackageIsForStore>False</AppxPackageIsForStore>
+    <AppxShowAllApps>False</AppxShowAllApps>
+    <AppxBuildConfigurationSelection>x86|x64|arm</AppxBuildConfigurationSelection>
+    <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
+  </PropertyGroup>
 </Project>

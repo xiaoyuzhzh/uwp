@@ -1,48 +1,39 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-
-<Package
-  xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
-  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
-  xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
-  IgnorableNamespaces="uap mp">
-
-  <Identity
-    Name="aa31e43c-3aae-4774-ab4c-e5d63239dab3"
-    Publisher="CN=xiaoy"
-    Version="1.0.0.0" />
-
-  <mp:PhoneIdentity PhoneProductId="aa31e43c-3aae-4774-ab4c-e5d63239dab3" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
-
+<Package xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10" 
+         xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest" 
+         xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+         IgnorableNamespaces="uap mp">
+         <!--xmlns:desktop4="http://schemas.microsoft.com/appx/manifest/desktop/windows10/4" 
+         xmlns:iot2="http://schemas.microsoft.com/appx/manifest/iot/windows10/2" 
+         IgnorableNamespaces="uap mp desktop4 iot2">-->
+  <Identity Name="aa31e43c-3aae-4774-ab4c-e5d63239dab3" Publisher="CN=xiaoy" Version="1.0.0.0" />
+  <mp:PhoneIdentity PhoneProductId="aa31e43c-3aae-4774-ab4c-e5d63239dab3" PhonePublisherId="00000000-0000-0000-0000-000000000000" />
   <Properties>
     <DisplayName>Tool</DisplayName>
     <PublisherDisplayName>xiaoy</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
-
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
   </Dependencies>
-
   <Resources>
-    <Resource Language="x-generate"/>
+    <Resource Language="x-generate" />
   </Resources>
-
   <Applications>
     <Application Id="App"
-      Executable="$targetnametoken$.exe"
-      EntryPoint="Tool.App">
-      <uap:VisualElements
-        DisplayName="Tool"
-        Square150x150Logo="Assets\Square150x150Logo.png"
-        Square44x44Logo="Assets\Square44x44Logo.png"
-        Description="Tool"
-        BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png"/>
+                 Executable="$targetnametoken$.exe"
+                 EntryPoint="Tool.App"
+                 >
+      <!--desktop4:SupportsMultipleInstances="true"
+                 iot2:SupportsMultipleInstances="true">-->
+      <uap:VisualElements DisplayName="Tool" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Tool" BackgroundColor="transparent">
+        <uap:LockScreen Notification="badgeAndTileText" BadgeLogo="Assets\BadgeLogo.png" />
+        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png" Square310x310Logo="Assets\LargeTile.png" Square71x71Logo="Assets\SmallTile.png">
+        </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
   </Applications>
-
   <Capabilities>
     <Capability Name="internetClient" />
   </Capabilities>

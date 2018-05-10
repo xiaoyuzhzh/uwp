@@ -64,7 +64,7 @@
             <NavigationView.MenuItems>
                 <NavigationViewItem Icon="ClosedCaption" FontFamily="DengXian Light" Content="编码转换" Tag="codeChange"/>
                 <NavigationViewItem Icon="Clock" FontFamily="DengXian Light" Content="时间戳转换" Tag="timestampTranslate"/>
-                <NavigationViewItem Icon="Clock" FontFamily="DengXian Light" Content="JSON格式化" Tag="jsonFormat"/>
+                <NavigationViewItem Icon="Font" FontFamily="DengXian Light" Content="JSON格式化" Tag="jsonFormat"/>
             </NavigationView.MenuItems>
 
             <Frame x:Name="contentFrame">
