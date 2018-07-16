@@ -1,4 +1,5 @@
-﻿using Tool.Pages;
+﻿using MyHelper.Pages;
+using Tool.Pages;
 using Windows.ApplicationModel.Core;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
@@ -63,6 +64,10 @@ namespace MyHelper
                     case "jsonFormat":
                         contentFrame.Navigate(typeof(JSONFormat));
                         ContentHeader.Text = "json转换";
+                        break;
+                    case "calculator":
+                        contentFrame.Navigate(typeof(Calculator));
+                        ContentHeader.Text = "sb计数器";
                         break;
                 }
             }

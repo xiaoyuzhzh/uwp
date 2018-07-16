@@ -77,6 +77,7 @@
                 <NavigationViewItem Icon="ClosedCaption" FontFamily="DengXian Light" Content="编码转换" Tag="codeChange"/>
                 <NavigationViewItem Icon="Clock" FontFamily="DengXian Light" Content="时间戳转换" Tag="timestampTranslate"/>
                 <NavigationViewItem Icon="Font" FontFamily="DengXian Light" Content="JSON格式化" Tag="jsonFormat"/>
+                <NavigationViewItem Icon="Calculator" FontFamily="DengXian Light" Content="sb计数器" Tag="calculator"/>
             </NavigationView.MenuItems>
 
             <Frame x:Name="contentFrame">
